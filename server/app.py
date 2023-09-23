@@ -50,12 +50,11 @@ def keep_age_current():
         (dancer.dob.month, dancer.dob.day))
         db.session.commit()
 
-#-------------------------------------------Marshmallow----------------------------------------------
-
+#-------------------------------------------Marshmallow----------------------------------------------45122222222222222222222222222222222222222222222222222222222222222222222
 #List all Parent Info 
 class ParentListSchema(ma.SQLAlchemySchema):
     class Meta:
-        model = Parent
+        model = Parent 
 
     id = ma.auto_field()
     first  = ma.auto_field()
@@ -233,20 +232,17 @@ class Signup(Resource):
         users.append(user)
         db.session.add_all(users)
 
-        db.session.commit()
-        # try:
-        #     db.session.add(dancer)
-        #     # db.session.add(user)
-        #     db.session.commit()
-
-        #all constraint errors are integrity errors
-        # except IntegrityError as e:
-        #     if isinstance(e, (IntegrityError)):
-        #         for error in e.orig.args:
-        #             if "UeNIQUE" in error:
-        #                 errors.append("Eamil already take. Please try again")
-        #     return {"Errors": ["errors"]},422    
-
+        #commit the parent, dancer, emergency, user tables
+        try:
+            db.session.commit()
+        except IntegrityError as error:
+            for error in error.orig.args:
+                if "UNIQUE" in error:
+                    failed_item=error[24:]
+                    return ([{"Message" : f"{failed_item} already taken"}],422)
+                elif "CHECK" in error:
+                    return ([{"Message" : "Bio needs to be at least 50 chars"}],422)
+        
 
         #link Parent and Emergency Contact to Dancer through foreignKey
         newdancer = Dancer.query.filter_by(username=dancer.username).first()  
@@ -257,10 +253,57 @@ class Signup(Resource):
         newdancer.emergency_id = newemergency.id
         db.session.commit()
         
-        response = make_response(singular_dancer_schema.dump(dancer),201)
+        response = make_response([singular_dancer_schema.dump(dancer)],201)
         return response
 
+class AddDancer(Resource):
+    def post(self):
 
+        #Get input dancer
+        data = request.get_json()
+
+        birthdate = datetime.strptime(data['dob'],'%Y-%m-%d').date()
+        
+        dancer = Dancer(
+            first = data['first'],
+            last = data['last'],
+            email = data['email'],
+            phone = data['phone'],
+            gender = data['gender'],
+            age = data["age"],
+            dob = birthdate,
+            bio = data['bio'],
+            image = data['image'],
+            parent_id = data['parent'],
+            emergency_id = data['emergency']
+        )
+        dancer.username = dancer.email
+
+        user = User(
+            name = f"{dancer.first} {dancer.last}",
+            username = dancer.username,
+            isparent = False,
+            isadmin = False
+        )   
+        user.password_hash = user.username + 'password'
+        
+        #Make sure email is unique.
+        try:
+            db.session.add(dancer)
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError as error:
+            for error in error.orig.args:
+                print ("this is an error:", str(error) )
+                if "UNIQUE" in error:
+                    return ({"Message" : "Email already taken"},422)
+                elif "CHECK" in error:
+                    return ([{"Message" : "Bio needs to be at least 50 chars"}],422)
+
+        response = make_response([singular_dancer_schema.dump(dancer)], 201)
+        return response
+
+       
 @app.route("/login", methods = ["Post"])
 def login():
 
@@ -388,11 +431,12 @@ class EventByID(Resource):
         return response
 
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
+api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
+api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
 api.add_resource(Parents, '/parents', endpoint='parents')
 api.add_resource(Events, '/events', endpoint='events')
 api.add_resource(Practices, '/practices', endpoint='practices')
 api.add_resource(Users, '/users', endpoint='users')
-api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
 api.add_resource(Signup, '/dancer/signup', endpoint='dancer/signup')
 api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
 api.add_resource(EventByID, '/events/<int:id>', endpoint='event/id')
