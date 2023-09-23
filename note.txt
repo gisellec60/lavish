@@ -1,0 +1,93 @@
+Tables:
+    dancers
+    parents
+    events
+    practice
+    events_practice_dancers_parents
+    emergency_contact
+
+<one-to-many>
+    parent < dancers 
+    emergency_contact < dancers
+
+<many-to-many>
+    parents <> events
+    dancers <> events
+    dancers <> practice
+
+Query:
+
+Dancer Information
+    Includes all Information
+        Parent Information 
+        Emergency Information
+
+All Dancers
+      Includes all Information
+        Parent Information 
+        Emergency Information
+
+Admin login Portal 
+    List all Dancers - done
+    List all Parents - done
+    list all practices -done
+    List Dancers by username - done  
+    List Parents by username  - done
+    list all events - done
+    list event by date - done
+    List Events Dancer attended - done
+    list all the dancers that attend a particular event - done
+    List Events Dance did not attended
+    List Practice Dancer attended
+    List Practice Dancer did not attended
+    List Parents who owe money
+    List balances for all
+    List balance by username
+    Add, Delete, Modify Dancer
+   
+    EventID:
+        return an event - none  done 
+        return all the dancers for that event - dancers  done
+        return all the dancers not for that event - notdanders  done
+        modify 
+        Delete
+    
+    DancerID:
+        return dancer  done
+        return all events for dancer   done
+        return all events not dancer    done
+        modify
+        delete
+
+Parent Login
+    List dancer Information
+    Balance Information
+
+
+Calendar < for upcoming events>
+
+To sign up for an Event you must login
+
+Links 
+  Facebook
+  Instagram
+
+  Setup Information
+
+  pipenv install flask-marshmallow
+  pipenv install Marshmallow-sqlalchemy
+
+This is a tool that you can install to snatch any YouTube file. 
+You can parse for different formats with 
+
+yt-dlp <link to YT video> --list-formats
+
+And download to the current folder with 
+
+yt-dlp <link to YT video> -f <number from list in above command> 
+
+But if you just want a high quality video, with video and audio, the number code is 22
+
+yt-dlp <link to YT video> -f 22
+https://github.com/yt-dlp/yt-dlp
+⬆️Command line app for YouTube downloading.
