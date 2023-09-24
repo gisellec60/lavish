@@ -113,7 +113,7 @@ class Practice(db.Model):
 
     def __repr__(self):
         return f'Practice: {self.id} Date:{self.date},' + \
-               f'Practice: {self.event_time} Arrival:{self.arrival_time},' + \
+               f'Practice: {self.practice_time} Arrival:{self.arrival_time},' + \
                f' Venue:{self.venue} Address: {self.address}'
 
 class Emergency(db.Model):
@@ -136,6 +136,8 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False)
     isparent = db.Column(db.Boolean, nullable=False)
     isadmin = db.Column(db.Boolean, nullable=False)
+    userid = db.Column(db.Integer )
+
     _password_hash = db.Column(db.String, nullable=False)
 
     @hybrid_property

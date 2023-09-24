@@ -50,6 +50,21 @@ def keep_age_current():
         (dancer.dob.month, dancer.dob.day))
         db.session.commit()
 
+def seed_userid():
+    dancers = Dancer.query.all()
+    parents = Parent.query.all()
+    users = User.query.all()
+
+    for dancer in dancers:
+        for user in users:
+            if dancer.username == user.username:
+                userid=dancer.id
+        
+    for parent in parents:
+        for user in users:
+            if parent.username == user.username:
+                userid=parent.id
+   
 #-------------------------------------------Marshmallow----------------------------------------------45122222222222222222222222222222222222222222222222222222222222222222222
 #List all Parent Info 
 class ParentListSchema(ma.SQLAlchemySchema):
@@ -159,12 +174,22 @@ singular_dancer_schema = DancerSchema()
 list_dancers_schema = DancerSchema(many=True)   
 
 #-----------------------------------------End of Marshmallow-------------------------------------------
-# def check_for_missing_values(data):
-    # errors = []
-    # for key, value in data.items():
-    #     if not value:
-    #         errors.append(f'{key} is required')
-    # return errors 
+@app.route("/login", methods = ["Post"])
+def login():
+
+    #User Table is for user verification
+    
+    data =request.get_json()
+    user = User.query.filter_by(User.username==data['username']).first()
+    if user:
+        if user.authenticate(data['password']):
+            session["user_id"] = user.id
+            return user
+        else:
+           return {"errors": ["Username or Password incorrect"]}, 401
+    else:
+        return {"errors": ["Username or Password incorrect"]},401    
+#--------------------------------------Custom Routes ------------------------------
 
 class Signup(Resource):
     def post(self):
@@ -255,7 +280,57 @@ class Signup(Resource):
         
         response = make_response([singular_dancer_schema.dump(dancer)],201)
         return response
+    
+class DeleteDancer(Resource):
+    def delete(self,id):
 
+       # When deleting a dancer we also delete the dancer from the following:
+       # practice and events association tables
+       # remove dancer from the user table.
+       # delete the parent if dancer is the only child in the dance club
+       # delete the emergency contact this is the only dancer for that contact
+        
+       dancer = Dancer.query.filter_by(Dancer.id==id).first()
+       users= User.query.all()
+       parents = Parent.query.all()
+       emergencies = Emergency.query.all()
+       
+       if dancer:
+            
+            #remove dancer from event_dancer association table
+            if len(dancer.events) > 0:
+               for event in dancer.events:
+                   dancer.events.remove(event)
+
+            #remove dancer from practice_dancer association table
+            if len(dancer.practice > 0):    
+               for practice in dancer.practices:
+                   dancer.events.remove(practice)
+
+            #remove dancer from user table    
+            for user in users:
+                if userid == dancer.id:
+                    db.session.delete(user)
+
+            #remove parent if dancer is only child
+            for parent in parents:
+                if dancer.parent_id == parent.id:
+                    if len(parent.dancers) == 1: 
+                        db.session.delete(parent)
+
+            #remove emergency contact if dancer is the only one using this contact                   
+            for emergency in emergencies:
+                if dancer.emergency_id == emergency.id:
+                    if len(emergency.dancers) == 1: 
+                        db.session.delete(emergency)
+
+            #Finally, delete dancer and commit change
+            db.session.delete(dancer)
+            db.session.commit() 
+            return ([{"Message" : "dancer removed"}],204) 
+       else:
+           return {"Message":["Users Not Found"]}, 404  
+ 
 class AddDancer(Resource):
     def post(self):
 
@@ -302,23 +377,6 @@ class AddDancer(Resource):
 
         response = make_response([singular_dancer_schema.dump(dancer)], 201)
         return response
-
-       
-@app.route("/login", methods = ["Post"])
-def login():
-
-    #User Table is for user verification
-    
-    data =request.get_json()
-    user = User.query.filter_by(User.username==data['username']).first()
-    if user:
-        if user.authenticate(data['password']):
-            session["user_id"] = user.id
-            return user
-        else:
-           return {"errors": ["Username or Password incorrect"]}, 401
-    else:
-        return {"errors": ["Username or Password incorrect"]},401    
 
 class Users(Resource):
     def get(self):
@@ -382,6 +440,8 @@ class DancerByID(Resource):
                 response = make_response(singular_dancer_schema.dump(dancer), 201)
             elif action == "events":
                 response = make_response(list_event_schema.dump(dancer.events), 201)
+            elif action == "practices":
+                response = make_response(list_practice_schema.dump(dancer.practices), 201)    
             elif action == "noevents":
                 not_listed=[]
                 events = Event.query.all()
@@ -389,6 +449,13 @@ class DancerByID(Resource):
                     if event.id not in dancer.events:
                         not_listed.append(event)
                 response = make_response(list_event_schema.dump(not_listed), 201)
+            elif action == "nopractice":
+                not_listed=[]
+                practices = Practice.query.all()
+                for practice in practices:
+                   if practice.id not in dancer.practices:
+                        not_listed.append(practice)
+                response = make_response(list_practice_schema.dump(not_listed), 201)
        else:
             response = make_response({"Message":["Invalid Dancer"]}, 404)
        return response
@@ -433,13 +500,18 @@ class EventByID(Resource):
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
 api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
+api.add_resource(DeleteDancer,'/dancers/delete', endpoint='dancer/delete')
+
 api.add_resource(Parents, '/parents', endpoint='parents')
+api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
+
 api.add_resource(Events, '/events', endpoint='events')
+api.add_resource(EventByID, '/events/<int:id>', endpoint='event/id')
+
 api.add_resource(Practices, '/practices', endpoint='practices')
+
 api.add_resource(Users, '/users', endpoint='users')
 api.add_resource(Signup, '/dancer/signup', endpoint='dancer/signup')
-api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
-api.add_resource(EventByID, '/events/<int:id>', endpoint='event/id')
 
 if __name__ == '__main__':
     with app.app_context():
