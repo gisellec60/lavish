@@ -136,7 +136,6 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False)
     isparent = db.Column(db.Boolean, nullable=False)
     isadmin = db.Column(db.Boolean, nullable=False)
-    userid = db.Column(db.Integer )
 
     _password_hash = db.Column(db.String, nullable=False)
 

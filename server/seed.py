@@ -103,7 +103,6 @@ with app.app_context():
         users.append(user)
     db.session.add_all(users)   
 
-
     emergencies = []
     for _ in range(17):
 

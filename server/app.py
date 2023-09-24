@@ -7,16 +7,19 @@ from flask_marshmallow import Marshmallow
 from config import app, db, api
 from models import Parent, Dancer, Event, Practice, Emergency, User
 from datetime import date, datetime
-
+import time
 
 ma = Marshmallow(app)
 
-#-------------------------------------------Run Before App --------------------------------------------
+#------------------------------------------- Run Before App --------------------------------------------
+# Since faker is not perfect sometimes we need to augment it. For me to clean up the data seeded
+# by faker I need to do some updates that cannot happen without an id. We don't have access to 
+# id's until seed.py is ran so I added the updates here.  
+
 def clean_parents():
     parent_list=[]
     parents = Parent.query.all()
     dancers = Dancer.query.all()
-
     for parent in parents:
         for dancer in dancers:
             if parent.id == dancer.parent_id:
@@ -42,29 +45,14 @@ def clean_emergency():
             db.session.delete(emergency)
     db.session.commit()
 
+# I calculate age every time app runs to keep age current. 
 def keep_age_current():
     today=date.today()
     dancers = Dancer.query.all()
     for dancer in dancers:
         dancer.age = today.year - dancer.dob.year - ((today.month, today.day) <
         (dancer.dob.month, dancer.dob.day))
-        db.session.commit()
-
-def seed_userid():
-    dancers = Dancer.query.all()
-    parents = Parent.query.all()
-    users = User.query.all()
-
-    for dancer in dancers:
-        for user in users:
-            if dancer.username == user.username:
-                userid=dancer.id
-        
-    for parent in parents:
-        for user in users:
-            if parent.username == user.username:
-                userid=parent.id
-   
+    db.session.commit()    
 #-------------------------------------------Marshmallow----------------------------------------------45122222222222222222222222222222222222222222222222222222222222222222222
 #List all Parent Info 
 class ParentListSchema(ma.SQLAlchemySchema):
@@ -135,7 +123,6 @@ class EmergencySchema(ma.SQLAlchemySchema):
 singular_emergency_schema = EmergencySchema()
 list_emergency_schema = EmergencySchema(many=True)
 
-
 class ParentSchema(ma.SQLAlchemySchema):
         class Meta:
             model = Parent 
@@ -154,9 +141,6 @@ class DancerSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Dancer 
 
-    #if you want to change a field:
-    #first = ma.auto_field(data_key="firstname")
-   
     first  = ma.auto_field()
     last  = ma.auto_field()
     username = ma.auto_field()
@@ -290,7 +274,7 @@ class DeleteDancer(Resource):
        # delete the parent if dancer is the only child in the dance club
        # delete the emergency contact this is the only dancer for that contact
         
-       dancer = Dancer.query.filter_by(Dancer.id==id).first()
+       dancer = Dancer.query.filter_by(id=id).first()
        users= User.query.all()
        parents = Parent.query.all()
        emergencies = Emergency.query.all()
@@ -303,13 +287,13 @@ class DeleteDancer(Resource):
                    dancer.events.remove(event)
 
             #remove dancer from practice_dancer association table
-            if len(dancer.practice > 0):    
+            if len(dancer.practices) > 0:    
                for practice in dancer.practices:
-                   dancer.events.remove(practice)
+                   dancer.practices.remove(practice)
 
             #remove dancer from user table    
             for user in users:
-                if userid == dancer.id:
+                if user.username == dancer.username:
                     db.session.delete(user)
 
             #remove parent if dancer is only child
@@ -327,10 +311,12 @@ class DeleteDancer(Resource):
             #Finally, delete dancer and commit change
             db.session.delete(dancer)
             db.session.commit() 
-            return ([{"Message" : "dancer removed"}],204) 
+            response = make_response ([{"Message" : "dancer removed"}],204) 
        else:
-           return {"Message":["Users Not Found"]}, 404  
- 
+            response = make_response ([{"Message":"Users Not Found"}]), 404  
+      
+       return response
+    
 class AddDancer(Resource):
     def post(self):
 
@@ -386,7 +372,7 @@ class Users(Resource):
         if users:
             response = make_response (users,200)
             return response
-        return {"Message":["Users Not Found"]}, 404  
+        return [{"Message":"Users Not Found"}], 404  
 
 class Parents(Resource):
     def get(self):
@@ -396,7 +382,7 @@ class Parents(Resource):
         if parents:
             response = make_response (parents,200)
             return response
-        return {"Message":["Dancers Not Found"]}, 404  
+        return [{"Message":"Dancers Not Found"}], 404  
     
 class Dancers(Resource):
     def get(self):
@@ -407,7 +393,7 @@ class Dancers(Resource):
             response = make_response (dancers, 200)
             return response
         
-        return {"Message":["Dancers Not Found"]}, 404         
+        return [{"Message":"Dancers Not Found"}], 404         
 
 class Events(Resource):
     def get(self):
@@ -417,7 +403,7 @@ class Events(Resource):
         if events:
             response = make_response(events, 201)
             return response
-        return {"Message": ["No Events Scheduled"]}, 404
+        return [{"Message": "No Events Scheduled"}], 404
 
 class Practices(Resource):
     def get(self):
@@ -427,7 +413,7 @@ class Practices(Resource):
         if practice:
             response = make_response (practice, 201) 
             return response
-        return {"Message": ["No Practice Scheduled"]}, 404
+        return [{"Message": "No Practice Scheduled"}], 404
 
 class DancerByID(Resource):
    
@@ -457,7 +443,7 @@ class DancerByID(Resource):
                         not_listed.append(practice)
                 response = make_response(list_practice_schema.dump(not_listed), 201)
        else:
-            response = make_response({"Message":["Invalid Dancer"]}, 404)
+            response = make_response([{"Message":"Invalid Dancer"}], 404)
        return response
    
 class ParentByID(Resource):
@@ -468,7 +454,7 @@ class ParentByID(Resource):
        if parent: 
            response = make_response(parent, 201)
            return response
-       return {"Message":["Invalid Parent"] }, 404   
+       return [{"Message":"Invalid Parent" }], 404   
    
 
 class EventByID(Resource):
@@ -494,13 +480,13 @@ class EventByID(Resource):
                          not_listed.append(dancer)
                 response = make_response(list_dancers_schema.dump(not_listed), 201)          
         else:
-            response = make_response({"Message": ["Invalid Event"]}, 404)
+            response = make_response([{"Message": "Invalid Event"}], 404)
         return response
 
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
 api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
-api.add_resource(DeleteDancer,'/dancers/delete', endpoint='dancer/delete')
+api.add_resource(DeleteDancer,'/dancers/delete/<int:id>', endpoint='dancer/delete/id')
 
 api.add_resource(Parents, '/parents', endpoint='parents')
 api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
@@ -515,7 +501,7 @@ api.add_resource(Signup, '/dancer/signup', endpoint='dancer/signup')
 
 if __name__ == '__main__':
     with app.app_context():
-        keep_age_current()
         clean_parents()
         clean_emergency()
+        keep_age_current()
     app.run(port=5555,debug=True)
