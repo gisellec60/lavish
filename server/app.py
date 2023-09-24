@@ -311,12 +311,10 @@ class DeleteDancer(Resource):
             #Finally, delete dancer and commit change
             db.session.delete(dancer)
             db.session.commit() 
-            response = make_response ([{"Message" : "dancer removed"}],204) 
+            return {},204 
        else:
-            response = make_response ([{"Message":"Users Not Found"}]), 404  
-      
-       return response
-    
+            return [{"Message":"User Not Found"}], 404  
+       
 class AddDancer(Resource):
     def post(self):
 
@@ -364,6 +362,35 @@ class AddDancer(Resource):
         response = make_response([singular_dancer_schema.dump(dancer)], 201)
         return response
 
+class ModifyDancer(Resource):
+    def patch(self,id):
+        dancer = Dancer.query.filter_by(id=id).first()        
+        if dancer:
+            data = request.json
+            for key,value in data.items():
+                if key == "first":
+                    dancer.first=value
+                elif key == "last":
+                    dancer.last=value
+                elif key == "email":
+                    dancer.email = value
+                    dancer.username = value
+                elif key == "phone":
+                    dancer.phone = value
+                elif key == "gender":
+                    dancer.gender = value
+                elif key == "dob":
+                    dancer.dob = value
+                elif key == "bio":
+                    dancer.bio == value
+                elif key == "image":
+                    dancer.image = value
+                db.session.commit()    
+            response = make_response([singular_dancer_schema.dump(dancer)], 202)       
+        else:
+            return [{"Message":"User Not Found"}], 404  
+        return response
+
 class Users(Resource):
     def get(self):
 
@@ -404,6 +431,62 @@ class Events(Resource):
             response = make_response(events, 201)
             return response
         return [{"Message": "No Events Scheduled"}], 404
+
+class AddEvent(Resource):
+    def post(self):
+
+        data = request.get_json()
+        date = datetime.strptime(data['date'],'%Y-%m-%d').date()
+
+        event = Event(
+            date = date,
+            event_time = data["event_time"],
+            arrival_time = data["arrival_time"],
+            venue = data["venue"],
+            address = data["address"]
+        )
+        db.session.add(event)
+        db.session.commit()
+
+        response = make_response(singular_event_schema.dump(event), 201)
+        return response
+    
+class ModifyEvent(Resource):
+    def patch(self,id):
+
+        event = Event.query.filter_by(id=id).first() 
+
+        if event:
+            data = request.json
+            for key,value in data.items():
+                if key == "event_time":
+                    event.event_time=value
+                elif key == "date":
+                     event.event_date = datetime.strptime(value,'%Y-%m-%d').date()   
+                elif key == "arrival_time":
+                    event.arrival_time=value
+                elif key == "venue":
+                    event.venue = value
+                elif key == "address":    
+                    event.address = value
+            db.session.commit()
+            response = make_response(singular_event_schema.dump(event), 202)    
+        else:
+            return [{"Message": "No Events Scheduled"}], 404
+        return response
+
+class DeleteEvent(Resource):
+    def delete(self,id):
+
+        event = Event.query.filter_by(id=id).first()
+        
+        if event:
+            db.session.delete(event)
+            db.session.commit()
+            return {}, 204
+        else:
+            return [{"Message":"Event Not Found"}], 404   
+
 
 class Practices(Resource):
     def get(self):
@@ -487,12 +570,16 @@ api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
 api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
 api.add_resource(DeleteDancer,'/dancers/delete/<int:id>', endpoint='dancer/delete/id')
+api.add_resource(ModifyDancer,'/dancers/modify/<int:id>', endpoint='dancer/modify/id')
 
 api.add_resource(Parents, '/parents', endpoint='parents')
 api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
 
 api.add_resource(Events, '/events', endpoint='events')
 api.add_resource(EventByID, '/events/<int:id>', endpoint='event/id')
+api.add_resource(AddEvent, '/events/add', endpoint='event/add')
+api.add_resource(DeleteEvent, '/events/delete/<int:id>', endpoint='event/delete/id')
+api.add_resource(ModifyEvent, '/events/modify/<int:id>', endpoint='event/modify/id')
 
 api.add_resource(Practices, '/practices', endpoint='practices')
 

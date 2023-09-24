@@ -117,12 +117,14 @@ with app.app_context():
     events = []
     etime = ["10am-5pm","9am-1pm", "10am-4pm", "9am-5pm"]
     atime = ["08:00:00","08:30:00","07:30:00"]
+    venues = ["Walnut Creek", "Doltan Arena","PNC Arena", "Durham Bulls BallPark", "Raleigh Convention Center","Charlotte Center","Atlanta Convention Center","Mercedes Benz Stadium"]
+    address = ["3801 Rock Quarry Rd, Raleigh, NC 27610","1400 Edwards Mill Rd, Raleigh, NC 27607","409 Blackwell St, Durham, NC 27701","4 Pennsylvania Plaza, New York, NY 10001","4 Pennsylvania Plaza, New York, NY 10001"]
     for _ in range(7):
         event = Event(
             date = fake.date_this_month(after_today=True),
             event_time = rc(etime),
             arrival_time = rc(atime),
-            venue = fake.company(),
+            venue = rc(venues),
             address = fake.street_address()
         )
         events.append(event)
