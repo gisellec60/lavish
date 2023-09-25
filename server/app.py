@@ -777,8 +777,14 @@ class ListBalances(Resource):
         else:
             return [{"message" :"User not authorized"}], 401  
 
+class AddToEvent(Resource):
+    def post(self,id1,id2):
 
+       dancer = Dancer.query.filter_by(id=id1).first()
+       event = Event.query.filter_by(id=id2).first()
 
+       event.dancers.append(dancer)
+       db.session.commit()
 
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
@@ -795,6 +801,7 @@ api.add_resource(EventByID, '/events/<int:id>', endpoint='event/id')
 api.add_resource(AddEvent, '/events/add', endpoint='event/add')
 api.add_resource(DeleteEvent, '/events/delete/<int:id>', endpoint='event/delete/id')
 api.add_resource(ModifyEvent, '/events/modify/<int:id>', endpoint='event/modify/id')
+api.add_resource(AddToEvent, '/events/add/<int:id1>/<int:id2>', endpoint='event/add/id/id')
 
 api.add_resource(Practices, '/practices', endpoint='practices')
 api.add_resource(PracticeByID, '/practices/<int:id>', endpoint='practice/id')
