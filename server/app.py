@@ -278,6 +278,7 @@ class DeleteDancer(Resource):
        parents = Parent.query.all()
        emergencies = Emergency.query.all()
        session['admin'] = True
+       session['user_id'] = 12
 
        if dancer:
             if session.get('admin') or session.get('user_id') == dancer.parent_id:
@@ -311,7 +312,7 @@ class Dancers(Resource):
     def get(self):
         
         #Only admin can list all the dancer information:
-        session['isadmin'] = True
+        session['isadmin'] = False
         dancers = list_dancers_schema.dump(Dancer.query.all())
 
         if dancers:
@@ -328,7 +329,7 @@ class AddDancer(Resource):
         #Only Parent or admin can add a dancer. 
         #Parent can only add their child
 
-        session['admin'] = True
+        session['isadmin'] = True
 
         if session.get('isadmin') or session.get("isparent"):
             #Get input dancer
@@ -382,10 +383,11 @@ class ModifyDancer(Resource):
         # Only admin, parent or dancer can modify dancer
 
         dancer = Dancer.query.filter_by(id=id).first() 
-        session['user_id'] = dancer.id
-            
-        if dancer:
-            if session.get('user_id') == dancer.id or session.get('isadmin') or session.get('user_id') == dancer.parent_id:
+        session['user_id'] = dancer.parent_id
+        session['isadmin'] = False
+
+        if session.get('user_id') == dancer.id or session.get('isadmin') or session.get('user_id') == dancer.parent_id:    
+            if dancer:
                 data = request.json
                 for key,value in data.items():
                     if key == "first":
@@ -406,48 +408,50 @@ class ModifyDancer(Resource):
                     elif key == "image":
                         dancer.image = value
                     db.session.commit()    
-            response = make_response([singular_dancer_schema.dump(dancer)], 202)       
+                response = make_response([singular_dancer_schema.dump(dancer)], 202)       
+                return response
+            else:
+                return [{"Message":"User Not Found"}], 404  
         else:
-            return [{"Message":"User Not Found"}], 404  
-        return response
+            return [{"Message":"User Not Authorized"}], 401 
 
 class DancerByID(Resource):
-   
    def get(self,id):
        #Only dancer, Parent, or admin
-       session["admin"] = True
 
-       if session.get("user_id") == dancer.id or session.get("userid") == dancer.parent_id or session.get('isadmin'):
-            action = request.args.get('action')
-            dancer = Dancer.query.filter_by(id=id).first() 
-
-            if dancer: 
-                    if action == "none":
-                        response = make_response(singular_dancer_schema.dump(dancer), 201)
-                    elif action == "events":
-                        response = make_response(list_event_schema.dump(dancer.events), 201)
-                    elif action == "practices":
-                        response = make_response(list_practice_schema.dump(dancer.practices), 201)    
-                    elif action == "noevents":
-                        not_listed=[]
-                        events = Event.query.all()
-                        for event in events:
-                            if event.id not in dancer.events:
-                                not_listed.append(event)
-                        response = make_response(list_event_schema.dump(not_listed), 201)
-                    elif action == "nopractice":
-                        not_listed=[]
-                        practices = Practice.query.all()
-                        for practice in practices:
-                            if practice.id not in dancer.practices:
-                                not_listed.append(practice)
-                        response = make_response(list_practice_schema.dump(not_listed), 201)
-            else:
-                    response = make_response([{"Message":"Invalid Dancer"}], 404)
-            return response
+       dancer = Dancer.query.filter_by(id=id).first() 
+       if dancer:
+            session["admin"] = False
+            session['user_id'] = dancer.id
+            if session.get("user_id") == dancer.id or session.get("userid") == dancer.parent_id or session.get('isadmin'):
+                action = request.args.get('action')
+                if action == "none":
+                    response = make_response(singular_dancer_schema.dump(dancer), 201)
+                elif action == "events":
+                    response = make_response(list_event_schema.dump(dancer.events), 201)
+                elif action == "practices":
+                    response = make_response(list_practice_schema.dump(dancer.practices), 201)    
+                elif action == "noevents":
+                    not_listed=[]
+                    events = Event.query.all()
+                    for event in events:
+                        if event.id not in dancer.events:
+                            not_listed.append(event)
+                    response = make_response(list_event_schema.dump(not_listed), 201)
+                elif action == "nopractice":
+                    not_listed=[]
+                    practices = Practice.query.all()
+                    for practice in practices:
+                        if practice.id not in dancer.practices:
+                            not_listed.append(practice)
+                    response = make_response(list_practice_schema.dump(not_listed), 201)
+                return response
+            else: 
+               return [{"Message":"User Not Authorized"}], 401 
        else:
-           return [{"Message":"User Not Authorized"}], 401  
- 
+            response = make_response([{"Message":"Dancer does not exist"}], 404)
+            return response
+
 class Parents(Resource):
     def get(self):
         # Only admin can list all parent information
@@ -466,23 +470,24 @@ class Parents(Resource):
 class ParentByID(Resource):
    def get(self,id):
        #Only Parent and Admin has access
+       
+       parent = Parent.query.filter_by(id=id).first() 
+       
        session["isadmin"] = True
-
-       if session.get("isadmin") or session.get("user_id") == parent.id:
-            parent = singular_parentlist_schema.dump(Parent.query.filter_by(id=id).first()) 
-            if parent: 
-                response = make_response(parent, 201)
+       if parent:
+            if session.get("isadmin") or session.get("user_id") == parent.id:
+                response = make_response(singular_parentlist_schema.dump(parent), 201)
                 return response
-            return [{"Message":"Invalid Parent" }], 404  
+            return [{"Message":"User Not authorized" }], 401  
        else:
-           return [{"Message":"User Not authorized" }], 401 
-
+           return [{"Message":"Invalid Parent" }], 404  
+       
 class ModifyParent(Resource):
     def patch(self,id):
         #Only parent or admin is authorized
 
         parent = Parent.query.filter_by(id=id).first()    
-        # session['user_id'] = parent.id  
+        session['user_id'] = parent.id  
         
         if parent:
             if session.get('user_id') == parent.id or session.get('admin'):
@@ -500,11 +505,11 @@ class ModifyParent(Resource):
                     elif key == "address":
                         parent.address = value
                     db.session.commit()    
-                response = make_response([singular_dancer_schema.dump(parent)], 202) 
+                response = make_response([singular_parentlist_schema.dump(parent)], 202) 
             else:
                 return  [{"Message":"User Not Authorized"}], 401            
         else:
-            return [{"Message":"User Not Found"}], 404  
+            return [{"Message":"Parent Not Found"}], 404  
         return response
 
 class Events(Resource):
@@ -738,7 +743,24 @@ class Users(Resource):
             return [{"Message":"Users Not Found"}], 404  
         else:
             return [{"message": "User not authorized"}], 401
-    
+
+class ListBalances(Resource):
+    def get(self):
+
+        session["isadmin"] = True
+        if session.get("isadmin"):
+            list_balance=[]
+            parents = Parent.query.all()
+            for parent in parents:
+                if parent.balance > 0:
+                    list_balance.append(parent) 
+            if len(list_balance) > 0: 
+                response = make_response(list_parentlist_schema.dump(list_balance),200)
+                return response
+            else:
+                return [{"message" :"No balances"}], 200
+        else:
+            return [{"message" :"User not authorized"}], 401  
 
 
 
@@ -767,6 +789,7 @@ api.add_resource(ModifyPractice, '/practices/modify/<int:id>', endpoint='practic
 
 api.add_resource(Users, '/users', endpoint='users')
 api.add_resource(Signup, '/dancer/signup', endpoint='dancer/signup')
+api.add_resource(ListBalances, '/balances', endpoint='balances')
 
 if __name__ == '__main__':
     with app.app_context():
