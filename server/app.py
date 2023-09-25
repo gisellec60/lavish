@@ -107,6 +107,8 @@ class UserSchema(ma.SQLAlchemySchema):
         id = ma.auto_field()
         name = ma.auto_field()
         username = ma.auto_field()
+        isparent = ma.auto_field()
+        isadmin = ma.auto_field()
 
 singular_user_schema = UserSchema()
 list_users_schema = UserSchema(many=True)
@@ -137,9 +139,9 @@ singular_parent_schema = ParentSchema()
 list_parents_schema = ParentSchema(many=True)
 
 class DancerSchema(ma.SQLAlchemySchema):
-
     class Meta:
         model = Dancer 
+
     id = ma.auto_field()
     first  = ma.auto_field()
     last  = ma.auto_field()
@@ -156,6 +158,19 @@ class DancerSchema(ma.SQLAlchemySchema):
 
 singular_dancer_schema = DancerSchema()  
 list_dancers_schema = DancerSchema(many=True)   
+
+class DancerNames(ma.SQLAlchemySchema):
+    class Meta:
+        model = Dancer 
+
+    id = ma.auto_field()
+    first  = ma.auto_field()
+    last  = ma.auto_field()
+    phone = ma.auto_field()
+
+singular_name_schema = DancerNames()
+list_names_schema =  DancerNames(many=True)    
+
 
 #-----------------------------------------End of Marshmallow-------------------------------------------
 @app.route("/login", methods = ["Post"])
@@ -606,7 +621,7 @@ class EventByID(Resource):
                 response = make_response(singular_event_schema.dump(event), 201)    
             elif action == "dancers": 
                  print("this is dancers") 
-                 response = make_response(list_dancers_schema.dump(event.dancers), 201)
+                 response = make_response(list_names_schema.dump(event.dancers), 201)
             elif action == "nodancers":
                 print("this is else") 
                 not_listed=[]
@@ -614,7 +629,7 @@ class EventByID(Resource):
                 for dancer in dancers:
                     if dancer not in event.dancers:
                          not_listed.append(dancer)
-                response = make_response(list_dancers_schema.dump(not_listed), 201)          
+                response = make_response(list_names_schema.dump(not_listed), 201)          
         else:
             response = make_response([{"Message": "Invalid Event"}], 404)
         return response
