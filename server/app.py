@@ -182,13 +182,29 @@ def login():
     user = User.query.filter_by(User.username==data['username']).first()
     if user:
         if user.authenticate(data['password']):
-            session["user_id"] = user.id
+            session["username"] = user.username
             return user
         else:
            return {"errors": ["Username or Password incorrect"]}, 401
     else:
-        return {"errors": ["Username or Password incorrect"]},401    
-#--------------------------------------Custom Routes ------------------------------
+        return {"errors": ["Username or Password incorrect"]},401  
+
+
+@app.route("/check_session", methods = ["POST"])
+def check_session():
+
+    user=User.query.filter(User.username == session.get('username')).first()
+        
+    if user:
+        return (
+            {
+              "username" : user.username
+            }
+ 
+            ),200
+    else:
+            return {"Message": "Unauthorized"}, 401  
+#----------------------------------End of Custom Routes ------------------------------
 
 class Signup(Resource):
     def post(self):
@@ -779,12 +795,95 @@ class ListBalances(Resource):
 
 class AddToEvent(Resource):
     def post(self,id1,id2):
+       session["isadmin"] = False 
+       session['user_id'] = id1
 
        dancer = Dancer.query.filter_by(id=id1).first()
        event = Event.query.filter_by(id=id2).first()
+       if dancer:
+           if event:
+              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+                    if event in dancer.events:
+                        return [{"message":"Dancer already exist for this event"}], 208
+                    else:
+                        event.dancers.append(dancer)   
+                        db.session.commit() 
+                        return [{"message":"Dancer added to event"}], 201 
+              else:
+                   return [{"message":"User is not authorized"}], 401  
+           else:
+               return [{"message":"Event does not exist"}], 404    
+       else:
+           return [{"message":"Dancer does not exist"}], 404      
 
-       event.dancers.append(dancer)
-       db.session.commit()
+class AddToPractice(Resource):
+    def post(self,id1,id2):
+       session["isadmin"] = False 
+       session['user_id'] = id1
+
+       dancer = Dancer.query.filter_by(id=id1).first()
+       practice = Practice.query.filter_by(id=id2).first()
+       if dancer:
+           if practice:
+              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+                    if practice in dancer.practices:
+                        return [{"message":"Dancer already exist for this event"}], 208
+                    else:
+                        practice.dancers.append(dancer)   
+                        db.session.commit() 
+                        return [{"message":"Dancer added to practice"}], 201 
+              else:
+                   return [{"message":"User is not authorized"}], 401  
+           else:
+               return [{"message":"Practice Schedule does not exist"}], 404    
+       else:
+           return [{"message":"Dancer does not exist"}], 404      
+
+class DeleteFromPractice(Resource):
+    def delete(self, id1, id2):
+       session["isadmin"] = False 
+       session['user_id'] = id1
+
+       dancer = Dancer.query.filter_by(id=id1).first()
+       practice = Practice.query.filter_by(id=id2).first()
+       if dancer:
+           if practice:
+              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+                  if dancer in practice.dancers:
+                      practice.dancers.remove(dancer) 
+                      db.session.commit()
+                      return {}, 204 
+                  else:
+                      return [{"message":"Dancer not scheduled"}], 404   
+              else:
+                  return [{"message":"User not authorized"}], 401    
+           else:
+               return [{"message":"Practice Schedule does not exist"}], 404
+       else:               
+           return [{"message":"Dancer does not exist"}], 404        
+
+class DeleteFromEvent(Resource):
+    def delete(self, id1, id2):
+       session["isadmin"] = False 
+       session['user_id'] = id1
+
+       dancer = Dancer.query.filter_by(id=id1).first()
+       event = Event.query.filter_by(id=id2).first()
+       if dancer:
+           if event:
+              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+                  if dancer in event.dancers:
+                      event.dancers.remove(dancer) 
+                      db.session.commit()
+                      return {}, 204 
+                  else:
+                      return [{"message":"Dancer not scheduled for event"}], 404   
+              else:
+                  return [{"message":"User not authorized"}], 401    
+           else:
+               return [{"message":"Event does not exist"}], 404
+       else:               
+           return [{"message":"Dancer does not exist"}], 404        
 
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
@@ -802,12 +901,15 @@ api.add_resource(AddEvent, '/events/add', endpoint='event/add')
 api.add_resource(DeleteEvent, '/events/delete/<int:id>', endpoint='event/delete/id')
 api.add_resource(ModifyEvent, '/events/modify/<int:id>', endpoint='event/modify/id')
 api.add_resource(AddToEvent, '/events/add/<int:id1>/<int:id2>', endpoint='event/add/id/id')
+api.add_resource(DeleteFromEvent, '/events/delete/<int:id1>/<int:id2>', endpoint='event/delete/id/id')
 
 api.add_resource(Practices, '/practices', endpoint='practices')
 api.add_resource(PracticeByID, '/practices/<int:id>', endpoint='practice/id')
 api.add_resource(AddPractice, '/practices/add', endpoint='practice/add')
 api.add_resource(DeletePractice, '/practices/delete/<int:id>', endpoint='practice/delete/id')
 api.add_resource(ModifyPractice, '/practices/modify/<int:id>', endpoint='practice/modify/id')
+api.add_resource(AddToPractice, '/practices/add/<int:id1>/<int:id2>', endpoint='practice/add/id/id')
+api.add_resource(DeleteFromPractice, '/practices/delete/<int:id1>/<int:id2>', endpoint='practice/delete/id/id')
 
 api.add_resource(Users, '/users', endpoint='users')
 api.add_resource(Signup, '/dancer/signup', endpoint='dancer/signup')
