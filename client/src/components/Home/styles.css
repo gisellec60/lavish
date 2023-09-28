@@ -8,10 +8,12 @@
     margin-top: 5%;
     padding-bottom: 5%;
     transform: scale(.7, 1.4);
+    color:white
 }
 
 .heading-highlight {
-    color:#42ddf5;
+    /* color:#42ddf5; */
+    color:gold
 }
 
 /* .card-container {
@@ -25,5 +27,6 @@
     z-index: -1;
     left: 40%;
     /*margin-top: 5%;  */ 
-    filter: brightness(.5);
+    filter: brightness(1.0);
 }
+

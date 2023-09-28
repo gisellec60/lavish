@@ -1,0 +1,45 @@
+label {
+    font-weight: bold;
+    display: flex;
+    margin-bottom:5px
+  }
+
+.labelfonts {
+    font-weight: bold;
+    color: white;
+  }
+
+  body{
+    background-color:black;
+    font-size:x-large;
+    font-style: italic;
+  }
+  
+  input[type='text'],
+  input[type ='email'],
+  textarea {
+    display:block; 
+    width:100%;
+    padding:12px 20px;
+    font-size:20px;
+    font-weight:bolder;
+    margin: 8px 0;
+    line-height:1.42857143; 
+    color:black;
+    background-color: #e4e1e1;
+    background-image:none;
+    border: 1px solide #ccc; 
+     border-radius: 4px;
+    
+  }
+   .bio
+    textarea  {
+    height: 500px
+  
+   }
+  
+    .error{
+    color: red;
+  }
+  
+  

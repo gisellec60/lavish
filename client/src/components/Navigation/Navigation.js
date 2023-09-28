@@ -38,7 +38,7 @@ const Navigation = ({ updateUser }) => {
               <Link to="/"> Home</Link>
             </li>
             <li>
-              <Link to="/authentication"> Login/Signup</Link>
+              <Link to="/signup"> Signup</Link>
             </li>
             <li className="logout-button" onClick={handleLogout}>
               {" "}
