@@ -9,7 +9,7 @@ import "./styles.css"
 export const Portal = () => {
   return (
     <div>
-        <Container >
+        <Container className = "portal-container" >
 
            <Row>
                <Col className="header">
