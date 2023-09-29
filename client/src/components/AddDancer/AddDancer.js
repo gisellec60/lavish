@@ -3,13 +3,14 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
 import "./styles.css"
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
+import {SignUpComplete} from "../SignUpComplete/SignUpComplete"
 
-// import {Texterror} from "./Component/Texterror"
+// import {Texterror} from "./components/Texterror"
 
 // handle form state 
 const initialValues = {
@@ -64,12 +65,13 @@ export const AddDancer = () => {
         .then(res => res.json())
         .then((newData) => {
             console.log(newData);
-            navigate("/portal")
+            <SignUpComplete newData={newData} />
+            // navigate("/portal")
         })
     } 
 
     return (
-        <Container >
+        <Container>
             <Row>
                 <Col></Col> 
                 <Col xs={12} md={8}>     
@@ -126,7 +128,7 @@ export const AddDancer = () => {
                 <Col></Col>     
             </Row>
         </Container>
-
+          
     )
 
 }

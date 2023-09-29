@@ -6,7 +6,7 @@ import Col from  'react-bootstrap/Col'
 import { Link } from "react-router-dom";
 import "./styles.css"
 
-export const Portal = () => {
+export const Portal = ({newData}) => {
   return (
     <div>
         <Container className = "portal-container" >
@@ -34,7 +34,7 @@ export const Portal = () => {
                     </ul>
                 </Col>    
                 <Col className="main-content">
-                    <p> Just want to see how to put stiff here</p>
+                    <p> {newData}</p>
                 </Col>
                 <Col className="col-2 sidebar " >
                     <h5>Admin</h5>

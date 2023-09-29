@@ -5,7 +5,7 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import "./styles.css"
 
-export const SignUpComplete = () => {
+export const SignUpComplete = (newData) => {
 
   return (
     <div>
@@ -13,7 +13,7 @@ export const SignUpComplete = () => {
         <Row className = "rows1">
             <Col className = "cols1">
               <div>
-                <h2 className = "h2"></h2>
+                <h2 className = "h2">{newData}</h2>
               </div>  
             </Col>
         </Row>    

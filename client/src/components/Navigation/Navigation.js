@@ -4,7 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 import "./styles.css";
 
-const Navigation = ({ updateUser }) => {
+const Navigation = () => {
   const [menu, setMenu] = useState(false);
 
   const navigate = useNavigate();
@@ -30,6 +30,9 @@ const Navigation = ({ updateUser }) => {
             </li>
             <li>
               <Link to="/signup"> Signup</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/portal"> Portal</Link>
