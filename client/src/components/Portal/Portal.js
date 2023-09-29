@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "./styles.css"
 
 export const Portal = ({newData}) => {
+
   return (
     <div>
         <Container className = "portal-container" >

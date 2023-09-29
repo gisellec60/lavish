@@ -4,16 +4,23 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 import "./styles.css";
 
-const Navigation = () => {
+const Navigation = ({setUser}) => {
+
   const [menu, setMenu] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     console.log("handle logout");
-    navigate("/");
-  };
-
+    fetch("/logout", {method: "DELETE"}
+    )
+    .then((r) => {
+      if (r.ok) {
+        setUser(null)
+        navigate("/") 
+      }
+    });
+  }
   const toggleMenu = () => setMenu((prev) => !prev);
 
   return (
@@ -32,14 +39,13 @@ const Navigation = () => {
               <Link to="/signup"> Signup</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
               <Link to="/portal"> Portal</Link>
             </li>
+             <li>
+               <Link to="/login"> Login</Link>
+            </li> 
             <li className="logout-button" onClick={handleLogout}>
-              {" "}
-              Logout{" "}
+              Logout
             </li>
           </ul>
         ) : (
@@ -49,6 +55,6 @@ const Navigation = () => {
         )}
       </section>
     </div>
-  );
-};
+  )
+}  
 export default Navigation;

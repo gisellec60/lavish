@@ -14,7 +14,7 @@ ma = Marshmallow(app)
 #------------------------------------------- Run Before App --------------------------------------------
 # Since faker is not perfect sometimes we need to augment it. For me to clean up the data seeded
 # by faker I need to do some updates that cannot happen without an id. We don't have access to 
-# id's until seed.py is ran so I added the updates here.  
+# id's until seed.py is ran so I added the updates here.  I will revist this if time permits.
 
 def clean_parents():
     parent_list=[]
@@ -54,7 +54,6 @@ def keep_age_current():
         (dancer.dob.month, dancer.dob.day))
     db.session.commit()    
 #-------------------------------------------Marshmallow----------------------------------------------45122222222222222222222222222222222222222222222222222222222222222222222
-#List all Parent Info 
 class ParentListSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Parent 
@@ -171,26 +170,35 @@ class DancerNames(ma.SQLAlchemySchema):
 singular_name_schema = DancerNames()
 list_names_schema =  DancerNames(many=True)    
 
+#-----------------------------------------End of Schemas-------------------------------------------
 
-#-----------------------------------------End of Marshmallow-------------------------------------------
 @app.route("/login", methods = ["Post"])
 def login():
 
     #User Table is for user verification
     
     data =request.get_json()
-    user = User.query.filter_by(User.username==data['username']).first()
+    user = User.query.filter_by(username=data['username']).first()
+    print("this is username", user.username)
     if user:
+        print("this is passwsord",data["password"])
         if user.authenticate(data['password']):
             session["username"] = user.username
-            return user
+            response = make_response ([singular_user_schema.dump(user)]), 201
+            return response
         else:
-           return {"errors": ["Username or Password incorrect"]}, 401
+           return {"errors": ["Password incorrect"]}, 401
     else:
         return {"errors": ["Username or Password incorrect"]},401  
 
+@app.route("/logout", methods =["DELETE"])
+def logout():
+    if session.get("username"):
+        session['username'] = None
+        return {}, 204
+    return {"message": "unauthorized"}, 404
 
-@app.route("/check_session", methods = ["POST"])
+@app.route("/check_session", methods = ["GET"])
 def check_session():
 
     user=User.query.filter(User.username == session.get('username')).first()
@@ -230,11 +238,11 @@ class Signup(Resource):
         db.session.add(dancer)
 
         parent = Parent(
-            first = data['pfirst'],
-            last = data['plast'],
-            address = data['padd'],
-            email = data['pemail'],
-            phone = data['pphone'],
+            first = data['p_first'],
+            last = data['p_last'],
+            address = data['p_address'],
+            email = data['p_email'],
+            phone = data['p_phone'],
             is_balance = False,
             balance = 0,
         )
@@ -244,9 +252,9 @@ class Signup(Resource):
 
         #add emergency contact
         emergency = Emergency(
-            name = data['ename'],
-            email = data['eemail'],
-            phone = data['ephone'],
+            name = data['e_name'],
+            email = data['e_email'],
+            phone = data['e_phone'],
         )
         db.session.add(emergency)
       
@@ -258,7 +266,9 @@ class Signup(Resource):
             isparent = False,
             isadmin = False
         )   
-        user.password_hash = user.username + 'password'
+        password = data['password']
+        print ("this is the dancer password ", password)
+        user.password_hash = password
         users.append(user)
 
         #add parent to user table
@@ -268,7 +278,9 @@ class Signup(Resource):
             isparent = True,
             isadmin = False
         )   
-        user.password_hash = user.username + 'password'
+        password = data['p_password']
+        print ("this is the Parent password ", password)
+        user.password_hash =  password
         users.append(user)
         db.session.add_all(users)
 
@@ -293,6 +305,8 @@ class Signup(Resource):
         newdancer.emergency_id = newemergency.id
         db.session.commit()
         
+        session["username"] = parent.username
+
         response = make_response([singular_dancer_schema.dump(dancer)],201)
         return response
   
@@ -368,6 +382,14 @@ class AddDancer(Resource):
 
             birthdate = datetime.strptime(data['dob'],'%Y-%m-%d').date()
             
+            parent = Parent.Query.filter_by(username=data["username"])
+
+            dancers = Dancer.query.all()
+            
+            for dancer in dancers:
+                if dancer.parent_id == parent.id:
+                   new_dancer_emergency_id = dancer.emergency_id
+
             dancer = Dancer(
                 first = data['first'],
                 last = data['last'],
@@ -378,8 +400,8 @@ class AddDancer(Resource):
                 dob = birthdate,
                 bio = data['bio'],
                 image = data['image'],
-                parent_id = data['parent'],
-                emergency_id = data['emergency']
+                parent_id = parent.id,
+                emergency_id = new_dancer_emergency_id
             )
             dancer.username = dancer.email
 
@@ -912,7 +934,7 @@ api.add_resource(AddToPractice, '/practices/add/<int:id1>/<int:id2>', endpoint='
 api.add_resource(DeleteFromPractice, '/practices/delete/<int:id1>/<int:id2>', endpoint='practice/delete/id/id')
 
 api.add_resource(Users, '/users', endpoint='users')
-api.add_resource(Signup, '/dancer/signup', endpoint='dancer/signup')
+api.add_resource(Signup, '/signup', endpoint='/signup')
 api.add_resource(ListBalances, '/balances', endpoint='balances')
 
 if __name__ == '__main__':
@@ -921,3 +943,5 @@ if __name__ == '__main__':
         clean_emergency()
         keep_age_current()
     app.run(port=5555,debug=True)
+
+ 

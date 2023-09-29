@@ -1,1 +1,0 @@
-PGPASSWORD=96PwmjlZebc35h6N4LLGY1JFsfXC6uJq pg_restore -h dpg-ck4bk1s2kpls73dijr00-a.ohio-postgres.render.com -U my_new_db_instance_va3z_user --verbose --clean --no-acl --no-owner -d diva_app_db diva_db.sql

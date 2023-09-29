@@ -84,7 +84,7 @@ const navigate = useNavigate()
         .then((newData) => {
              console.log(newData);
              navigate("/portal")
-         })
+        })
     } 
 
   return (

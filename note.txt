@@ -37,34 +37,44 @@ Admin login Portal
     list event by date - done
     List Events Dancer attended - done
     list all the dancers that attend a particular event - done
-    List Events Dance did not attended
-    List Practice Dancer attended
-    List Practice Dancer did not attended
-    List Parents who owe money
-    List balances for all
-    List balance by username
-    Add, Delete, Modify Dancer
+    List Events Dance did not attended - done
+    List Practice Dancer attended - done
+    List Practice Dancer did not attended - done
+    List Parents who owe money done
+    List balances for all done
+    List balance by username done
+    Add, Delete, Modify Dancer - done
    
     EventID:
         return an event - none  done 
         return all the dancers for that event - dancers  done
         return all the dancers not for that event - notdanders  done
-        modify 
-        Delete
+        add   done
+        modify done
+        Delete  done
     
     DancerID:
         return dancer  done
         return all events for dancer   done
         return all events not dancer    done
-        modify
-        delete
+        add - done
+        modify - done
+        delete - done
+
+    Practice_id    
+        return an event - none  done 
+        return all the dancers for that event - dancers  done
+        return all the dancers not for that event - notdanders done
+        add   done 
+        modify done 
+        Delete  done 
 
 Parent Login
-    List dancer Information
-    Balance Information
+    List dancer Information - done 
+    Balance Information - done 
 
 
-Calendar < for upcoming events>
+Calendar < for upcoming events>  - done
 
 To sign up for an Event you must login
 

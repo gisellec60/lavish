@@ -12,7 +12,7 @@ const initialValues = {
     password: 'mypasswordisher'
 }
 
-export const Login = () => {
+export const Login = ({user, setUser}) => {
     const navigate = useNavigate()
 
     const onSubmit = values => {  
