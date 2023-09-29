@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-import { Link, Navigate, useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./styles.css"
 
 const initialValues = {
     first: 'Deja',
@@ -34,12 +35,12 @@ export const DeleteDancer = () => {
     return (
         <Container >
            <Row>
-               <Col xs={12} md={8}>     
+               <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 
                         initialValues = {initialValues}
                         onSubmit = {onSubmit} >
                         <Form>
-                            <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
+                            <h2 className="heading">Delete Dancer</h2>     
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                             <Field type = 'text' id='first' name='first' />
                             <ErrorMessage name = 'first' />
