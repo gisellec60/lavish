@@ -9,15 +9,6 @@ const Navigation = ({ updateUser }) => {
 
   const navigate = useNavigate();
 
-  /* 
-   Build a DELETE fetch request
-    - On a successful delete clear the user from 
-      state (updateUser is passed down from app via 
-      props) and redirect back to the authentication route
-      
-    - Head back to server/app.py to build a route 
-      that will keep our user logged in with sessions
-  */
   const handleLogout = () => {
     console.log("handle logout");
     navigate("/");
@@ -40,6 +31,9 @@ const Navigation = ({ updateUser }) => {
             <li>
               <Link to="/signup"> Signup</Link>
             </li>
+            <li>
+              <Link to="/portal"> Portal</Link>
+            </li>
             <li className="logout-button" onClick={handleLogout}>
               {" "}
               Logout{" "}
@@ -47,7 +41,7 @@ const Navigation = ({ updateUser }) => {
           </ul>
         ) : (
           <div className="hamburger-menu-wrapper" onClick={toggleMenu}>
-            <GiHamburgerMenu size={30} />
+            <GiHamburgerMenu size={50} />
           </div>
         )}
       </section>

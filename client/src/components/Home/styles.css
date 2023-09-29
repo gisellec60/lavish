@@ -13,20 +13,15 @@
 
 .heading-highlight {
     /* color:#42ddf5; */
-    color:gold
+    color:goldenrod
 }
 
-/* .card-container {
-    display: flex;
-    flex-direction: column;
-    margin: 5%;
-} */
 
 .hero-image {
     position: relative;
     z-index: -1;
     left: 40%;
-    /*margin-top: 5%;  */ 
+    margin-top: 5%;  
     filter: brightness(1.0);
 }
 

@@ -1,0 +1,38 @@
+
+.header {
+    background-color: goldenrod;
+    height:40px;
+}
+
+.main-content{
+  background-color:whitesmoke;
+  min-height:500px;
+  border:5px solid goldenrod
+ }
+
+
+.content {
+   min-height:500px;
+}
+
+.sidebar{
+    color:grey;
+    border:5px solid goldenrod;
+    /* background-color: rgb(33, 37, 41); */
+    max-height: 600px;
+    overflow-y:scroll
+}
+
+.list-group-item{
+    background-color: transparent;
+    color:#ddd;
+}
+
+.footer{
+    height:40px;
+  
+}
+
+.lavish-heading{
+    font-family: Jazz LET, fantasy;
+}
