@@ -14,9 +14,9 @@ import {SignUpComplete} from "../SignUpComplete/SignUpComplete"
 
 // handle form state 
 const initialValues = {
-    first: 'Deja',
+    first: 'Laura',
     last: 'Thompson',
-    email: 'de4ja@gmail.com',
+    email: 'laura@gmail.com',
     phone: '919-123-1234',
     gender: 'female',
     age: 20,
@@ -24,8 +24,8 @@ const initialValues = {
     bio: 'I started off in cheer but found that my passion was in majorette dancing.',
     image: '',
     password: 'mypasswordisme',
+    username:'chanee@gmail.com'
 }
-
 
 // Validation using Yup library 
 const validationSchema = Yup.object({
@@ -47,7 +47,6 @@ export const AddDancer = () => {
 
     // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = values => {  
-        console.log('Form data', values)   
         fetch("/dancers/add",{
             method: "POST",
             headers: {
@@ -65,8 +64,7 @@ export const AddDancer = () => {
         .then(res => res.json())
         .then((newData) => {
             console.log(newData);
-            <SignUpComplete newData={newData} />
-            // navigate("/portal")
+            navigate("/portal")
         })
     } 
 
@@ -120,6 +118,10 @@ export const AddDancer = () => {
                             <label htmlFor ='password' style={{color: "white"}}>Password</label>
                             <Field type = 'password' id='password' name='password' />
                             <ErrorMessage name = 'password'/>
+
+                            <label htmlFor ='username' style={{color: "goldenrod"}}>Parent Username or E-mail</label>
+                            <Field type = 'username' id='username' name='username' />
+                            <ErrorMessage name = 'username'/>
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>

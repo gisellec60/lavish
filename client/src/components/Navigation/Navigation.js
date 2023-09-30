@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-
 import "./styles.css";
 
-const Navigation = ({setUser}) => {
+export const Navigation = ({setUser, user}) => {
 
   const [menu, setMenu] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    console.log("handle logout");
     fetch("/logout", {method: "DELETE"}
     )
     .then((r) => {
@@ -38,9 +36,13 @@ const Navigation = ({setUser}) => {
             <li>
               <Link to="/signup"> Signup</Link>
             </li>
+            {
+              user ? 
             <li>
               <Link to="/portal"> Portal</Link>
             </li>
+            : null
+            }
              <li>
                <Link to="/login"> Login</Link>
             </li> 
@@ -50,11 +52,11 @@ const Navigation = ({setUser}) => {
           </ul>
         ) : (
           <div className="hamburger-menu-wrapper" onClick={toggleMenu}>
-            <GiHamburgerMenu size={50} />
+            <GiHamburgerMenu style={{color:"goldenrod"}} size={50} />
           </div>
         )}
       </section>
     </div>
   )
 }  
-export default Navigation;
+// export default Navigation;

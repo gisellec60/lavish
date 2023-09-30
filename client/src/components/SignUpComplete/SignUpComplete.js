@@ -5,8 +5,8 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import "./styles.css"
 
-export const SignUpComplete = (newData) => {
-
+export const SignUpComplete = ({newData}) => {
+  console.log("this is from complete", newData)
   return (
     <div>
       <Container fluid="md">

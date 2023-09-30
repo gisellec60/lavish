@@ -10,7 +10,7 @@ import "./styles.css"
 const initialValues = {
     first: 'Deja',
     last: 'Thompson',
-    email: 'deja@gmail.com'
+    username: 'de4ja@gmail.com'
 }
 
 export const DeleteDancer = () => {
@@ -18,8 +18,7 @@ export const DeleteDancer = () => {
     const navigate = useNavigate()
 
     const onSubmit = values => {  
-        console.log('Form data', values)   
-        fetch("/dancers/delete/id",{
+        fetch(`/dancers/delete/${values["username"]}`,{
             method: "Delete"
         })
         .then(res => {
@@ -49,9 +48,9 @@ export const DeleteDancer = () => {
                             <Field type = 'text' id='last' name='last' />
                             <ErrorMessage name = 'last' />
 
-                            <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
-                            <Field type = 'email' id='email' name='email' />
-                            <ErrorMessage name = 'email' />
+                            <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
+                            <Field type = 'username' id='username' name='username' />
+                            <ErrorMessage name = 'username' />
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>

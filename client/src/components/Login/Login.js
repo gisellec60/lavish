@@ -12,11 +12,11 @@ const initialValues = {
     password: 'mypasswordisher'
 }
 
-export const Login = ({user, setUser}) => {
+export const Login = ({onLogin}) => {
+    
     const navigate = useNavigate()
 
     const onSubmit = values => {  
-        console.log('Form data', values)   
         fetch("/login",{
             method: "POST",
             headers: {
@@ -27,6 +27,7 @@ export const Login = ({user, setUser}) => {
         .then(res => {
             if (res.ok) {
                alert("Login successful")
+               res.json().then((user) => onLogin(user))
                navigate("/portal")
             }else { 
                console.log("Error returned", res)
