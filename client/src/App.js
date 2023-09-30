@@ -14,7 +14,6 @@ import ModifyDancer from "./components/ModifyDancer/ModifyDancer"
 function App() {
 
   const [user, setUser] = useState(null);
-  
 
   const navigate = useNavigate()
 
@@ -28,6 +27,11 @@ function App() {
     });
   }, []);
 
+   const handleSetUser = ((user) => {
+       setUser(user)
+       navigate('/portal')
+   })
+
   // if (!user) return <Login onLogin={setUser} />;
 
   return (
@@ -36,7 +40,7 @@ function App() {
       <Navigation setUser={setUser} user={user}/>
       <Routes>
          <Route path ="/" element = {<Home />}> </Route>  
-         <Route path={"/signup"} element={<Signup  />}></Route>
+         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} />}></Route>
          <Route path={"/signupcomplete"} element={<SignUpComplete  />}></Route>
          <Route path={"/login"} element={<Login onLogin={setUser} />}></Route>
          {

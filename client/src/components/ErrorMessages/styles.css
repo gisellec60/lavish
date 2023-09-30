@@ -1,0 +1,32 @@
+.rows1{
+    position: absolute;
+    border: 10px solid gold;
+    background-color: ghostwhite;
+    height: 300px;
+    width: 1000px;
+    justify-self: center;
+    top:200px;
+}
+
+.rows2{
+    position: absolute;
+    height: 300px;
+    width: 1000px;
+    bottom: 100px;
+    border: 10px solid gold;
+    background-color: ghostwhite;
+    justify-self: center;
+}
+
+/* .cols1{
+    border: 5px blue;
+} */
+
+.h2{
+    color: white;
+}
+
+/* .cols2{
+    border: 5px blue;
+} */
+

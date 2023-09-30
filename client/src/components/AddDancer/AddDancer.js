@@ -3,6 +3,7 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
 import "./styles.css"
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
@@ -14,12 +15,12 @@ import {SignUpComplete} from "../SignUpComplete/SignUpComplete"
 
 // handle form state 
 const initialValues = {
-    first: 'Laura',
+    first: 'Deja',
     last: 'Thompson',
-    email: 'laura@gmail.com',
+    email: 'deja@gmail.com',
     phone: '919-123-1234',
     gender: 'female',
-    age: 20,
+    age: 16,
     dob: '2003-02-01',
     bio: 'I started off in cheer but found that my passion was in majorette dancing.',
     image: '',
@@ -55,19 +56,19 @@ export const AddDancer = () => {
             body:JSON.stringify(values)
         })
         .then(res => {
-            if (res.ok) 
-            alert("Dancer Added succesful")
-            else
-            console.log("Error returned", res)
-            return res   
-        })
+            if (res.ok) {
+               alert("Dancer Added succesful")
+            }else
+                console.log("Error returned", res)
+                return res   
+         })
         .then(res => res.json())
         .then((newData) => {
             console.log(newData);
             navigate("/portal")
         })
     } 
-
+    
     return (
         <Container>
             <Row>
@@ -130,8 +131,7 @@ export const AddDancer = () => {
                 <Col></Col>     
             </Row>
         </Container>
-          
-    )
+     )
 
 }
 

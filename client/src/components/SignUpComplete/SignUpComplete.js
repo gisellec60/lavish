@@ -5,15 +5,17 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import "./styles.css"
 
-export const SignUpComplete = ({newData}) => {
-  console.log("this is from complete", newData)
+export const SignUpComplete = ({dancers}) => {
+  console.log("this is from complete", dancers)
   return (
     <div>
       <Container fluid="md">
         <Row className = "rows1">
             <Col className = "cols1">
+            <h2 className = "h2">Dancer Information</h2>
               <div>
-                <h2 className = "h2">{newData}</h2>
+                {dancers}
+
               </div>  
             </Col>
         </Row>    

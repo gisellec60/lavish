@@ -6,33 +6,28 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import ShowModifyDancer from "./ShowModifyDancer"
+import { useState } from "react";
 
 const ModifyDancer = () => {
 
+ const [error, setError] = useState([])
+
   const onSubmit = values => { 
-        fetch(`/dancers/delete/${values["username"]}`)
+        fetch(`/dancers/${values["username"]}?action="none"`)
             .then(res => {
                 if (res.ok) {
                     res.json().then((user) => {console.log(user); return (user)})
                 }else{
                     console.log("Error returned", res)
-                    return res 
+                    setError(res) 
                 }      
             })
     } 
     // handle form state 
     const initialValues = {
-        first: '',
-        last: '',
-        email: '',
-        phone: '',
-        gender: '',
-        age: '',
-        dob: '',
-        bio: '',
-        image: '',
-        password: '',
+        first: 'John',
+        last: 'King',
+        username: 'payneholly@hotmail.com',
     }
 
     return (
@@ -64,7 +59,10 @@ const ModifyDancer = () => {
             </Row>  
         </Container>  
         <div>
-          {/* <ShowModifyDancer user={user} /> */}
+        {error ?
+           <ErrorMessage displayError={error} /> 
+           :null
+        }  
         </div>
 
       </div>       

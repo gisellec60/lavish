@@ -179,9 +179,7 @@ def login():
     
     data =request.get_json()
     user = User.query.filter_by(username=data['username']).first()
-    print("this is username", user.username)
     if user:
-        print("this is passwsord",data["password"])
         if user.authenticate(data['password']):
             session["username"] = user.username
             response = make_response ([singular_user_schema.dump(user)]), 201
@@ -267,7 +265,6 @@ class Signup(Resource):
             isadmin = False
         )   
         password = data['password']
-        print ("this is the dancer password ", password)
         user.password_hash = password
         users.append(user)
 
@@ -279,7 +276,6 @@ class Signup(Resource):
             isadmin = False
         )   
         password = data['p_password']
-        print ("this is the Parent password ", password)
         user.password_hash =  password
         users.append(user)
         db.session.add_all(users)
@@ -311,22 +307,22 @@ class Signup(Resource):
         return response
   
 class DeleteDancer(Resource):
-    def delete(self,id):
+    def delete(self,username):
        # Only parent or Admin is authorized to delete a dancer 
        # When deleting a dancer we also delete the dancer from the following:
        # remove dancer from the user table.
        # delete the parent if dancer is the only child in the dance club
        # delete the emergency contact this is the only dancer for that contact
-        
-       dancer = Dancer.query.filter_by(id=id).first()
+
+       dancer = Dancer.query.filter_by(username=username).first()
        users= User.query.all()
        parents = Parent.query.all()
        emergencies = Emergency.query.all()
        session['admin'] = True
-       session['user_id'] = 12
-
+      
+       
        if dancer:
-            if session.get('admin') or session.get('user_id') == dancer.parent_id:
+            if session.get('admin') or session.get('username') == dancer.parent_username:
                 #remove dancer from user table    
                 for user in users:
                     if user.username == dancer.username:
@@ -374,15 +370,15 @@ class AddDancer(Resource):
         #Only Parent or admin can add a dancer. 
         #Parent can only add their child
 
-        session['isadmin'] = True
+        data = request.get_json()
+        user = User.query.filter_by(username=session.get("username")).first()
 
-        if session.get('isadmin') or session.get("isparent"):
+        if data["username"] == session.get("username") and user.isparent or session.get('isadmin') :
+
             #Get input dancer
-            data = request.get_json()
-
             birthdate = datetime.strptime(data['dob'],'%Y-%m-%d').date()
             
-            parent = Parent.Query.filter_by(username=data["username"])
+            parent = Parent.query.filter_by(username=user.username).first()
 
             dancers = Dancer.query.all()
             
@@ -432,14 +428,18 @@ class AddDancer(Resource):
             return  [{"Message":"User Not Authorized"}], 401
 
 class ModifyDancer(Resource):
-    def patch(self,id):
+    def patch(self,username):
         # Only admin, parent or dancer can modify dancer
 
-        dancer = Dancer.query.filter_by(id=id).first() 
-        session['user_id'] = dancer.parent_id
-        session['isadmin'] = False
+        dancer = Dancer.query.filter_by(username=username).first() 
+        parent = Parent.query.filter_by(id=dancer.parent_id).first()
 
-        if session.get('user_id') == dancer.id or session.get('isadmin') or session.get('user_id') == dancer.parent_id:    
+        session['isadmin'] = True
+
+        if session.get("isadmin"):
+            print ("this is coarret")
+
+        if session.get('username') == dancer.username or session.get('isadmin') or session.get('username') == parent.username:    
             if dancer:
                 data = request.json
                 for key,value in data.items():
@@ -469,16 +469,19 @@ class ModifyDancer(Resource):
             return [{"Message":"User Not Authorized"}], 401 
 
 class DancerByID(Resource):
-   def get(self,id):
+   def get(self,username):
        #Only dancer, Parent, or admin
+       dancer = Dancer.query.filter_by(username=username).first() 
+       parent = Parent.query.filter_by(id=dancer.parent_id).first()
+       
+       session["isadmin"]=True
 
-       dancer = Dancer.query.filter_by(id=id).first() 
        if dancer:
-            session["admin"] = False
-            session['user_id'] = dancer.id
-            if session.get("user_id") == dancer.id or session.get("userid") == dancer.parent_id or session.get('isadmin'):
+            if session.get("username") == dancer.username or session.get("username") == parent.username or session.get('isadmin'):
                 action = request.args.get('action')
+                print("THis is action",action)
                 if action == "none":
+                    print("are you here")
                     response = make_response(singular_dancer_schema.dump(dancer), 201)
                 elif action == "events":
                     response = make_response(list_event_schema.dump(dancer.events), 201)
@@ -498,6 +501,8 @@ class DancerByID(Resource):
                         if practice.id not in dancer.practices:
                             not_listed.append(practice)
                     response = make_response(list_practice_schema.dump(not_listed), 201)
+                else:
+                    return [{"Message":"Invalid action"}], 444 
                 return response
             else: 
                return [{"Message":"User Not Authorized"}], 401 
@@ -908,10 +913,10 @@ class DeleteFromEvent(Resource):
            return [{"message":"Dancer does not exist"}], 404        
 
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
-api.add_resource(DancerByID,'/dancers/<int:id>', endpoint='dancer/id')
+api.add_resource(DancerByID,'/dancers/<string:username>', endpoint='dancer/<string:username>')
 api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
-api.add_resource(DeleteDancer,'/dancers/delete/<int:id>', endpoint='dancer/delete/id')
-api.add_resource(ModifyDancer,'/dancers/modify/<int:id>', endpoint='dancer/modify/id')
+api.add_resource(DeleteDancer,'/dancers/delete/<string:username>', endpoint='dancer/delete/username')
+api.add_resource(ModifyDancer,'/dancers/modify/<string:username>', endpoint='dancer/modify/<string:username>')
 
 api.add_resource(Parents, '/parents', endpoint='parents')
 api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
@@ -936,6 +941,7 @@ api.add_resource(DeleteFromPractice, '/practices/delete/<int:id1>/<int:id2>', en
 api.add_resource(Users, '/users', endpoint='users')
 api.add_resource(Signup, '/signup', endpoint='/signup')
 api.add_resource(ListBalances, '/balances', endpoint='balances')
+
 
 if __name__ == '__main__':
     with app.app_context():

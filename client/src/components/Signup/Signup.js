@@ -3,17 +3,15 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
 import "./styles.css"
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-import {SignUpComplete} from "../SignUpComplete/SignUpComplete"
-
 // import {Texterror} from "./Component/Texterror"
 
-// handle form state 
-const initialValues = {
+ // handle form state 
+ const initialValues = {
     first: 'Phoenix',
     last: 'Brito',
     email: 'phena@gmail.com',
@@ -34,7 +32,6 @@ const initialValues = {
     e_phone: '567-789-1234',
     e_email: 'von@gmail.com'
 }
-
 
 // Validation using Yup library 
 const validationSchema = Yup.object({
@@ -59,35 +56,35 @@ e_email:Yup.string().email('invaled email format').required('E-mail is Required'
 e_phone: Yup.string().required('Phone number is Required')
 })
 
-export const Signup = () => {
+export const Signup = ({onSignUp}) => {
 
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
-// handle form submission onSubmit and formik.handleSubmit 
+    // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = values => {  
-        console.log('Form data', values)   
         fetch("/signup",{
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
             body:JSON.stringify(values)
+            
         })
         .then(res => {
             if (res.ok) 
-               alert("update succesful")
+               alert("Signup succesful")
             else
                console.log("Error returned", res)
                return res   
         })
         .then(res => res.json())
-        .then((newData) => {
-             console.log(newData);
-             navigate("/portal")
+        .then((newDancer) => {
+             console.log(newDancer);
+             onSignUp(newDancer)
         })
-    } 
+    }          
 
-  return (
+    return (
       <Container >
             <Row>
                 <Col></Col> 
@@ -183,9 +180,6 @@ const navigate = useNavigate()
                 </Col>
                 <Col></Col>     
             </Row>
-          </Container>
-
-)
-
+        </Container>
+   )
 }
-
