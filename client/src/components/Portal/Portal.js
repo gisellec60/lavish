@@ -4,10 +4,11 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import { Link } from "react-router-dom";
+import ListGroup from 'react-bootstrap/ListGroup';
 import "./styles.css"
 
-export const Portal = ({newData}) => {
-
+export const Portal = ({dancer}) => {
+  console.log("this is dance from list", dancer)
   return (
     <div>
         <Container className = "portal-container" >
@@ -19,67 +20,81 @@ export const Portal = ({newData}) => {
                     </div>   
                 </Col>
             </Row> 
-
+            <Row>'' </Row>
             <Row>
                 <Col className ="col-2 sidebar" >
-                    <h5>Parents</h5>
-                    <ul>
-                        <li>Search Dancer Information</li> 
-                        <li>Payment Information</li> 
+                    <ul class="list-group" className="list-group">
+                        <li>Parent</li>
+                        <li class="list-group-item">
+                            <Link to="/addDancer"> Add Dancer</Link>
+                        </li>  
+                        <li class="list-group-item">
+                            <Link to="/deleteDancer"> Delete Dancer</Link>
+                        </li>                        
+                        <li class="list-group-item">
+                            <Link to="/listDancer"> Dancer Information </Link>
+                        </li> 
+                        <li class="list-group-item">
+                             <Link to="/dancer/practice "> Dancer Practice </Link>
+                        </li> 
+                        <li class="list-group-item">
+                             <Link to="/dancer/events "> Dancer Events </Link>
+                        </li> 
+                         <li class="list-group-item">
+                             <Link to="/dancer/events "> Dancer Events </Link>
+                        </li> 
                     </ul>
-                    <h5>Everyone</h5>
-                    <ul>
-                      <li>Competition Information</li> 
-                      <li>Practice Information </li> 
-                      <li>Search Dancer by Name</li>
+                    <ul class="list-group" className="list-group">
+                       <li>Dancers</li> 
+                      <li class="list-group-item">Competitions</li> 
+                      <li class="list-group-item">Practice</li> 
+                      <li class="list-group-item">
+                         <Link to="/listDancer">Dancer by Name </Link>
+                      </li>
                     </ul>
                 </Col>    
                 <Col className="main-content">
-                    <p> {newData}</p>
+                    <form>
+                        <label for="first"></label> 
+                    </form> 
                 </Col>
                 <Col className="col-2 sidebar " >
-                    <h5>Admin</h5>
-                    <ul>
-                        Dancers
-                        <li>
-                            <Link to="/adddancer"> Add</Link>
+                    <ul class="list-group" className="list-group">
+                        <li>Admin Portal</li>
+                        <li class="list-group-item">
+                            <Link to="/addDancer"> Add Dancer</Link>
                         </li> 
-                        <li>
-                            <Link to="/deletedancer"> Delete</Link>
+                        <li class="list-group-item">
+                            <Link to="/deleteDancer"> Delete Dancer</Link>
                         </li>    
-                        <li>
-                            <Link to="/modifydancer"> Modify</Link>
+                        <li class="list-group-item">
+                            <Link to="/modifyDancer"> Modify Dancer</Link>
                         </li>
-                        <li>-----</li>
-                        Competition
-                        <li>
-                            <Link to="/addcompetition"> Add</Link>
+                        <li class="list-group-item">
+                              <Link to="/dancerbyid"> Search Dancer</Link>
                         </li> 
-                        <li>
-                            <Link to="/deletecompetion"> Delete</Link>
-                        </li>
-                        <li>
-                            <Link to="/modifycompetion"> Modify</Link>
-                        </li>
-                        <li>-----</li>
-                        Practice
-                        <li>
-                             <Link to="addpractice"> Add</Link>
-                        </li> 
-                             <Link to="/deletepractice"> Delete</Link>
-                        <li>
-                             <Link to="/modifypractice"> Modify</Link>
-                        </li>
-                        <li>-----</li>
-                        Search
-                        <li>
-                              <Link to="/dancerbyid"> Dancer</Link>
-                        </li> 
-                        <li>
+                        <li class="list-group-item">
                               <Link to="/dancers"> All Dancers</Link>
                         </li>  
-                        Parent
-                        <li>Payment Information</li>   
+                        <li class="list-group-item">
+                            <Link to="/addcompetition"> Add Event</Link>
+                        </li> 
+                        <li class="list-group-item">
+                            <Link to="/deletecompetion"> Delete Event</Link>
+                        </li>
+                        <li class="list-group-item">
+                            <Link to="/modifycompetion"> Modify Event</Link>
+                        </li>
+                        <li class="list-group-item">
+                             <Link to="addpractice"> Add Practice</Link>
+                        </li> 
+                        <li class="list-group-item">
+                             <Link to="/deletepractice"> Delete Practice</Link>
+                        </li>     
+                        <li class="list-group-item">
+                             <Link to="/modifypractice"> Modify Practice</Link>
+                        </li>
+                        <li class="list-group-item">Balances</li>   
                     </ul>
                 </Col>
             </Row> 

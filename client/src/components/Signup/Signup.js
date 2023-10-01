@@ -56,7 +56,7 @@ e_email:Yup.string().email('invaled email format').required('E-mail is Required'
 e_phone: Yup.string().required('Phone number is Required')
 })
 
-export const Signup = ({onSignUp}) => {
+export const Signup = ({onSignUp, onErrors}) => {
 
     const navigate = useNavigate()
 
@@ -70,12 +70,23 @@ export const Signup = ({onSignUp}) => {
             body:JSON.stringify(values)
             
         })
-        .then(res => {
-            if (res.ok) 
+        .then((res) => {
+            if (res.ok) {
                alert("Signup succesful")
-            else
-               console.log("Error returned", res)
-               return res   
+            }else{
+               if (res.headers.get("content-type").includes("application/json")) { 
+                    res.json().then((errorObj)=> {
+                        console.log(errorObj);    
+                        onErrors(errorObj.errors) 
+                    })
+               } else {
+                    // If the response is not JSON, treat it as text
+                    res.text().then((errorText) => {
+                      console.log(errorText);
+                      onErrors(errorText)
+                    })  
+               }  
+            }      
         })
         .then(res => res.json())
         .then((newDancer) => {

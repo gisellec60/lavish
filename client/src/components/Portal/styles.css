@@ -41,3 +41,8 @@
     position: absolute;
     top:130px;
 } */
+
+.list-group{
+    font-size:15px;
+    font-family:Arial, Helvetica, sans-serif
+}

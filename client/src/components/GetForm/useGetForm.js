@@ -7,38 +7,32 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from "react-router-dom"
 
    // handle form state 
    const initialValues = {
     first: 'Becky',
     last: 'Roach',
-    username: 'ylambert@hotmail.com',
-   }  
+    username: 'ylambert@hotmail.com'
+    }
 
-const ModifyDancer = ({onModifyDancer}) => {
-
-    const [error, setError] = useState([])
-    const navigate = useNavigate
+const useGetForm = () => {
+    const [errors, setErrors] = useState([])
+    const [user, setUser] = useState([])
 
     const onSubmit = values => { 
-        fetch(`/dancers/${values["username"]}?action=none`)
-        .then(res => {
-            if (res.ok) 
-            alert("Get Dancer succesful")
-         else
-            console.log("Error returned", res)
-            return res   
-     })
-        .then(res => res.json())
-        .then((newDancer) => {
-            onModifyDancer(newDancer)
-        })
-    } 
-    return (
-      <div>  
-        <Container >
+        fetch(`/dancers/${values["username"]}?action="none"`)
+            .then(res => {
+                if (res.ok) {
+                    res.json().then((user) => {console.log(user); setUser(user)})
+                }else{
+                    console.log("Error returned", res)
+                    setErrors(res) 
+                }      
+            })
+    }     
+  return (
+    <>
+     <Container >
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 
@@ -64,8 +58,15 @@ const ModifyDancer = ({onModifyDancer}) => {
                 </Col>  
             </Row>  
         </Container>  
-    </div>      
-    )
- }
+        <div>
+            {
+                user ? 
+                   <div><p>{user}</p></div>
+                  : <div><p>{errors}</p></div>
+            }
+        </div>
+    </>    
+  )
+}
 
-export default ModifyDancer
+export default useGetForm
