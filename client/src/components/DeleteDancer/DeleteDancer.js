@@ -6,6 +6,8 @@ import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import "./styles.css"
+import { useState } from "react"
+import UserExistError from '../ErrorMessages/UserExistError'
 
 const initialValues = {
     first: 'Deja',
@@ -15,6 +17,12 @@ const initialValues = {
 
 export const DeleteDancer = () => {
 
+    const [error, setError] = useState(null)
+
+    const closeErrorButton = ((error) => {
+        setError(null)
+    })
+
     const navigate = useNavigate()
 
     const onSubmit = values => {  
@@ -22,16 +30,20 @@ export const DeleteDancer = () => {
             method: "Delete"
         })
         .then(res => {
-            if (res.ok) 
-            alert("Dancer was deleted succesfully")
-            else
-            console.log("Error returned", res)
-            return res   
+            if (res.ok){ 
+                alert("Dancer was deleted succesfully")
+                navigate("/portal")  
+            }else{
+                res.json().then((error)=> {
+                    console.log("Error Returned",error);    
+                    setError(error)
+                })
+            }    
         })
-        navigate("/portal")    
     } 
   
     return (
+        <>
         <Container >
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
@@ -49,7 +61,7 @@ export const DeleteDancer = () => {
                             <ErrorMessage name = 'last' />
 
                             <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
-                            <Field type = 'username' id='username' name='username' />
+                            <Field type = 'email' id='username' name='username' />
                             <ErrorMessage name = 'username' />
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
@@ -57,7 +69,14 @@ export const DeleteDancer = () => {
                     </Formik>
                 </Col>  
             </Row>  
-        </Container>        
+        </Container> 
+        <div> 
+        {
+            error ? <UserExistError error = {error} onCloseButton={closeErrorButton} />
+            : null
+        }
+    </div>
+    </>       
     )
 }
 

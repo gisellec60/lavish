@@ -15,7 +15,7 @@ const UserExistError = ({error, onCloseButton }) => {
         <Col >
            <p className='text'>{error}</p>
            <p>The user you're trying to access does not exist.
-            in use. Click 'Signup' to re-enter email or 'Home' to quit.
+            Click "X" to re-enter email or "Portal" to return to Portal.
            </p>
            <CloseButton arial-lable="close" onClick={onCloseButton}/>
         </Col>

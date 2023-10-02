@@ -12,7 +12,7 @@ import UserExistError from '../ErrorMessages/UserExistError'
 
    // handle form state 
    const initialValues = {
-    email: 'robert33@yahoo.com'
+    email: 'phoenix@gmail.com'
     }
 
     // Validation using Yup library 
@@ -34,9 +34,10 @@ const GetForm = ({onListDancer}) => {
         .then(res => {
             if (res.ok) {
                 res.json()
-                .then((dancer) => (
+                .then((dancer) => {
+                  console.log("this dancer", dancer)   
                   onListDancer(dancer)
-                )) 
+                }) 
             }else{
                 res.json().then((error)=> {
                   console.log("Error Returned",error);    

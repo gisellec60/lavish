@@ -13,7 +13,6 @@ import DivaNews from '../DivaNews/DivaNews';
 import "./styles.css"
 
 export const Portal = ({dancer}) => {
-  console.log("this is dance from list", dancer)
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -90,7 +89,7 @@ export const Portal = ({dancer}) => {
                             <Link to="/modifyDancer"> Modify Dancer</Link>
                         </li>
                         <li class="list-group-item">
-                              <Link to="/dancerbyid"> Search Dancer</Link>
+                              <Link to="/listDancer"> Search Dancer</Link>
                         </li> 
                         <li class="list-group-item">
                               <Link to="/dancers"> All Dancers</Link>
