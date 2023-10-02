@@ -32,14 +32,12 @@ label {
      border-radius: 4px;
     
   }
-   .bio
-    textarea  {
-    height: 500px
   
-   }
-  
-    .error{
+  .error{
     color: red;
   }
   
+  .heading{
+    text-align: center;
+  }
   

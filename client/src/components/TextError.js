@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Texterror = (props) => {
+export const TextError = (props) => {
   return (
     <div className = 'error'>
       {props.children}

@@ -30,8 +30,10 @@ export const Login = ({onLogin}) => {
                res.json().then((user) => onLogin(user))
                navigate("/portal")
             }else { 
-               console.log("Error returned", res)
-               navigate("/login")  
+               res.json().then((error) => { 
+                  console.log("Error returned", error)
+                  navigate('/signup')
+                })
             }   
         })
     } 

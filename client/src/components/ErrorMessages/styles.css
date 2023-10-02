@@ -1,4 +1,4 @@
-.row1{
+.row-no-user{
     position: relative;
     top:150px; 
     border: 10px solid goldenrod;
@@ -6,7 +6,7 @@
     height: 250px;
     width: 500px;
     justify-self: center;
-    top:-1000px;
+    top:-250px;
     left:400px
 }
 

@@ -8,13 +8,13 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 import "./styles.css"
 
-const ShowErrorMessages = ({error, onCloseButton }) => {
+const UserExistError = ({error, onCloseButton }) => {
   return (
     <Container fluid="md">
-      <Row className="row1">
+      <Row className="row-no-user">
         <Col >
            <p className='text'>{error}</p>
-           <p>This indicates either the dancer's or parent's email is already
+           <p>The user you're trying to access does not exist.
             in use. Click 'Signup' to re-enter email or 'Home' to quit.
            </p>
            <CloseButton arial-lable="close" onClick={onCloseButton}/>
@@ -24,4 +24,4 @@ const ShowErrorMessages = ({error, onCloseButton }) => {
      )
 }
 
-export default ShowErrorMessages
+export default UserExistError

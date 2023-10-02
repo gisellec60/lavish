@@ -7,8 +7,7 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from "react-router-dom"
+import UserExistError from '../ErrorMessages/UserExistError'
 
    // handle form state 
    const initialValues = {
@@ -19,25 +18,32 @@ import { useNavigate } from "react-router-dom"
 
 const ModifyDancer = ({onModifyDancer}) => {
 
-    const [error, setError] = useState([])
-    const navigate = useNavigate
+    const [error, setError] = useState(null)
+
+    const closeErrorButton = ((error) => {
+        setError(null)
+    })
 
     const onSubmit = values => { 
-        fetch(`/dancers/${values["username"]}?action=none`)
+        fetch(`/dancers/${values["email"]}?action=none`)
         .then(res => {
-            if (res.ok) 
-            alert("Get Dancer succesful")
-         else
-            console.log("Error returned", res)
-            return res   
-     })
-        .then(res => res.json())
-        .then((newDancer) => {
-            onModifyDancer(newDancer)
-        })
-    } 
+            if (res.ok){ 
+                res.json()
+                .then((dancer) => (
+                   onModifyDancer(dancer)
+                )) 
+            }else{
+                res.json().then((error)=> {
+                    console.log("Error Returned",error);    
+                    // onError(error) 
+                    setError(error)
+                })
+            }
+        }) 
+    }
+
     return (
-      <div>  
+      <>  
         <Container >
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
@@ -55,16 +61,22 @@ const ModifyDancer = ({onModifyDancer}) => {
                             <ErrorMessage name = 'last' />
 
                             <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
-                            <Field type = 'username' id='username' name='username' />
+                            <Field type = 'email' id='username' name='username' />
                             <ErrorMessage name = 'username' />
                             
-                            <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
+                            <Button variant="primary" size="lg" type="submit"> Submit</Button>
                         </Form>
                     </Formik>
                 </Col>  
             </Row>  
-        </Container>  
-    </div>      
+        </Container> 
+        <div> 
+            {
+               error ? <UserExistError error = {error} onCloseButton={closeErrorButton} />
+               : null
+            }
+        </div>
+    </>      
     )
  }
 

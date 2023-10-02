@@ -8,6 +8,7 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
+import UserExistError from '../ErrorMessages/UserExistError'
 
    // handle form state 
    const initialValues = {
@@ -21,21 +22,28 @@ import { useState } from "react"
     
 
 const GetForm = ({onListDancer}) => {
-    const [errors, setErrors] = useState([])
-    const [user, setUser] = useState([])
+
+    const [error, setError] = useState(null)
+    
+    const closeErrorButton = ((error) => {
+        setError(null)
+    })
 
     const onSubmit = values => { 
         fetch(`/dancers/${values["email"]}?action=none`)
-            // .then(res => {
-            //     if (! res.ok) {
-            //       console.log("Error returned", res)
-            //       return res 
-            //     }      
-            // })
-            .then(res => res.json())
-            .then((newDancer) => {
-                onListDancer(newDancer)
-            })
+        .then(res => {
+            if (res.ok) {
+                res.json()
+                .then((dancer) => (
+                  onListDancer(dancer)
+                )) 
+            }else{
+                res.json().then((error)=> {
+                  console.log("Error Returned",error);    
+                  setError(error)
+                })      
+            }
+        })
     }
 
     return (
@@ -59,7 +67,12 @@ const GetForm = ({onListDancer}) => {
             </Row>  
         </Container>  
         <div>
-     </div>
+            {
+               error ? <UserExistError error = {error} onCloseButton={closeErrorButton} />
+               : null
+            }
+
+       </div>
     </>    
   )
 }

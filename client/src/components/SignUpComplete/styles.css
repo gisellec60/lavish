@@ -13,7 +13,7 @@
     height: 300px;
     width: 1000px;
     bottom: 100px;
-    border: 10px solid gold;
+    border: 10px solid goldenrod;
     background-color: ghostwhite;
     justify-self: center;
 }
@@ -25,8 +25,4 @@
 .h2{
     color: white;
 }
-
-/* .cols2{
-    border: 5px blue;
-} */
 
