@@ -1,4 +1,5 @@
 import React from 'react'
+import './styles.css'
 
 const SpotLight = () => {
   return (
@@ -7,7 +8,7 @@ const SpotLight = () => {
       
       <h2>Phoenix Brito</h2>
       <p></p>
-      <p>Meet our exceptional majorette dancer, Phoenix, whose dedication and 
+      <p className="text-style">Meet our exceptional majorette dancer, Phoenix, whose dedication and 
         talent have led to a remarkable journey filled with numerous accomplishments. 
         She has consistently wowed audiences with is her mesmerizing performances, 
         earning her a well-deserved reputation as one of the finest majorette dancers 

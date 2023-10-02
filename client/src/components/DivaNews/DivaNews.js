@@ -7,7 +7,7 @@ const DivaNews = () => {
         <p></p>
        <h2>Makayla Jackson</h2>
        <p></p>
-       <p> Makayla, May your day be filled with laughter, cherished moments, and
+       <p className="text-style"> Makayla, May your day be filled with laughter, cherished moments, and
          the warmth of family and friends. You deserve all the happiness in the 
          world, not just today, but every day.
 

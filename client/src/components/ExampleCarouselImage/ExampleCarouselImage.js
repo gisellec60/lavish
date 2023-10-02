@@ -4,8 +4,8 @@ import "./styles.css"
 const ExampleCarouselImage = () => {
   return (
     <div className = "body">
-      <h1>Welcome to Lavish Divas Majorette Dance Club Portal</h1>
-      <p>So What is Majorette Dance?</p>
+      <h1>Majorette Dance</h1>
+      <h3>So, What is it?</h3>
       <p className="text-style">"I think it is a mix of pop culture dance and other expressions 
         through movement that is done on the fields with a marching band," 
         said Traci Greene, coach of the Southern University Dancing Dolls and 
