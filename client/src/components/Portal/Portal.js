@@ -5,10 +5,21 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import { Link } from "react-router-dom";
 import ListGroup from 'react-bootstrap/ListGroup';
+import { useState } from 'react';
+import Carousel from 'react-bootstrap/Carousel';
+import ExampleCarouselImage from '../ExampleCarouselImage/ExampleCarouselImage';
+import SpotLight from '../DivaNews/SpotLight';
+import DivaNews from '../DivaNews/DivaNews';
 import "./styles.css"
 
 export const Portal = ({dancer}) => {
   console.log("this is dance from list", dancer)
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
+
   return (
     <div>
         <Container className = "portal-container" >
@@ -54,9 +65,17 @@ export const Portal = ({dancer}) => {
                     </ul>
                 </Col>    
                 <Col className="main-content">
-                    <form>
-                        <label for="first"></label> 
-                    </form> 
+                     <Carousel activeIndex={index} onSelect={handleSelect}>
+                        <Carousel.Item>
+                            <ExampleCarouselImage text="First slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <SpotLight text="Second slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <DivaNews text="Third slide" />
+                        </Carousel.Item>
+                    </Carousel>
                 </Col>
                 <Col className="col-2 sidebar " >
                     <ul class="list-group" className="list-group">
