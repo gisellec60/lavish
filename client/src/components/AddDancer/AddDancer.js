@@ -88,10 +88,6 @@ export const AddDancer = () => {
                             <Field type = 'text' id='last' name='last' />
                             <ErrorMessage name = 'last' />
 
-                            <label htmlFor ='email' style={{color: "white"}}>Email</label>
-                            <Field type = 'email' id='email' name='email' />
-                            <ErrorMessage name = 'email'/>
-
                             <label htmlFor ='phone' style={{color: "white"}}>Phone</label>
                             <Field type = 'text' id='phone' name='phone'/>
                             <ErrorMessage name = 'phone' />
@@ -120,9 +116,9 @@ export const AddDancer = () => {
                             <Field type = 'password' id='password' name='password' />
                             <ErrorMessage name = 'password'/>
 
-                            <label htmlFor ='username' style={{color: "goldenrod"}}>Parent Username or E-mail</label>
-                            <Field type = 'username' id='username' name='username' />
-                            <ErrorMessage name = 'username'/>
+                            <label htmlFor ='email' style={{color: "white"}}>Email</label>
+                            <Field type = 'email' id='email' name='email' />
+                            <ErrorMessage name = 'email'/>
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>

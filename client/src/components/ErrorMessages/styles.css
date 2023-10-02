@@ -1,14 +1,13 @@
 .row-no-user{
     position: relative;
-    top:150px; 
+    top:-350px; 
     border: 10px solid goldenrod;
     background-color: wheat;
     height: 250px;
     width: 500px;
     justify-self: center;
-    top:-250px;
     left:400px
-}
+} 
 
 .text {
     color: red;
@@ -16,8 +15,14 @@
     font-weight: bold;
 }
 
-.closebutton{
-    position:relative;
-    top:250px;
-    color:red;
+
+.row-not-authorized {
+    position: relative;
+    top:30px; 
+    border: 10px solid goldenrod;
+    background-color: wheat;
+    height: 250px;
+    width: 500px;
+    justify-self: center;
+    left:400px
 }
