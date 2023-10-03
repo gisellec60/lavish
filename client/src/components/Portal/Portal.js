@@ -92,22 +92,22 @@ export const Portal = ({dancer}) => {
                               <Link to="/allDancers"> All Dancers</Link>
                         </li>  
                         <li class="list-group-item">
-                            <Link to="/addcompetition"> Add Event</Link>
+                            <Link to="/addEvent"> Add Event</Link>
                         </li> 
                         <li class="list-group-item">
-                            <Link to="/deletecompetion"> Delete Event</Link>
+                            <Link to="/deleteEvent"> Delete Event</Link>
                         </li>
                         <li class="list-group-item">
-                            <Link to="/modifycompetion"> Modify Event</Link>
+                            <Link to="/modifyEvent"> Modify Event</Link>
                         </li>
                         <li class="list-group-item">
-                             <Link to="addpractice"> Add Practice</Link>
+                             <Link to="/addPractice"> Add Practice</Link>
                         </li> 
                         <li class="list-group-item">
-                             <Link to="/deletepractice"> Delete Practice</Link>
+                             <Link to="/deletePractice"> Delete Practice</Link>
                         </li>     
                         <li class="list-group-item">
-                             <Link to="/modifypractice"> Modify Practice</Link>
+                             <Link to="/modifyPractice"> Modify Practice</Link>
                         </li>
                         <li class="list-group-item">Balances</li>   
                     </ul>
