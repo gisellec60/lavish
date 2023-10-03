@@ -1,12 +1,14 @@
 import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from '@mui/material/Button';
 import * as Yup  from 'yup'
 import "./styles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+import Stack from '@mui/material/Stack';
+// import Button from 'react-bootstrap/Button'
 import {TextError} from "../TextError"
 import {useNavigate } from "react-router-dom"
 import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
@@ -34,7 +36,7 @@ const validationSchema = Yup.object({
 const AddPractice = () => {
 
     const [error, setError] = useState(null)
-    const [addPractice, setAddPractice] = update(null)
+    const [addPractice, setAddPractice] = useState("True")
 
     const navigate = useNavigate()
 
@@ -56,7 +58,6 @@ const AddPractice = () => {
                alert("Event Added succesfully")
                res.json().then((newPractice) => {
                   console.log(newPractice);
-                  setAddPractice(newPractice)
                 })
      
             }else{
@@ -71,6 +72,7 @@ const AddPractice = () => {
 
     return (
     <div>
+        <h1 className="practiceHeading">Add Practice Form</h1>
          <Container fluid='md' className="location">
             <Row>
                 <Col></Col> 
@@ -82,7 +84,6 @@ const AddPractice = () => {
                         {
                           addPractice ?
                             <Form>
-                                
                                 <label htmlFor ='date' style={{color: "white"}}>Date</label>
                                 <Field type = 'text' id='date' name='date'/>
                                 <ErrorMessage name = 'date' component={TextError} />
@@ -102,9 +103,11 @@ const AddPractice = () => {
                                 <label htmlFor ='address'  style={{color: "white"}}>Address</label>
                                 <Field as = 'textarea' id='address' name='address' />
                                 <ErrorMessage name = 'bio'  component={TextError}/>
-
-                                <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
-                               
+                                
+                                <Stack spacing={2} direction="row">    
+                                   <Button variant="contained" type="submit">Submit</Button>
+                                   <Button variant="contained" onClick={() => {setAddPractice(null);navigate("/portal")}} >Finish</Button>
+                                </Stack>
                             </Form>
                         : null
                         }                           

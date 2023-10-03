@@ -1,3 +1,12 @@
 .location{
     justify-self: center;
 }
+
+.practiceHeading{
+    position: relative;
+    color:goldenrod;
+    /* top:90px; */
+    
+    left:650px;
+
+}
