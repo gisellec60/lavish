@@ -6,11 +6,12 @@ import "./styles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
 import {TextError} from "../TextError"
 import {useNavigate } from "react-router-dom"
 import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
 import { useState} from "react";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 // handle form state 
 const initialValues = {
@@ -34,6 +35,7 @@ const validationSchema = Yup.object({
 const AddEvent = () => {
 
     const [error, setError] = useState(null)
+    const [addEvent, setAddEvent] = useState("True")
 
     const navigate = useNavigate()
 
@@ -73,11 +75,14 @@ const AddEvent = () => {
          <Container fluid='md' className="location">
             <Row>
              <Col></Col> 
-                <Col xs={12} md={4}>     
+                <Col xs={12} md={4}>    
+                <h1 style={{color:"goldenrod"}} >Add Events</h1> 
                     <Formik 
                         initialValues = {initialValues}
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
+                        { 
+                          addEvent ?    
                         <Form>
                             <label htmlFor ='date' style={{color: "white"}}>Date</label>
                             <Field type = 'text' id='date' name='date'/>
@@ -98,9 +103,15 @@ const AddEvent = () => {
                              <label htmlFor ='address'  style={{color: "white"}}>Address</label>
                             <Field as = 'textarea' id='address' name='address' />
                             <ErrorMessage name = 'bio'  component={TextError}/>
+        
+                            <Stack spacing={2} direction="row">    
+                                <Button variant="contained" type="submit">Submit</Button>
+                                <Button variant="contained" onClick={() => {setAddEvent(null);navigate("/portal")}} >Finish</Button>
+                            </Stack>
 
-                            <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>
+                          : null
+                        }
                     </Formik>
                 </Col>
               <Col></Col>

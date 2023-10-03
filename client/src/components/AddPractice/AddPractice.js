@@ -8,7 +8,6 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Stack from '@mui/material/Stack';
-// import Button from 'react-bootstrap/Button'
 import {TextError} from "../TextError"
 import {useNavigate } from "react-router-dom"
 import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
@@ -72,11 +71,11 @@ const AddPractice = () => {
 
     return (
     <div>
-        <h1 className="practiceHeading">Add Practice Form</h1>
          <Container fluid='md' className="location">
             <Row>
                 <Col></Col> 
-                <Col xs={12} md={4}>     
+                <Col xs={12} sm={8} md={4}>    
+                <h1 style={{color:"goldenrod"}}>Add Practice Form</h1> 
                    <Formik 
                         initialValues = {initialValues}
                         validationSchema = {validationSchema}
