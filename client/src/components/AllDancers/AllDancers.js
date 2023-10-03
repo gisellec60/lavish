@@ -18,8 +18,7 @@ const AllDancers = ({onCloseButton}) => {
 const fetchDancers = async() => {
     const response = await fetch("/dancers").then(r=>r.json())
     setDancers(response)
-    console.log("Response", response)
-    console.log("Dancer state", dancers)
+    
 }
 
   useEffect(() => {
@@ -42,12 +41,13 @@ const fetchDancers = async() => {
         // })
     }, []);
 
-    const dancerList = dancers.map((item)=>(
-        <li style={{color:"white"}} key={item.id}>{item.first}</li>
+    const dancerList = dancers.map((item)=>{
+      console.log(item)
+      return <li style={{color:"white"}} key={item.id}>{item.first}</li>
         
-        ))
+    })
 
-        console.log("Mah dancers", dancerList )
+        
   return (
     <div>
     { 
