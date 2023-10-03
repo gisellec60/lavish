@@ -37,10 +37,10 @@
     font-family: Jazz LET, fantasy;
 }
 
-/* .port-container {
-    position: absolute;
+.portal-container {
+    position: relative;
     top:130px;
-} */
+}
 
 .list-group{
     font-size:15px;

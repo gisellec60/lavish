@@ -6,43 +6,60 @@ import Table from 'react-bootstrap/Table';
 
 const AllDancers = ({onCloseButton}) => {
   
-  const [dancers, setDancers] = useState(null)
+  const [dancers, setDancers] = useState([])
   const [error, setError] = useState(null)
+
  
+  // let dancerList
+  // function that turns dancerList into list items with dancers
+  // THEN
+  // on successful useEffect, run that function
+  
+const fetchDancers = async() => {
+    const response = await fetch("/dancers").then(r=>r.json())
+    setDancers(response)
+    console.log("Response", response)
+    console.log("Dancer state", dancers)
+}
+
   useEffect(() => {
-        fetch("/dancers")
-        .then(res => {
-            if (res.ok) {
-                res.json()
-                .then((users) => {
-                    console.log("These are the users",users); 
-                    setDancers(users)
-                })
-            }else{
-                res.json()
-                .then((error) => {
-                    console.log("Returned error", error); 
-                    setError(error) 
-                })  
-            }        
-        })
+    fetchDancers()
+        // fetch("/dancers")
+        // .then(res => {
+        //     if (res.ok) {
+        //         res.json()
+        //         .then((users) => {
+        //             setDancers(users)
+        //             console.log(dancers)
+        //         })
+        //     }else{
+        //         res.json()
+        //         .then((error) => {
+        //             console.log("Returned error", error); 
+        //             setError(error) 
+        //         })  
+        //     }        
+        // })
     }, []);
 
+    const dancerList = dancers.map((item)=>(
+        <li style={{color:"white"}} key={item.id}>{item.first}</li>
+        
+        ))
+
+        console.log("Mah dancers", dancerList )
   return (
     <div>
     { 
       dancers ? 
         <Container fluid='md'>
             <div>
-                {dancers.map((item)=>(
-                  <ul>   
-                  <li style={{color:"white"}} key={item.id}>{item.first}</li>
-                  </ul>
-
-                ))}
+                <ul>   
+                 {dancerList}
+               </ul>
 
             </div>
-            {/* <Table responsive striped bordered className="noWrap">
+            <Table responsive striped bordered className="noWrap">
                 <thead>
                     <tr>
                     <th>#</th>
@@ -72,7 +89,7 @@ const AllDancers = ({onCloseButton}) => {
                     </tr>
                   ))}
                 </tbody>
-            </Table> */}
+            </Table>
         </Container>
         : null
     } 

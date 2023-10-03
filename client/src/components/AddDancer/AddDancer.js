@@ -6,11 +6,12 @@ import "./styles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
 import {TextError} from "../TextError"
 import {useNavigate } from "react-router-dom"
 import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
 import { useState} from "react";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 // handle form state 
 const initialValues = {
@@ -44,6 +45,8 @@ password: Yup.string().required("Must enter a password"),
 export const AddDancer = () => {
 
     const [error, setError] = useState(null)
+    const [addDancer, setAddDancer] = useState("True")
+
     const navigate = useNavigate()
 
     const closeErrorButton = ((error) => {
@@ -87,50 +90,58 @@ export const AddDancer = () => {
                         initialValues = {initialValues}
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
-                        <Form>
-                            <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
-                            <label htmlFor ='first' style={{color: "white"}}>First Name</label>
-                            <Field type = 'text' id='first' name='first' />
-                            <ErrorMessage name = 'first' component={TextError} />
+                        {
+                           addDancer ?
+                            
+                                <Form>
+                                    <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
+                                    <label htmlFor ='first' style={{color: "white"}}>First Name</label>
+                                    <Field type = 'text' id='first' name='first' />
+                                    <ErrorMessage name = 'first' component={TextError} />
 
-                            <label htmlFor ='last' style={{color: "white"}}>Last Name</label>
-                            <Field type = 'text' id='last' name='last' component={TextError} />
-                            <ErrorMessage name = 'last' />
+                                    <label htmlFor ='last' style={{color: "white"}}>Last Name</label>
+                                    <Field type = 'text' id='last' name='last' component={TextError} />
+                                    <ErrorMessage name = 'last' />
 
-                            <label htmlFor ='phone' style={{color: "white"}}>Phone</label>
-                            <Field type = 'text' id='phone' name='phone'/>
-                            <ErrorMessage name = 'phone' component={TextError} />
+                                    <label htmlFor ='phone' style={{color: "white"}}>Phone</label>
+                                    <Field type = 'text' id='phone' name='phone'/>
+                                    <ErrorMessage name = 'phone' component={TextError} />
 
-                            <label htmlFor ='gender' style={{color: "white"}}>Gender</label>
-                            <Field type = 'text' id='gender' name='gender'/>
-                            <ErrorMessage name = 'gender' component={TextError} />
+                                    <label htmlFor ='gender' style={{color: "white"}}>Gender</label>
+                                    <Field type = 'text' id='gender' name='gender'/>
+                                    <ErrorMessage name = 'gender' component={TextError} />
 
-                            <label htmlFor ='dob' style={{color: "white"}}>Date of Birth</label>
-                            <Field type = 'text' id='dob' name='dob'/>
-                            <ErrorMessage name = 'dob' component={TextError} />
+                                    <label htmlFor ='dob' style={{color: "white"}}>Date of Birth</label>
+                                    <Field type = 'text' id='dob' name='dob'/>
+                                    <ErrorMessage name = 'dob' component={TextError} />
 
-                            <label htmlFor ='age' style={{color: "white"}}>Age</label>
-                            <Field type = 'text' id='age' name='age'/>
-                            <ErrorMessage name = 'age'  component={TextError}/>
+                                    <label htmlFor ='age' style={{color: "white"}}>Age</label>
+                                    <Field type = 'text' id='age' name='age'/>
+                                    <ErrorMessage name = 'age'  component={TextError}/>
 
-                            <label htmlFor ='image' style={{color: "white"}}>Image</label>
-                            <Field type = 'text' id='image' name='image'/>
-                            <ErrorMessage name = 'image' component={TextError} />
+                                    <label htmlFor ='image' style={{color: "white"}}>Image</label>
+                                    <Field type = 'text' id='image' name='image'/>
+                                    <ErrorMessage name = 'image' component={TextError} />
 
-                            <label htmlFor ='bio' className="bio" style={{color: "white"}}>Bio</label>
-                            <Field as = 'textarea' id='bio' name='bio' />
-                            <ErrorMessage name = 'bio'  component={TextError}/>
+                                    <label htmlFor ='bio' className="bio" style={{color: "white"}}>Bio</label>
+                                    <Field as = 'textarea' id='bio' name='bio' />
+                                    <ErrorMessage name = 'bio'  component={TextError}/>
 
-                            <label htmlFor ='password' style={{color: "white"}}>Password</label>
-                            <Field type = 'password' id='password' name='password' />
-                            <ErrorMessage name = 'password' component={TextError}/>
+                                    <label htmlFor ='password' style={{color: "white"}}>Password</label>
+                                    <Field type = 'password' id='password' name='password' />
+                                    <ErrorMessage name = 'password' component={TextError}/>
 
-                            <label htmlFor ='email' style={{color: "white"}}>Email</label>
-                            <Field type = 'email' id='email' name='email' />
-                            <ErrorMessage name = 'email' component={TextError}/>
+                                    <label htmlFor ='email' style={{color: "white"}}>Email</label>
+                                    <Field type = 'email' id='email' name='email' />
+                                    <ErrorMessage name = 'email' component={TextError}/>
 
-                            <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
-                        </Form>
+                                    <Stack spacing={2} direction="row">    
+                                        <Button variant="contained" type="submit">Submit</Button>
+                                        <Button variant="contained" onClick={() => {setAddDancer(null);navigate("/portal")}} >Finish</Button>
+                                    </Stack>
+                           </Form>
+                               : null
+                        }     
                     </Formik>
                 </Col>
                 <Col></Col>     

@@ -17,6 +17,10 @@ import ModifyForm from "./components/GetForm/ModifyForm"
 import ShowDancerListing from "./components/ShowDancerListing/ShowDancerListing"
 import ShowErrorMessages  from "./components/ShowErrorMessages/ShowErrorMessages"
 import AllDancers from "./components/AllDancers/AllDancers"
+import AllEvents from "./components/AllEvents/AllEvents"
+import DeleteEvent from "./components/DeleteEvent/DeleteEvent"
+import AllPractices from "./components/AllPractices/AllPractices"
+
 
 function App() {
 
@@ -84,7 +88,10 @@ function App() {
          <Route path= {"/showdancerlisting"} element={<ShowDancerListing dancer={dancer} />}></Route>
          <Route path={"/showerrormessages"} element={<ShowErrorMessages error={errors} />}></Route>
          <Route path={"/addEvent"} element={<AddEvent />}></Route>
+         <Route path={"/deleteEvent"} element={<DeleteEvent />}></Route>
+         <Route path={"/allEvents"} element={<AllEvents />}></Route>
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
+         <Route path={"/allPractices"} element={<AllPractices />}></Route>
       </Routes> 
       </div>
     </> 

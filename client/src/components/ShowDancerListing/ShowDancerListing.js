@@ -3,14 +3,15 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
+import "./dancerlist.css"
 
 function ShowDancerListing({dancer}) {
   return (
-   <Container fluid="md">
+   <Container fluid="md" className="list-container">
      <Row>
         <Col md={2}>  </Col>
           <Col >
-            <Card style={{ width: '50rem' }} bg='dark' border='warning'>
+            <Card style={{ width: '50rem' }} bg='dark' border='warning' >
               <ListGroup variant="flush">
                 <ListGroup.Item >{dancer['first']} {dancer['last']}</ListGroup.Item>
                 <ListGroup.Item>E-mail: {dancer['email']}</ListGroup.Item>

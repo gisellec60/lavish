@@ -92,6 +92,9 @@ export const Portal = ({dancer}) => {
                               <Link to="/allDancers"> All Dancers</Link>
                         </li>  
                         <li class="list-group-item">
+                            <Link to="/allEvents"> All Events</Link>
+                        </li> 
+                        <li class="list-group-item">
                             <Link to="/addEvent"> Add Event</Link>
                         </li> 
                         <li class="list-group-item">
@@ -100,6 +103,9 @@ export const Portal = ({dancer}) => {
                         <li class="list-group-item">
                             <Link to="/modifyEvent"> Modify Event</Link>
                         </li>
+                        <li class="list-group-item">
+                            <Link to="/allPractices"> All Practices</Link>
+                        </li> 
                         <li class="list-group-item">
                              <Link to="/addPractice"> Add Practice</Link>
                         </li> 

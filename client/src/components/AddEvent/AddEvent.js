@@ -58,7 +58,6 @@ const AddEvent = () => {
                alert("Event Added succesfully")
                res.json().then((newEvent) => {
                   console.log(newEvent);
-                  navigate("/portal")
                 })
      
             }else{

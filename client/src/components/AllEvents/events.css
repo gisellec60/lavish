@@ -1,0 +1,25 @@
+.table {
+    background-color: wheat;
+    white-space: normal;
+    border-color: wheat;
+}
+
+.event-container {
+    position: relative;
+    background-color: goldenrod;
+    top:150px;
+    border:5px;
+
+}
+
+.event-col {
+    border:5px;
+    border-color: wheat;
+    background-color: wheat;
+    height:5px;
+}
+
+.event-row {
+    border: 5px;
+    border-color: goldenrod
+}
