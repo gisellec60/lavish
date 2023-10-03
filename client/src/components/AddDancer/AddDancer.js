@@ -3,15 +3,14 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
 import "./styles.css"
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import {SignUpComplete} from "../SignUpComplete/SignUpComplete"
-
-// import {Texterror} from "./components/Texterror"
+import {TextError} from "../TextError"
+import {useNavigate } from "react-router-dom"
+import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
+import { useState} from "react";
 
 // handle form state 
 const initialValues = {
@@ -44,11 +43,16 @@ password: Yup.string().required("Must enter a password"),
 
 export const AddDancer = () => {
 
+    const [error, setError] = useState(null)
     const navigate = useNavigate()
+
+    const closeErrorButton = ((error) => {
+        setError(null)
+    })
 
     // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = values => {  
-        fetch("/dancers/add",{
+        fetch("/dancers/add", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -58,18 +62,23 @@ export const AddDancer = () => {
         .then(res => {
             if (res.ok) {
                alert("Dancer Added succesful")
-            }else
-                console.log("Error returned", res)
-                return res   
-         })
-        .then(res => res.json())
-        .then((newData) => {
-            console.log(newData);
-            navigate("/portal")
+               res.json().then((newData) => {
+                  console.log(newData);
+                  navigate("/portal")
+                })
+     
+            }else{
+                res.json().then((error)=> {
+                    console.log("Error Returned",error);    
+                    setError(error)
+                    })
+                }        
+    
         })
     } 
     
     return (
+        <>
         <Container>
             <Row>
                 <Col></Col> 
@@ -82,43 +91,43 @@ export const AddDancer = () => {
                             <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                             <Field type = 'text' id='first' name='first' />
-                            <ErrorMessage name = 'first' />
+                            <ErrorMessage name = 'first' component={TextError} />
 
                             <label htmlFor ='last' style={{color: "white"}}>Last Name</label>
-                            <Field type = 'text' id='last' name='last' />
+                            <Field type = 'text' id='last' name='last' component={TextError} />
                             <ErrorMessage name = 'last' />
 
                             <label htmlFor ='phone' style={{color: "white"}}>Phone</label>
                             <Field type = 'text' id='phone' name='phone'/>
-                            <ErrorMessage name = 'phone' />
+                            <ErrorMessage name = 'phone' component={TextError} />
 
                             <label htmlFor ='gender' style={{color: "white"}}>Gender</label>
                             <Field type = 'text' id='gender' name='gender'/>
-                            <ErrorMessage name = 'gender' />
+                            <ErrorMessage name = 'gender' component={TextError} />
 
                             <label htmlFor ='dob' style={{color: "white"}}>Date of Birth</label>
                             <Field type = 'text' id='dob' name='dob'/>
-                            <ErrorMessage name = 'dob' />
+                            <ErrorMessage name = 'dob' component={TextError} />
 
                             <label htmlFor ='age' style={{color: "white"}}>Age</label>
                             <Field type = 'text' id='age' name='age'/>
-                            <ErrorMessage name = 'age' />
+                            <ErrorMessage name = 'age'  component={TextError}/>
 
                             <label htmlFor ='image' style={{color: "white"}}>Image</label>
                             <Field type = 'text' id='image' name='image'/>
-                            <ErrorMessage name = 'image' />
+                            <ErrorMessage name = 'image' component={TextError} />
 
                             <label htmlFor ='bio' className="bio" style={{color: "white"}}>Bio</label>
                             <Field as = 'textarea' id='bio' name='bio' />
-                            <ErrorMessage name = 'bio' />
+                            <ErrorMessage name = 'bio'  component={TextError}/>
 
                             <label htmlFor ='password' style={{color: "white"}}>Password</label>
                             <Field type = 'password' id='password' name='password' />
-                            <ErrorMessage name = 'password'/>
+                            <ErrorMessage name = 'password' component={TextError}/>
 
                             <label htmlFor ='email' style={{color: "white"}}>Email</label>
                             <Field type = 'email' id='email' name='email' />
-                            <ErrorMessage name = 'email'/>
+                            <ErrorMessage name = 'email' component={TextError}/>
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>
@@ -127,6 +136,13 @@ export const AddDancer = () => {
                 <Col></Col>     
             </Row>
         </Container>
+        <div>
+        {
+            error ? <ShowErrorMessages error = {error} onCloseButton={closeErrorButton}/>
+            : null
+        }
+        </div> 
+     </>   
      )
 
 }

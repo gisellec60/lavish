@@ -50,9 +50,6 @@ export const Portal = ({dancer}) => {
                         <li class="list-group-item">
                              <Link to="/dancer/events "> Dancer Events </Link>
                         </li> 
-                         <li class="list-group-item">
-                             <Link to="/dancer/events "> Dancer Events </Link>
-                        </li> 
                     </ul>
                     <ul class="list-group" className="list-group">
                        <li>Dancers</li> 
