@@ -30,6 +30,7 @@ const AllEvents = () => {
   
     const eventList = 
         <Container fluid='md' className="event-container">
+            <h3>Event Schedule</h3>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >

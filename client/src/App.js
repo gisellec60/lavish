@@ -14,16 +14,19 @@ import {SignUpComplete} from "./components/SignUpComplete/SignUpComplete"
 import ModifyDancer from "./components/ModifyDancer/ModifyDancer"
 import ListDancer from "./components/ListDancer/ListDancer"
 import ModifyForm from "./components/GetForm/ModifyForm"
-import ShowDancerListing from "./components/ShowDancerListing/ShowDancerListing"
 import ShowErrorMessages  from "./components/ShowErrorMessages/ShowErrorMessages"
 import AllDancers from "./components/AllDancers/AllDancers"
+
+import DancerEvents from "./components/DancerEvent/DancerEvents"
+
+
 import AllEvents from "./components/AllEvents/AllEvents"
 import DeleteEvent from "./components/DeleteEvent/DeleteEvent"
 import ModifyEvent from "./components/ModifyEvent/ModifyEvent"
 import AllPractices from "./components/AllPractices/AllPractices"
 import DeletePractice from "./components/DeletePractice/DeletePractice"
 import ModifyPractice from "./components/ModifyPractice/ModifyPractice"
-
+import DancerPractices from "./components/DancerPractice/DancerPractices"
 
 function App() {
 
@@ -53,10 +56,10 @@ function App() {
        navigate("/modifyform")
    })
 
-   const handleListDancer = ((dancer) => {
-       setDancer(dancer)
-       navigate("/showdancerlisting")
-    })
+  //  const handleListDancer = ((dancer) => {
+  //      setDancer(dancer)
+  //      navigate("/showdancerlisting")
+  //   })
 
     const handleErrorMessages = ((errors)=>{
         setErrors(errors)
@@ -86,9 +89,10 @@ function App() {
          <Route path={"/allDancers"} element={<AllDancers onCloseButton={handleCloseButton}/>}></Route>
          <Route path={"/modifyDancer"} element={<ModifyDancer onModifyDancer={handleModifyDancer} />}></Route>
          <Route path={"/deleteDancer"} element={<DeleteDancer />}></Route>
-         <Route path={"/listDancer"} element={<ListDancer onListDancer={handleListDancer} />}></Route>
+         <Route path={"/listDancer"} element={<ListDancer  />}></Route>
+         <Route path={"/dancer/events"} element={<DancerEvents  />}></Route>
+         <Route path={"/dancer/pracitces"} element={<DancerPractices />}></Route>
          <Route path= {"/modifyForm"} element={<ModifyForm dancer={dancer} />}></Route>
-         <Route path= {"/showdancerlisting"} element={<ShowDancerListing dancer={dancer} />}></Route>
          <Route path={"/showerrormessages"} element={<ShowErrorMessages error={errors} />}></Route>
          <Route path={"/addEvent"} element={<AddEvent />}></Route>
          <Route path={"/deleteEvent"} element={<DeleteEvent />}></Route>

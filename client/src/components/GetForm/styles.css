@@ -1,4 +1,4 @@
-label {
+/* label {
     font-weight: bold;
     display: flex;
     margin-bottom:5px
@@ -13,7 +13,7 @@ label {
     background-color:black;
     font-size:x-large;
     font-style: italic;
-  }
+  } */
   
   input[type='text']
    textarea {

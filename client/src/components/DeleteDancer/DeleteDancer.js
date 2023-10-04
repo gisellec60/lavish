@@ -44,7 +44,7 @@ export const DeleteDancer = () => {
   
     return (
         <>
-        <Container >
+        <Container className="location" >
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 

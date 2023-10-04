@@ -1,7 +1,7 @@
 import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles.css"
+import "./getformstyles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'

@@ -53,6 +53,7 @@ const DeletePractice = () => {
 
     const eventList = 
         <Container fluid='md' className="event-container">
+            <h3>Click icon to remove practice from schedule</h3>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >

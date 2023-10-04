@@ -1,7 +1,7 @@
 import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles.css"
+import "./getFormStyles.css"
 import * as Yup  from 'yup'
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
@@ -9,6 +9,7 @@ import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
+import ShowDancerListing from '../ShowDancerListing/ShowDancerListing';
 
    // handle form state 
    const initialValues = {
@@ -21,13 +22,18 @@ import UserExistError from '../ErrorMessages/UserExistError'
     })
     
 
-const GetForm = ({onListDancer}) => {
+const GetForm = ({setDancer,showDancerListing,setShowDancerListing}) => {
 
     const [error, setError] = useState(null)
     
     const closeErrorButton = ((error) => {
         setError(null)
     })
+
+     const handleListing = (() => {
+        console.log("this is the listing")
+        setShowDancerListing(!showDancerListing)
+     })
 
     const onSubmit = values => { 
         fetch(`/dancers/${values["email"]}?action=none`)
@@ -36,7 +42,8 @@ const GetForm = ({onListDancer}) => {
                 res.json()
                 .then((dancer) => {
                   console.log("this dancer", dancer)   
-                  onListDancer(dancer)
+                  setDancer(dancer)
+                  handleListing()
                 }) 
             }else{
                 res.json().then((error)=> {
@@ -49,7 +56,7 @@ const GetForm = ({onListDancer}) => {
 
     return (
     <>
-     <Container >
+     <Container className="location">
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 

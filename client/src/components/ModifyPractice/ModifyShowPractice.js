@@ -34,7 +34,7 @@ const ModifyShowPractice = ({showModifyPracticeForm, setShowModifyPracticeForm, 
 
     const practiceList = 
         <Container fluid='md' className="event-container">
-            <h1>Practice Table </h1>
+            <h3>Practice Table - click practice to modify</h3>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >

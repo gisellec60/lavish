@@ -30,6 +30,7 @@ const AllPractice = () => {
   
     const eventList = 
         <Container fluid='md' className="practice-container">
+            <h3>Practice Schedule</h3>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >

@@ -34,7 +34,7 @@ const ModifyShowEvents = ({showModifyEventForm, setShowModifyEventForm, setEvent
 
     const eventList = 
         <Container fluid='md' className="event-container">
-            <h1>Event Table </h1>
+            <h3>Event Table : click event to modify </h3>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >
