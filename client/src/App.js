@@ -22,6 +22,7 @@ import DeleteEvent from "./components/DeleteEvent/DeleteEvent"
 import ModifyEvent from "./components/ModifyEvent/ModifyEvent"
 import AllPractices from "./components/AllPractices/AllPractices"
 import DeletePractice from "./components/DeletePractice/DeletePractice"
+import ModifyPractice from "./components/ModifyPractice/ModifyPractice"
 
 
 function App() {
@@ -92,10 +93,8 @@ function App() {
          <Route path={"/addEvent"} element={<AddEvent />}></Route>
          <Route path={"/deleteEvent"} element={<DeleteEvent />}></Route>
          <Route path={"/allEvents"} element={<AllEvents />}></Route>
-         
          <Route path={"/modifyEvent"} element={<ModifyEvent />}></Route>
-           
-         
+         <Route path={"/modifyPractice"} element={<ModifyPractice />}></Route>  
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>

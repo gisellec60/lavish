@@ -6,26 +6,24 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 
-const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) => {
+const ModifyPracticeForm= ({practiceObj,setShowModifyPracticeForm, showModifyPracticeForm}) => {
     const [errors, setErrors] = useState([])
 
-    const navigate = useNavigate()
     // handle form state 
-  console.log("this is event form" ,eventObj.date, eventObj['date'])
+  console.log("this is practice form" ,practiceObj.date, practiceObj['date'])
 
   const initialValues = {
-    date: eventObj['date'],
-    event_time:eventObj['event_time'],
-    arrival_time: eventObj['arrival_time'],
-    venue: eventObj["venue"],
-    address:eventObj["address"]
+    date: practiceObj['date'],
+    practice_time:practiceObj['practice_time'],
+    arrival_time: practiceObj['arrival_time'],
+    venue: practiceObj["venue"],
+    address:practiceObj["address"]
     }
 
      
     const onSubmit = values => { 
-        fetch(`/events/modify/${eventObj["id"]}`,{
+        fetch(`/practices/modify/${practiceObj["id"]}`,{
             method: "PATCH",
             headers: {
                 "Content-Type" : "application/json"
@@ -34,8 +32,8 @@ const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) 
         })
         .then(res => {
             if (res.ok) {
-               alert("Event Modified succesful")
-               setShowModifyEventForm(!showModifyEventForm)
+               alert("Practice Modified succesful")
+               setShowModifyPracticeForm(!showModifyPracticeForm)
             }else{
                 res.json()
                 .then((errors) => {
@@ -46,10 +44,6 @@ const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) 
         })
     }    
       
-    // const handleReturn = (() => {
-    //       navigate('/modifyEvent')  
-    //   })   
-    
     return (
      <Container >
            <Row>
@@ -63,9 +57,9 @@ const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) 
                             <Field type = 'text' id='date' name='date' />
                             <ErrorMessage name = 'date' />
 
-                            <label htmlFor ='event_time' style={{color: "white"}}>Event Time</label>
-                            <Field type = 'text' id='event_time' name='event_time' />
-                            <ErrorMessage name = 'event_time' />
+                            <label htmlFor ='practice_time' style={{color: "white"}}>Practice Time</label>
+                            <Field type = 'text' id='practice_time' name='practice_time' />
+                            <ErrorMessage name = 'practice_time' />
 
                             <label htmlFor ='arrival_time' style={{color: "white"}}>Arrival Time</label>
                             <Field type = 'arrival_time' id='arrival_time' name='arrival_time' />
@@ -88,4 +82,4 @@ const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) 
   )
 }
 
-export default ModifyEventForm
+export default ModifyPracticeForm

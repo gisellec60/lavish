@@ -8,7 +8,6 @@ const ModifyEvent = () => {
     const [showModifyEventForm, setShowModifyEventForm] = useState(false)
     const [eventObj, setEventObj] = useState(null)
   
-
     return (
      <>    
         <div>

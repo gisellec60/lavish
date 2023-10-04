@@ -3,19 +3,19 @@ import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 
-const ModifyShowEvents = ({showModifyEventForm, setShowModifyEventForm, setEventObj }) => {
+const ModifyShowPractice = ({showModifyPracticeForm, setShowModifyPracticeForm, setPracticeObj }) => {
 
-   const [events, setEvents] = useState([])
+   const [practice, setPractice] = useState([])
    const [error, setError] = useState(null)
      
     useEffect(() => {
-        fetch("/events")
+        fetch("/practices")
         .then(res => {
             if (res.ok) {
                 res.json()
-                .then((events) => {
-                    setEvents(events)
-                    console.log(events)
+                .then((practice) => {
+                    setPractice(practice)
+                    console.log(practice)
                 })
             }else{
                 res.json()
@@ -29,31 +29,31 @@ const ModifyShowEvents = ({showModifyEventForm, setShowModifyEventForm, setEvent
     
           
     const handleEditClick = (() => {
-        setShowModifyEventForm(!showModifyEventForm)
+        setShowModifyPracticeForm(!showModifyPracticeForm)
     })
 
-    const eventList = 
+    const practiceList = 
         <Container fluid='md' className="event-container">
-            <h1>Event Table </h1>
+            <h1>Practice Table </h1>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >
                         <th>Date</th>
-                        <th>Event Time</th>
+                        <th>Practice Time</th>
                         <th>Arrival Time</th>
                         <th>Venue</th>
                         <th>Address</th>
                     </tr>
                 </thead>
                 <tbody>
-                {events.map((event) => {
+                {practice.map((practice) => {
                     return (
-                        <tr key={event.id} onClick={() => {setEventObj(event); handleEditClick()}}>
-                            <td >{event.date}</td>
-                            <td>{event.event_time}</td> 
-                            <td>{event.arrival_time}</td>
-                            <td>{event.venue}</td>
-                            <td>{event.address}</td>
+                        <tr key={practice.id} onClick={() => {setPracticeObj(practice); handleEditClick()}}>
+                            <td >{practice.date}</td>
+                            <td>{practice.practice_time}</td> 
+                            <td>{practice.arrival_time}</td>
+                            <td>{practice.venue}</td>
+                            <td>{practice.address}</td>
                          </tr>
                     )
                  })}
@@ -61,14 +61,8 @@ const ModifyShowEvents = ({showModifyEventForm, setShowModifyEventForm, setEvent
             </Table>
         </Container>
 
-    return (
-     <>    
-        <div>
-        {eventList}
-        </div>
-
-    </>
+    return (<div>{practiceList}</div>
   )
 }
 
-export default ModifyShowEvents
+export default ModifyShowPractice
