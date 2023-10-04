@@ -1,7 +1,6 @@
 import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
@@ -9,22 +8,32 @@ import Button from 'react-bootstrap/Button'
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-const ModifyEventForm = ({event}) => {
+const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) => {
     const [errors, setErrors] = useState([])
 
     const navigate = useNavigate()
     // handle form state 
-  console.log("this is event",event)
+  console.log("this is event form" ,eventObj.date, eventObj['date'])
+
   const initialValues = {
-    date: event['date'],
-    event_time:event['event_time'],
-    arrival_time: '',
-    venue: '',
-    address:''
+    date: eventObj['date'],
+    event_time:eventObj['event_time'],
+    arrival_time: eventObj['arrival_time'],
+    venue: eventObj["venue"],
+    address:eventObj["address"]
     }
 
+    // const initialValues = {
+    //     date: '',
+    //     event_time:'',
+    //     arrival_time: '',
+    //     venue: '',
+    //     address:''
+    //     }
+    
+
     const onSubmit = values => { 
-        fetch(`/events/modify/${event["id"]}`,{
+        fetch(`/events/modify/${eventObj["id"]}`,{
             method: "PATCH",
             headers: {
                 "Content-Type" : "application/json"
@@ -34,7 +43,7 @@ const ModifyEventForm = ({event}) => {
         .then(res => {
             if (res.ok) {
                alert("Event Modified succesful")
-               handleReturn()
+               setShowModifyEventForm(!showModifyEventForm)
             }else{
                 res.json()
                 .then((errors) => {
@@ -45,9 +54,9 @@ const ModifyEventForm = ({event}) => {
         })
     }    
       
-    const handleReturn = (() => {
-          navigate('/modifyEvent')  
-      })   
+    // const handleReturn = (() => {
+    //       navigate('/modifyEvent')  
+    //   })   
     
     return (
      <Container >

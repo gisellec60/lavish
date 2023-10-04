@@ -92,7 +92,10 @@ function App() {
          <Route path={"/addEvent"} element={<AddEvent />}></Route>
          <Route path={"/deleteEvent"} element={<DeleteEvent />}></Route>
          <Route path={"/allEvents"} element={<AllEvents />}></Route>
+         
          <Route path={"/modifyEvent"} element={<ModifyEvent />}></Route>
+           
+         
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
