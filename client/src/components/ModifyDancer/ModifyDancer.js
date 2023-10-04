@@ -11,9 +11,9 @@ import UserExistError from '../ErrorMessages/UserExistError'
 
    // handle form state 
    const initialValues = {
-    first: 'Becky',
-    last: 'Roach',
-    username: 'ylambert@hotmail.com',
+    first: 'Phoenix',
+    last: 'Brito',
+    email: 'phoenix@gmail.com',
    }  
 
 const ModifyDancer = ({onModifyDancer}) => {
@@ -60,9 +60,9 @@ const ModifyDancer = ({onModifyDancer}) => {
                             <Field type = 'text' id='last' name='last' />
                             <ErrorMessage name = 'last' />
 
-                            <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
-                            <Field type = 'email' id='username' name='username' />
-                            <ErrorMessage name = 'username' />
+                            <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
+                            <Field type = 'email' id='email' name='email' />
+                            <ErrorMessage name = 'email' />
                             
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>
                         </Form>
