@@ -2,23 +2,22 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
-import "./delevents.css"
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
-const DeleteEvent = () => {
+const DeletePractice = () => {
 
-   const [events, setEvents] = useState([])
+   const [practices, setEvents] = useState([])
    const [error, setError] = useState(null)
   
     useEffect(() => {
-        fetch("/events")
+        fetch("/practices")
         .then(res => {
             if (res.ok) {
                 res.json()
-                .then((events) => {
-                    setEvents(events)
-                    console.log(events)
+                .then((practices) => {
+                    setEvents(practices)
+                    console.log(practices)
                 })
             }else{
                 res.json()
@@ -31,12 +30,12 @@ const DeleteEvent = () => {
         }, []);
     
     const handleDeleteClick = ((id) => {
-         fetch(`/events/delete/${id}`,{
+         fetch(`/practices/delete/${id}`,{
             method:"DELETE"
          })
          .then (res => {
             if (res.ok) { 
-                alert("Event was deleted succesfully")
+                alert("Practice was deleted succesfully")
                 handleDeleteTask(id) 
             }else{
                 res.json().then((error)=> {
@@ -48,7 +47,7 @@ const DeleteEvent = () => {
     })    
 
     const handleDeleteTask = ((id) => {
-        const upDatedEvents = events.filter((event) => event.id !== id )
+        const upDatedEvents = practices.filter((event) => event.id !== id )
         setEvents(upDatedEvents)
     })   
 
@@ -65,7 +64,7 @@ const DeleteEvent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {events.map((event) => {
+                {practices.map((event) => {
                     return (
                         <tr key={event.id}>
                             <td>{event.date}</td>
@@ -90,4 +89,4 @@ const DeleteEvent = () => {
   )
 }
 
-export default DeleteEvent
+export default DeletePractice

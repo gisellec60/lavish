@@ -21,8 +21,8 @@ function ShowDancerListing({dancer}) {
                 <ListGroup.Item>Gender : {dancer['gender']}</ListGroup.Item>
                 <ListGroup.Item>Username : {dancer['username']}</ListGroup.Item>
                 <ListGroup.Item >Bio: {dancer['bio']} </ListGroup.Item>
-                <ListGroup.Item >Parent: {dancer['Parent']['first']} </ListGroup.Item>
-
+                <ListGroup.Item >Parent: {dancer['Parent']['first']} {dancer['Parent']['last']} </ListGroup.Item>
+                <ListGroup.Item >phone: {dancer['Parent']['phone']} </ListGroup.Item>
               </ListGroup>
             </Card>
         </Col>

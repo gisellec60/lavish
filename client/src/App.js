@@ -20,6 +20,7 @@ import AllDancers from "./components/AllDancers/AllDancers"
 import AllEvents from "./components/AllEvents/AllEvents"
 import DeleteEvent from "./components/DeleteEvent/DeleteEvent"
 import AllPractices from "./components/AllPractices/AllPractices"
+import DeletePractice from "./components/DeletePractice/DeletePractice"
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
          <Route path={"/allEvents"} element={<AllEvents />}></Route>
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
+         <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
       </Routes> 
       </div>
     </> 

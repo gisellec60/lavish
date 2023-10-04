@@ -40,13 +40,14 @@ export const Navigation = ({setUser, user}) => {
           <NavLink exact to="/signup" className="linkStyles"  activeStyle={activeLinkStyle} >
             Signup
           </NavLink> 
-          <NavLink exact to="/portal" className="linkStyles" activeStyle={activeLinkStyle} >
+          {user ? <NavLink exact to="/portal" className="linkStyles" activeStyle={activeLinkStyle} >
             Portal
-          </NavLink>  
+          </NavLink> :null  }
           <NavLink exact to="/login" className="linkStyles"  activeStyle={{color:"white",}} >
             Login
           </NavLink> 
-          <NavLink exact to="/logout" className="linkStyles"  activeStyle={{color:"white",}} >
+          <NavLink exact to="/logout" className="linkStyles"  activeStyle={{color:"white",}}
+            onClick={() => {handleLogout()}} >
             Logout
           </NavLink> 
           </div>

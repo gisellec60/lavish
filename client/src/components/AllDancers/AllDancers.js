@@ -3,105 +3,77 @@ import UserNotAuthorized from '../ErrorMessages/UserNotAuthorized';
 import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
+import "./dancerstyles.css"
 
 const AllDancers = ({onCloseButton}) => {
   
   const [dancers, setDancers] = useState([])
   const [error, setError] = useState(null)
 
- 
-  // let dancerList
-  // function that turns dancerList into list items with dancers
-  // THEN
-  // on successful useEffect, run that function
-  
-const fetchDancers = async() => {
-    const response = await fetch("/dancers").then(r=>r.json())
-    setDancers(response)
-    
-}
-
   useEffect(() => {
-    fetchDancers()
-        // fetch("/dancers")
-        // .then(res => {
-        //     if (res.ok) {
-        //         res.json()
-        //         .then((users) => {
-        //             setDancers(users)
-        //             console.log(dancers)
-        //         })
-        //     }else{
-        //         res.json()
-        //         .then((error) => {
-        //             console.log("Returned error", error); 
-        //             setError(error) 
-        //         })  
-        //     }        
-        // })
+    fetch("/dancers")
+    .then(res => {
+        if (res.ok) {
+            res.json()
+            .then((users) => {
+                console.log("line26:",users)
+                setDancers(users)
+            })
+        }else{
+            res.json()
+            .then((error) => {
+                console.log("Returned error", error); 
+                setError(error) 
+            })  
+        }        
+    })
     }, []);
 
-    const dancerList = dancers.map((item)=>{
-      console.log(item)
-      return <li style={{color:"white"}} key={item.id}>{item.first}</li>
-        
-    })
-
-        
-  return (
-    <div>
-    { 
-      dancers ? 
-        <Container fluid='md'>
-            <div>
-                <ul>   
-                 {dancerList}
-               </ul>
-
-            </div>
-            <Table responsive striped bordered className="noWrap">
-                <thead>
-                    <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Date of Birth</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Username</th>
-                    <th>Bio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {dancers.map((dancer) => (
+   const dancerlist = 
+     <Container fluid='md' className="event-container">
+      <h1>Dancer Roster</h1>
+       <Table responsive striped boarded variant="dark" className="noWrap">
+            <thead >
+              <tr >
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>DOB</th>
+                <th>phone</th>
+                <th>Parent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dancers.map((dancer) => {
+                console.log('line 62',dancer)
+                 return (
                     <tr key={dancer.id}>
-                        <td>{dancer.first}</td>
-                        <td>{dancer.last}</td> 
-                        <td>{dancer.email}</td>
-                        <td>{dancer.phone}</td>
-                        <td>{dancer.dob}</td>
-                        <td>{dancer.age}</td>
-                        <td>{dancer.gender}</td>
-                        <td>{dancer.username}</td>
-                        <td>{dancer.bio}</td>
-                    </tr>
-                  ))}
-                </tbody>
-            </Table>
-        </Container>
-        : null
-    } 
-
-    {
+                      <td>{dancer.first} {dancer.last}</td>
+                      <td>{dancer.email}</td> 
+                      <td>{dancer.gender}</td>
+                      <td>{dancer.age}</td>
+                      <td>{dancer.dob}</td>
+                      <td>{dancer.phone}</td>
+                      <td>{dancer['Parent']['first']} {dancer['Parent']['last']}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+      </Table>
+    </Container>
+        
+  return( 
+     <div>
+       { dancerlist }    
+   
+     {
         error ?
-            <UserNotAuthorized error={error} onCloseButton={onCloseButton} />
-            : null
-    }
-
-    </div> 
-  )
+          <UserNotAuthorized error={error} onCloseButton={onCloseButton} />
+          : null
+     }
+     </div> 
+)  
   
 }
 
