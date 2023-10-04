@@ -1,4 +1,13 @@
 .heading {
+    position:relative;
     color: goldenrod;
-    left: 140px
+    right:150px;
+    top:-100px;
+
+    
+}
+
+.location {
+    position: relative;
+    
 }

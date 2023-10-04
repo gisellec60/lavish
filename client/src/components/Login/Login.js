@@ -40,15 +40,14 @@ export const Login = ({onLogin}) => {
 
   return (
     <div>
-        <Container >
+        <Container className="location" >
+        <h2 className="heading">Login</h2> 
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 
                         initialValues = {initialValues}
                         onSubmit = {onSubmit} >
                         <Form>
-                            <h2 className="heading">Login</h2>  
-                              
                             <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
                             <Field type = 'username' id='username' name='username' />
                             <ErrorMessage name = 'username' />
