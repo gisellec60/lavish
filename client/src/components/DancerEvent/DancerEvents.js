@@ -1,18 +1,19 @@
 import React from 'react'
-import GetForm from "../GetForm/GetForm"
-import ShowDancerEventListing from "../ShowDancerListing/ShowDancerListing"
+import GetEventsForm from "./GetEventsForm"
+import ShowDancerEventsListing from "../DancerEvent/ShowDancerEventsListing"
 import {useState} from "react"
 
 const DancerEvents = () => {
   
-  const [dancer, setDancer] = useState({})
-  const [showDancerEventListing, setShowDancerEventListing] = useState (false)
+  const [dancer, setDancer] = useState([])
+  const [events, setEvents] = useState ([])
+  const [showDancerListing, setShowDancerListing] = useState (false)
   
   return (
     <div>
       {
-        showDancerEventListing ? <ShowDancerEventListing dancer={dancer} setDancer={setDancer}   />  :
-        <GetForm setDancer={setDancer} showDancerEventListing={showDancerEventListing} setShowDancerEventListing={setShowDancerEventListing}  />
+        showDancerListing ? <ShowDancerEventsListing dancer={dancer} setDancer={setDancer} events={events} setEvents={setEvents} />  :
+        <GetEventsForm setDancer={setDancer} setEvents={setEvents} showDancerListing={showDancerListing} setShowDancerListing={setShowDancerListing}  />
       }
     </div>
   )

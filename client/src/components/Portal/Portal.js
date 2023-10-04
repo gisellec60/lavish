@@ -45,7 +45,7 @@ export const Portal = ({dancer}) => {
                             <Link to="/listDancer"> Dancer Information </Link>
                         </li> 
                         <li class="list-group-item">
-                             <Link to="/dancer/practice "> Dancer Practice </Link>
+                             <Link to="/dancer/practices "> Dancer Practice </Link>
                         </li> 
                         <li class="list-group-item">
                              <Link to="/dancer/events "> Dancer Events </Link>
@@ -53,8 +53,12 @@ export const Portal = ({dancer}) => {
                     </ul>
                     <ul class="list-group" className="list-group">
                        <li>Dancers</li> 
-                      <li class="list-group-item">Competitions</li> 
-                      <li class="list-group-item">Practice</li> 
+                       <li class="list-group-item">
+                         <Link to="/dancer/events "> Competitions </Link>
+                        </li> 
+                      <li class="list-group-item">
+                        <Link to="/dancer/practices">Practice </Link>
+                      </li> 
                       <li class="list-group-item">
                          <Link to="/listDancer">Dancer by Name </Link>
                       </li>
