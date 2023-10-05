@@ -46,6 +46,15 @@ export const Navigation = ({setUser, user}) => {
           <NavLink exact to="/login" className="linkStyles"  activeStyle={{color:"white",}} >
             Login
           </NavLink> 
+
+          <NavLink exact to="/admin" className="linkStyles"  activeStyle={{color:"white",}} >
+            Admin
+          </NavLink> 
+                    
+          {user ? <NavLink exact to="/admin" className="linkStyles"  activeStyle={{color:"white",}} >
+            Admin
+          </NavLink> :null  }
+
           <NavLink exact to="/logout" className="linkStyles"  activeStyle={{color:"white",}}
             onClick={() => {handleLogout()}} >
             Logout

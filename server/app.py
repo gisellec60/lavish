@@ -5,9 +5,8 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from flask_marshmallow import Marshmallow 
 from config import app, db, api
-from models import Parent, Dancer, Event, Practice, Emergency, User
+from models import Parent, Dancer, Event, Practice, Emergency, User,Password
 from datetime import date, datetime
-import time
 
 ma = Marshmallow(app)
 
@@ -53,7 +52,8 @@ def keep_age_current():
         dancer.age = today.year - dancer.dob.year - ((today.month, today.day) <
         (dancer.dob.month, dancer.dob.day))
     db.session.commit()    
-#-------------------------------------------Marshmallow----------------------------------------------45122222222222222222222222222222222222222222222222222222222222222222222
+#-------------------------------------------Marshmallow----------------------------------------------
+
 class ParentListSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Parent 
@@ -191,9 +191,10 @@ def login():
             response = make_response ([singular_user_schema.dump(user)]), 201
             return response
         else:
-           return {"message": ["Password incorrect"]}, 401
+           return ["message:", " Password incorrect"], 401
     else:
-        return {"message": ["User does not exist, Please signup"]},401  
+        return ["message:", " User does not exist, Please signup"],401  
+    
 @app.route("/logout", methods =["DELETE"])
 def logout():
     if session.get("username"):
@@ -215,6 +216,17 @@ def check_session():
             ),200
     else:
             return {"Message": "Unauthorized"}, 401  
+
+@app.route("/check_admin_password", methods = ["POST"])
+def check_admin_password():
+     
+     data =request.get_json()
+     password = Password.query.filter_by(id=1).first()
+     if password.authenticate(data['password']):
+        return ["message:", " Password incorrect"], 201
+     else:
+         return ["message:", " Password incorrect"], 401
+
 #----------------------------------End of Custom Routes ------------------------------
 
 class Signup(Resource):
@@ -922,6 +934,29 @@ class DeleteFromEvent(Resource):
        else:               
            return [{"message":"Dancer does not exist"}], 404        
 
+class Admin(Resource):
+    def post(self):
+
+        #Get input for Admin
+        data = request.get_json()
+
+        #add admin to user table
+        user = User(
+            name = data['name'],
+            username = data['email'],
+            isparent = False,
+            isadmin = True
+        )   
+        password = data['password']
+        user.password_hash =  password
+        db.session.add(user)
+        db.session.commit()
+
+        session["username"] = user.username
+        response = make_response (singular_user_schema.dump(user),200)
+        return response
+        
+
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<string:email>', endpoint='dancer/<string:email>')
 api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
@@ -948,10 +983,10 @@ api.add_resource(ModifyPractice, '/practices/modify/<int:id>', endpoint='practic
 api.add_resource(AddToPractice, '/practices/add/<int:id1>/<int:id2>', endpoint='practice/add/id/id')
 api.add_resource(DeleteFromPractice, '/practices/delete/<int:id1>/<int:id2>', endpoint='practice/delete/id/id')
 
-api.add_resource(Users, '/users', endpoint='users')
+api.add_resource(Users, '/users', endpoint='/users')
 api.add_resource(Signup, '/signup', endpoint='/signup')
-api.add_resource(ListBalances, '/balances', endpoint='balances')
-
+api.add_resource(ListBalances, '/balances', endpoint='/balances')
+api.add_resource(Admin, '/admin', endpoint='/admin')
 
 if __name__ == '__main__':
     with app.app_context():

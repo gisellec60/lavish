@@ -3,7 +3,7 @@ import random
 from faker import Faker
 from datetime import date
 from app import app
-from models import db, event_dancer, practice_dancer, Dancer, Parent, Event, Practice, Emergency, User
+from models import db, event_dancer, practice_dancer, Dancer, Parent, Event, Practice, Emergency, User, Password
 
 fake = Faker('en_US')
 
@@ -164,6 +164,12 @@ with app.app_context():
         if not parent.is_balance:
             parent.balance = 0
     
-                
+    admin = Password (
+       name='admin'
+    )
+
+    admin.password_hash = admin.name + 'password'
+    db.session.add(admin) 
+
     db.session.commit()
     print('Seeding Complete')      

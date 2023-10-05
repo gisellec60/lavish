@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css"
 
 const initialValues = {
-    username: 'chanee@gmail.com',
-    password: 'mypasswordisher'
+    username: 'giselle@gmail.com',
+    password: 'thisismypassword'
 }
 
 export const Login = ({onLogin}) => {

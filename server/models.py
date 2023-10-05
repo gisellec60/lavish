@@ -117,6 +117,7 @@ class Practice(db.Model):
                f' Venue:{self.venue} Address: {self.address}'
 
 class Emergency(db.Model):
+
     __tablename__ = "emergencies"   
     
     id = db.Column(db.Integer, primary_key=True)
@@ -131,6 +132,9 @@ class Emergency(db.Model):
                f'Phone: {self.phone} Email:{self.email}' 
     
 class User(db.Model):
+
+    __tablename__ = "users" 
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
@@ -156,3 +160,27 @@ class User(db.Model):
 
     def __repr__(self):
         return f'Id: {self.id} User:{self.username} '
+    
+class Password(db.Model):
+     
+    __tablename__ = "password" 
+
+    id = db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String, nullable=False)
+
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError('Password hashes may not be viewed.')
+            
+    @password_hash.setter
+    def password_hash(self, password):
+        
+        password_hash = bcrypt.generate_password_hash( password.encode('utf-8'))
+        
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
+
