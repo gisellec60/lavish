@@ -15,18 +15,18 @@ import { useState} from "react";
 
 // handle form state 
 const initialValues = {
-    date: "2023-10-12",
-    practice_time :"6-8pm"  ,
-    arrival_time: "5:30pm" ,
-    venue : "SoundView Center",
-    address :"2312 Walbash Rd Durham, NC 27607"
+    date: "",
+    practice_time :""  ,
+    arrival_time: "" ,
+    venue : "",
+    address :""
 }
 
 // Validation using Yup library 
 const validationSchema = Yup.object({
  
     date: Yup.date().required("Date is required YYY-MM-DD"),
-    practice_time: Yup.string().required('range: 9am-5pm'),
+    practice_time: Yup.string().required('format: 09:00-17:00'),
     arrival_time: Yup.string().required("Arrival time required: 8am"),
     venue: Yup.string().required("Venue is required"),
     address: Yup.string().required("Address required"),
@@ -44,7 +44,7 @@ const AddPractice = () => {
     })
 
     // handle form submission onSubmit and formik.handleSubmit 
-    const onSubmit = values => {  
+    const onSubmit = (values,onSubmitProps) => {  
         fetch("/practices/add", {
             method: "POST",
             headers: {
@@ -57,6 +57,8 @@ const AddPractice = () => {
                alert("Event Added succesfully")
                res.json().then((newPractice) => {
                   console.log(newPractice);
+                  onSubmitProps.setSubmitting(false)
+                  onSubmitProps.resetForm()
                 })
      
             }else{
@@ -87,7 +89,7 @@ const AddPractice = () => {
                                 <Field type = 'text' id='date' name='date'/>
                                 <ErrorMessage name = 'date' component={TextError} />
 
-                                <label htmlFor ='practice_time' style={{color: "white"}}>Event Time</label>
+                                <label htmlFor ='practice_time' style={{color: "white"}}>Practice Time</label>
                                 <Field type = 'text' id='practice_time' name='practice_time'/>
                                 <ErrorMessage name = 'practice_time'  component={TextError}/>
 

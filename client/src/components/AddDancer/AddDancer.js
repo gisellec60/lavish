@@ -59,8 +59,6 @@ export const AddDancer = () => {
 
     // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = (values, onSubmitProps) => {  
-        console.log('form data', values)
-        console.log('submit props', onSubmitProps)
         fetch("/dancers/add", {
             method: "POST",
             headers: {

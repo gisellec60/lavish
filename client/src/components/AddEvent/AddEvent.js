@@ -15,18 +15,18 @@ import Button from '@mui/material/Button';
 
 // handle form state 
 const initialValues = {
-    date: "2024-02-07",
-    event_time :"9am-5pm"  ,
-    arrival_time: "8am" ,
-    venue : "Dorton Arena",
-    address :" 4285 Trinity Rd, Raleigh, NC 27607"
+    date: "",
+    event_time :""  ,
+    arrival_time: "" ,
+    venue : "",
+    address :""
 }
 
 // Validation using Yup library 
 const validationSchema = Yup.object({
  
     date: Yup.date().required("Date is required YYY-MM-DD"),
-    event_time: Yup.string().required('range: 9am-5pm'),
+    event_time: Yup.string().required('format: 09:00-17:00'),
     arrival_time: Yup.string().required("Arrival time required: 8am"),
     venue: Yup.string().required("Venue is required"),
     address: Yup.string().required("Address required"),
@@ -45,7 +45,7 @@ const AddEvent = () => {
 
 
     // handle form submission onSubmit and formik.handleSubmit 
-    const onSubmit = values => {  
+    const onSubmit = (values, onSubmitProps)  => {  
         fetch("/events/add", {
             method: "POST",
             headers: {
@@ -58,6 +58,9 @@ const AddEvent = () => {
                alert("Event Added succesfully")
                res.json().then((newEvent) => {
                   console.log(newEvent);
+                  onSubmitProps.setSubmitting(false)
+                  onSubmitProps.resetForm()
+
                 })
      
             }else{
