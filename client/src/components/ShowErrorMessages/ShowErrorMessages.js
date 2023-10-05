@@ -15,7 +15,9 @@ const ShowErrorMessages = ({error, onCloseButton }) => {
         <Col >
            <p className='text'>{error}</p>
            <p>This indicates either the dancer's or parent's email is already
-            in use. Click 'X' to re-enter email. </p>
+            in use or the Parent or dancer does not exist. </p>
+            
+             <p>Verify email is correct then Click 'X' to re-enter email. </p>
             <p>Note: To return to Home page click "Home" on top right, 
             for Portal click "Portal" (must be logged in to access Portal)       
            </p>

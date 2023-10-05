@@ -43,3 +43,7 @@ label {
     position:relative;
     top:140px;
   }
+
+  .error {
+    color:red;
+  }

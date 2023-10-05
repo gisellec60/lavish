@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 // handle form state 
-const initialValues = {
+ const initialValues = {
     first: '',
     last: '',
     email: '',
@@ -25,14 +25,17 @@ const initialValues = {
     bio: '',
     image: '',
     password: '',
-    username:''
+    username:'' ,
+    pemail:''
 }
+
 
 // Validation using Yup library 
 const validationSchema = Yup.object({
 first: Yup.string().required('First Name is Required'),
 last: Yup.string().required('Last Name is Required'),
 email:Yup.string().email('invaled email format').required('E-mail is Required'),
+pemail:Yup.string().email('invaled email format').required('E-mail is Required'),
 phone: Yup.string().required('Phone number is Required'),
 gender: Yup.string().required("Gender is required"),
 dob: Yup.date().required("Date of birth required YYY-MM-DD"),
@@ -40,6 +43,7 @@ bio: Yup.string().min(50,"Must be at least 50 chars long").required('Must enter 
 age: Yup.number().min(10,"must be at least 10yrs" ).max(20,"Age must be less than 21yrs").integer().positive().required("Enter Age"),
 image: Yup.string().url().nullable(),
 password: Yup.string().required("Must enter a password"),
+
 })
 
 export const AddDancer = () => {
@@ -54,7 +58,9 @@ export const AddDancer = () => {
     })
 
     // handle form submission onSubmit and formik.handleSubmit 
-    const onSubmit = values => {  
+    const onSubmit = (values, onSubmitProps) => {  
+        console.log('form data', values)
+        console.log('submit props', onSubmitProps)
         fetch("/dancers/add", {
             method: "POST",
             headers: {
@@ -67,7 +73,8 @@ export const AddDancer = () => {
                alert("Dancer Added succesful")
                res.json().then((newData) => {
                   console.log(newData);
-                  navigate("/portal")
+                  onSubmitProps.setSubmitting(false)
+                  onSubmitProps.resetForm()
                 })
      
             }else{
@@ -78,6 +85,7 @@ export const AddDancer = () => {
                 }        
     
         })
+        
     } 
     
     return (
@@ -93,15 +101,15 @@ export const AddDancer = () => {
                         {
                            addDancer ?
                             
-                                <Form>
+                                <Form >
                                     <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
                                     <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                                     <Field type = 'text' id='first' name='first' />
                                     <ErrorMessage name = 'first' component={TextError} />
 
                                     <label htmlFor ='last' style={{color: "white"}}>Last Name</label>
-                                    <Field type = 'text' id='last' name='last' component={TextError} />
-                                    <ErrorMessage name = 'last' />
+                                    <Field type = 'text' id='last' name='last' />
+                                    <ErrorMessage name = 'last' component={TextError} />
 
                                     <label htmlFor ='phone' style={{color: "white"}}>Phone</label>
                                     <Field type = 'text' id='phone' name='phone'/>
@@ -135,7 +143,11 @@ export const AddDancer = () => {
                                     <Field type = 'email' id='email' name='email' />
                                     <ErrorMessage name = 'email' component={TextError}/>
 
-                                    <Stack spacing={2} direction="row">    
+                                    <label htmlFor ='pemail' style={{color: "white"}}>Parent Email or Username</label>
+                                    <Field type = 'pemail' id='pemail' name='pemail' />
+                                    <ErrorMessage name = 'pemail' component={TextError}/>
+                                   
+                                    <Stack spacing={3} direction="row">    
                                         <Button variant="contained" type="submit">Submit</Button>
                                         <Button variant="contained" onClick={() => {setAddDancer(null);navigate("/portal")}} >Finish</Button>
                                     </Stack>
@@ -153,23 +165,7 @@ export const AddDancer = () => {
             : null
         }
         </div> 
-     </>   
+     </>
      )
 
 }
-
-// handle form state 
-// const initialValues = {
-//     first: 'Deja',
-//     last: 'Thompson',
-//     email: 'deja@gmail.com',
-//     phone: '919-123-1234',
-//     gender: 'female',
-//     age: 16,
-//     dob: '2003-02-01',
-//     bio: 'I started off in cheer but found that my passion was in majorette dancing.',
-//     image: '',
-//     password: 'mypasswordisme',
-//     username:'chanee@gmail.com'
-// }
-

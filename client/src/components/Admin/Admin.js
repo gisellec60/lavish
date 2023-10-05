@@ -12,7 +12,7 @@ import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
 import { useState} from "react";
 import { useNavigate } from 'react-router-dom';
 
-const initialValues = {
+const adminValue = {
     name: 'Giselle Smith',
     email: 'giselle@gmail.com',
     password: "thisismypassword"
@@ -46,7 +46,7 @@ export const Admin = ({onSignUp}) => {
     })
 
     // handle form submission for admin signup 
-    const onSubmit = values => {  
+    const addAdmin = values => {  
            
         fetch("/admin",{
             method: "POST",
@@ -108,9 +108,9 @@ export const Admin = ({onSignUp}) => {
                    {
                         password  ?
                             <Formik 
-                                initialValues = {initialValues}
+                                initialValues = {adminValue}
                                 validationSchema = {validationSchema}
-                                onSubmit = {onSubmit} >
+                                onSubmit = {addAdmin} >
                                     <Form>
                                         <h2 className="heading">Admin Page</h2>
                                         <label className="labelfonts" style={{color: "goldenrod"}}>Admin Information</label>    
@@ -156,8 +156,3 @@ export const Admin = ({onSignUp}) => {
      </>  
    )
 }
-// const initialValues = {
-//     name: '',
-//     email: '',
-//     password: "thisismypassworddontyoucopyit"
-// }

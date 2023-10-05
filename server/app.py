@@ -361,9 +361,9 @@ class DeleteDancer(Resource):
                 db.session.commit() 
                 return {},204 
             else:
-                return ["Message","User Not Authorized"], 401  
+                return ["Message: ","User Not Authorized"], 401  
        else:
-            return ["Message","User Not Found"], 404  
+            return ["Message: ","User Not Found"], 404  
 
 class Dancers(Resource):
     def get(self):
@@ -390,60 +390,62 @@ class AddDancer(Resource):
         data = request.get_json()
 
         user = User.query.filter_by(username=session.get("username")).first()
+        parent = Parent.query.filter_by(username=data['pemail']).first() 
+
+        if parent:
+            if parent.username == user.username or user.isadmin:
                 
-        if  user.isparent or session.get('isadmin') :
+                #python date
+                birthdate = datetime.strptime(data['dob'],'%Y-%m-%d').date()
 
-            #Get input dancer
-            birthdate = datetime.strptime(data['dob'],'%Y-%m-%d').date()
-            
-            parent = Parent.query.filter_by(username=user.username).first()
+                #Get emergency contact    
+                dancers = Dancer.query.all()
+                for dancer in dancers:
+                    if dancer.parent_id == parent.id:
+                       new_dancer_emergency_id = dancer.emergency_id
 
-            dancers = Dancer.query.all()
-            
-            for dancer in dancers:
-                if dancer.parent_id == parent.id:
-                   new_dancer_emergency_id = dancer.emergency_id
+                dancer = Dancer(
+                    first = data['first'],
+                    last = data['last'],
+                    email = data['email'],
+                    phone = data['phone'],
+                    gender = data['gender'],
+                    age = data["age"],
+                    dob = birthdate,
+                    bio = data['bio'],
+                    image = data['image'],
+                    parent_id = parent.id,
+                    emergency_id = new_dancer_emergency_id
+                )
+                dancer.username = dancer.email
 
-            dancer = Dancer(
-                first = data['first'],
-                last = data['last'],
-                email = data['email'],
-                phone = data['phone'],
-                gender = data['gender'],
-                age = data["age"],
-                dob = birthdate,
-                bio = data['bio'],
-                image = data['image'],
-                parent_id = parent.id,
-                emergency_id = new_dancer_emergency_id
-            )
-            dancer.username = dancer.email
+                user = User(
+                    name = f"{dancer.first} {dancer.last}",
+                    username = dancer.username,
+                    isparent = False,
+                    isadmin = False
+                )   
+                user.password_hash = user.username + 'password'
+                
+                #Make sure email is unique.
+                try:
+                    db.session.add(dancer)
+                    db.session.add(user)
+                    db.session.commit()
+                except IntegrityError as error:
+                    for error in error.orig.args:
+                        if "UNIQUE" in error:
+                            response = make_response(['Message:', " Email already taken"],422)
+                            return response
+                        elif "CHECK" in error:
+                            return (["Message"," Bio needs to be at least 50 chars"],422)
 
-            user = User(
-                name = f"{dancer.first} {dancer.last}",
-                username = dancer.username,
-                isparent = False,
-                isadmin = False
-            )   
-            user.password_hash = user.username + 'password'
-            
-            #Make sure email is unique.
-            try:
-                db.session.add(dancer)
-                db.session.add(user)
-                db.session.commit()
-            except IntegrityError as error:
-                for error in error.orig.args:
-                    if "UNIQUE" in error:
-                        response = make_response(['Message:', " Email already taken"],422)
-                        return response
-                    elif "CHECK" in error:
-                        return (["Message"," Bio needs to be at least 50 chars"],422)
-
-            response = make_response([singular_dancer_schema.dump(dancer)], 201)
-            return response
+                response = make_response([singular_dancer_schema.dump(dancer)], 201)
+                return response
+            else:
+                return  ["Message:"," User Not Authorized"], 401
         else:
-            return  ["Message:"," User Not Authorized"], 401
+            return  ["Message:","Parent does not exist"], 401    
 
 class ModifyDancer(Resource):
     def patch(self,id):
