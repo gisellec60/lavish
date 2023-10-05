@@ -10,9 +10,7 @@ import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
 
 const initialValues = {
-    first: 'Deja',
-    last: 'Thompson',
-    username: 'de4ja@gmail.com'
+    email: ''
 }
 
 export const DeleteDancer = () => {
@@ -26,7 +24,7 @@ export const DeleteDancer = () => {
     const navigate = useNavigate()
 
     const onSubmit = values => {  
-        fetch(`/dancers/delete/${values["username"]}`,{
+        fetch(`/dancers/delete/${values["email"]}`,{
             method: "Delete"
         })
         .then(res => {
@@ -51,18 +49,10 @@ export const DeleteDancer = () => {
                         initialValues = {initialValues}
                         onSubmit = {onSubmit} >
                         <Form>
-                            <h2 className="heading">Delete Dancer</h2>     
-                            <label htmlFor ='first' style={{color: "white"}}>First Name</label>
-                            <Field type = 'text' id='first' name='first' />
-                            <ErrorMessage name = 'first' />
 
-                            <label htmlFor ='last' style={{color: "white"}}>Last Name</label>
-                            <Field type = 'text' id='last' name='last' />
-                            <ErrorMessage name = 'last' />
-
-                            <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
-                            <Field type = 'email' id='username' name='username' />
-                            <ErrorMessage name = 'username' />
+                            <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
+                            <Field type = 'email' id='email' name='email' />
+                            <ErrorMessage name = 'email' />
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>

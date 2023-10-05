@@ -9,11 +9,10 @@ import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
-import ShowDancerListing from '../ShowDancerListing/ShowDancerListing';
 
    // handle form state 
    const initialValues = {
-    email: 'phoenix@gmail.com'
+    email: ''
     }
 
     // Validation using Yup library 
