@@ -35,7 +35,11 @@ label {
  
   .heading {
     position:relative;
-    left:550px;
-    top:-10px; 
+    left:280px;
+    top:-50px; 
   }
   
+  .location-signup{
+    position:relative;
+    top:140px;
+  }

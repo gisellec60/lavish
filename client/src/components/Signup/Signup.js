@@ -93,8 +93,7 @@ export const Signup = ({onSignUp}) => {
 
     return (
       <>
-      <Container >
-        <h3 className="heading">SignUp Page</h3>
+      <Container className="location-signup">
             <Row>
                 <Col></Col> 
                 <Col xs={12} md={8}>     
@@ -103,6 +102,7 @@ export const Signup = ({onSignUp}) => {
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
+                            <h2 className="heading">SignUp Page</h2>
                             <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                             <Field type = 'text' id='first' name='first' />
