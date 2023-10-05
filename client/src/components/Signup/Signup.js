@@ -3,7 +3,6 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
 import "./styles.css"
-import {useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
@@ -60,7 +59,6 @@ e_phone: Yup.string().required('Phone number is Required')
 
 export const Signup = ({onSignUp}) => {
     const [error, setError] = useState(null)
-    const navigate = useNavigate()
 
     const closeErrorButton = ((error) => {
         setError(null)
@@ -96,6 +94,7 @@ export const Signup = ({onSignUp}) => {
     return (
       <>
       <Container >
+        <h3 className="heading">SignUp Page</h3>
             <Row>
                 <Col></Col> 
                 <Col xs={12} md={8}>     
@@ -104,7 +103,6 @@ export const Signup = ({onSignUp}) => {
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
-                            <h1 className="heading">SignUp Page</h1>
                             <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                             <Field type = 'text' id='first' name='first' />

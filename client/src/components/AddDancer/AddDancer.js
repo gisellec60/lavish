@@ -15,17 +15,17 @@ import Button from '@mui/material/Button';
 
 // handle form state 
 const initialValues = {
-    first: 'Deja',
-    last: 'Thompson',
-    email: 'deja@gmail.com',
-    phone: '919-123-1234',
-    gender: 'female',
-    age: 16,
-    dob: '2003-02-01',
-    bio: 'I started off in cheer but found that my passion was in majorette dancing.',
+    first: '',
+    last: '',
+    email: '',
+    phone: '',
+    gender: '',
+    age: '',
+    dob: '',
+    bio: '',
     image: '',
-    password: 'mypasswordisme',
-    username:'chanee@gmail.com'
+    password: '',
+    username:''
 }
 
 // Validation using Yup library 
@@ -158,4 +158,18 @@ export const AddDancer = () => {
 
 }
 
+// handle form state 
+// const initialValues = {
+//     first: 'Deja',
+//     last: 'Thompson',
+//     email: 'deja@gmail.com',
+//     phone: '919-123-1234',
+//     gender: 'female',
+//     age: 16,
+//     dob: '2003-02-01',
+//     bio: 'I started off in cheer but found that my passion was in majorette dancing.',
+//     image: '',
+//     password: 'mypasswordisme',
+//     username:'chanee@gmail.com'
+// }
 
