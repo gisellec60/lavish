@@ -97,6 +97,11 @@ const ShowModifyDancer = () => {
                     <label htmlFor ='bio' className="bio" style={{color: "white"}}>Bio</label>
                     <Field as = 'textarea' id='bio' name='bio' />
                     <ErrorMessage name = 'bio' />
+
+                    <label htmlFor ='password' style={{color: "white"}}>Password</label>
+                    <Field type = 'password' id='password' name='password' />
+                    <ErrorMessage name = 'password'/>
+
                     {' '}
                     <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                 </Form>

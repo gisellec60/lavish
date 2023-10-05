@@ -14,7 +14,7 @@ import {DeleteDancer} from "./components/DeleteDancer/DeleteDancer"
 // import {SignUpComplete} from "./components/SignUpComplete/SignUpComplete"
 import ModifyDancer from "./components/ModifyDancer/ModifyDancer"
 import ListDancer from "./components/ListDancer/ListDancer"
-import ModifyForm from "./components/GetForm/ModifyForm"
+// import ModifyForm from "./components/GetForm/ModifyForm"
 // import ShowErrorMessages  from "./components/ShowErrorMessages/ShowErrorMessages"
 import AllDancers from "./components/AllDancers/AllDancers"
 
