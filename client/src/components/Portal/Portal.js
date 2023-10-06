@@ -26,7 +26,7 @@ export const Portal = ({dancer}) => {
            <Row>
                <Col className="header">
                     <div className="lavish-heading">
-                        Lavish Divas Majorett Dance Portal
+                        Lavish Divas Majorette Dance Portal
                     </div>   
                 </Col>
             </Row> 

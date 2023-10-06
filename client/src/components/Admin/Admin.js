@@ -8,13 +8,13 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import {TextError} from "../TextError"
-import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
+import UserExistError from '../ErrorMessages/UserExistError';
 import { useState} from "react";
 
 const adminValue = {
     name: '',
     email: '',
-    password: "",
+    password: '',
     picked: '',
 }
 
@@ -68,7 +68,7 @@ export const Admin = ({onSignUp}) => {
         })
     }          
     
-    const checkPassword = values => {  
+    const checkPassword = (values, onSubmitProps) => {  
         fetch("/check_admin_password",{
             method: "POST",
             headers: {
@@ -84,7 +84,9 @@ export const Admin = ({onSignUp}) => {
                .then((admin) => {
                 console.log(admin);
                 setPassword("yes")
-                })
+                onSubmitProps.setSubmitting(false)
+                onSubmitProps.resetForm()
+            })
             }else{
                 res.json().then((error)=> {
                 console.log("Error Returned",error);    
@@ -158,7 +160,7 @@ export const Admin = ({onSignUp}) => {
         </Container>
         <div>
         {
-            error ? <ShowErrorMessages error = {error} onCloseButton={closeErrorButton}/>
+            error ? <UserExistError error = {error} onCloseButton={closeErrorButton}/>
             : null
         }
        </div> 

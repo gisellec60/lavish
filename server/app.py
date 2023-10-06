@@ -970,12 +970,12 @@ class Admin(Resource):
         if user.isadmin:
             #Get input for Admin
             data = request.get_json()
-            print("picked", data["picked"] ) 
             if data["picked"] == "true":
-                print ("email",data['email'])
                 p_user = User.query.filter_by(username=data["email"]).first()
-                print("user",p_user)
-                p_user.isadmin = True
+                if p_user:
+                    p_user.isadmin = True
+                else:
+                    return ["Message: ","Parent Does Exist"], 401 
             else:
                 #add admin to user table
                 user = User(
