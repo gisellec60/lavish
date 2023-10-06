@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css"
 
 const initialValues = {
-    username: 'giselle@gmail.com',
+    username: 'phoenix@gmail.com',
     password: 'thisismypassword'
 }
 
