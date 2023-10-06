@@ -26,7 +26,6 @@ greenlet==3.0.0; platform_machine == 'aarch64' or (platform_machine == 'ppc64le'
 gunicorn==21.2.0
 idna==3.4; python_version >= '3.5'
 ipdb==0.13.13
-ipython==8.12.3; python_version > '3.6' and python_version < '3.11'
 itsdangerous==2.1.2; python_version >= '3.7'
 jedi==0.19.1; python_version >= '3.6'
 jinja2==3.1.2; python_version >= '3.7'
