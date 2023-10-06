@@ -16,6 +16,9 @@ flask-bcrypt = "==1.0.1"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 cors = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+werkzeug = "==2.2.2"
 
 [dev-packages]
 

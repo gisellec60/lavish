@@ -1,7 +1,7 @@
 Tables:
     dancers
     parents
-    events
+    
     practice
     events_practice_dancers_parents
     emergency_contact
