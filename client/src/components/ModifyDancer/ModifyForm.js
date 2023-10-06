@@ -71,7 +71,7 @@ const ModifyForm = ({dancer}) => {
                             <Field type = 'text' id='phone' name='phone'/>
                             <ErrorMessage name = 'phone' />
   
-                             <label htmlFor ='image' style={{color: "white"}}>Image</label>
+                            <label htmlFor ='image' style={{color: "white"}}>Image</label>
                             <Field type = 'text' id='image' name='image'/>
                             <ErrorMessage name = 'image' />
 
