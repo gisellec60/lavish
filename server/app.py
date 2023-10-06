@@ -971,10 +971,11 @@ class Admin(Resource):
             #Get input for Admin
             data = request.get_json()
             print("picked", data["picked"] ) 
-            if data["picked"]:
-                print ("do you get here?")
-                puser = User.query.filter_by(username=data["email"]).first()
-                puser.isadmin = True
+            if data["picked"] == "true":
+                print ("email",data['email'])
+                p_user = User.query.filter_by(username=data["email"]).first()
+                print("user",p_user)
+                p_user.isadmin = True
             else:
                 #add admin to user table
                 user = User(

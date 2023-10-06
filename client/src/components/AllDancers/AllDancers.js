@@ -30,7 +30,7 @@ const AllDancers = ({onCloseButton}) => {
     }, []);
 
    const dancerlist = 
-     <Container fluid='md' className="event-container">
+     <Container fluid='md' className="font-size ">
       <h3>Dancer Roster</h3>
        <Table responsive striped bordered hover variant="dark" className="table-size">
             <thead >

@@ -3,6 +3,7 @@
     position: relative;
     background-color: goldenrod;
     top:150px;
-    border:5px
-
+    border:5px;
+    font-size:medium;
+    font-style: normal;
 }

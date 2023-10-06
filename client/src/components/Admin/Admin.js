@@ -22,12 +22,12 @@ const passwordValue = {
     password: ""
 }
 
-// const validationSchema = Yup.object({
-//     name: Yup.string().required('First Name is Required'),
-//     email:Yup.string().email('invaled email format').required('E-mail is Required'),
-//     password: Yup.string().required("Must enter a password"),
-//     picked: Yup.string().required("Select One")
-// })
+const validationSchema = Yup.object({
+    name: Yup.string().required('First Name is Required'),
+    email:Yup.string().email('invaled email format').required('E-mail is Required'),
+    password: Yup.string().required("Must enter a password"),
+    picked: Yup.string().required("Select One")
+})
 
 const passwordSchema = Yup.object({
     password: Yup.string().required("Must enter a password"),
@@ -104,7 +104,7 @@ export const Admin = ({onSignUp}) => {
                         password  ?
                             <Formik 
                                 initialValues = {adminValue}
-                                // validationSchema = {validationSchema}
+                                validationSchema = {validationSchema}
                                 onSubmit = {addAdmin} >
                                     <Form>
                                         <h2 className="heading">Admin Page</h2>
@@ -120,8 +120,10 @@ export const Admin = ({onSignUp}) => {
                                         <label htmlFor ='password' style={{color: "white"}}> Password</label>
                                         <Field type = 'password' id='password' name='password' />
                                         <ErrorMessage name = 'password' component={TextError}/>
+                                        
                                         <div role="group" className="my-radio-group">
                                             <h3 style={{color: 'white'}} className="border-parent"> Parent? </h3>
+
                                             <label htmlFor ='true' style={{color: "white"}} className="true"> True 
                                             <Field type = 'radio' id='true' name='picked' value="true" />
                                             </label>
@@ -141,7 +143,8 @@ export const Admin = ({onSignUp}) => {
                                     validationSchema = {passwordSchema}
                                     onSubmit = {checkPassword} >   
                                     <Form>
-                                        <label htmlFor ='password' style={{color: "white"}} className="location-admin"> Password</label>
+                                        <h3 style={{color: "white"}}>Admin Password</h3>
+                                        <label htmlFor ='password' className="location-admin"> </label>
                                         <Field type = 'password' id='password' name='password' />
                                         <ErrorMessage name = 'password' component={TextError}/>
                                             
