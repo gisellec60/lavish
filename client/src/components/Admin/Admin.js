@@ -10,26 +10,23 @@ import Button from 'react-bootstrap/Button';
 import {TextError} from "../TextError"
 import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
 import { useState} from "react";
-import { useNavigate } from 'react-router-dom';
 
 const adminValue = {
-    name: 'Giselle Smith',
-    email: 'giselle@gmail.com',
-    password: "thisismypassword"
+    name: '',
+    email: '',
+    password: ""
 }
 
 const passwordValue = {
-    password: "adminpassword"
+    password: ""
 }
 
-// Validation for admin signup 
 const validationSchema = Yup.object({
     name: Yup.string().required('First Name is Required'),
     email:Yup.string().email('invaled email format').required('E-mail is Required'),
     password: Yup.string().required("Must enter a password"),
 })
 
-// Validation for admin signup 
 const passwordSchema = Yup.object({
     password: Yup.string().required("Must enter a password"),
 })
@@ -39,13 +36,10 @@ export const Admin = ({onSignUp}) => {
     const [error, setError] = useState(null)
     const [password, setPassword] = useState(null)
     
-    const navigate = useNavigate
-
-    const closeErrorButton = ((error) => {
+    const closeErrorButton = (() => {
         setError(null)
     })
 
-    // handle form submission for admin signup 
     const addAdmin = values => {  
            
         fetch("/admin",{
@@ -72,7 +66,6 @@ export const Admin = ({onSignUp}) => {
         })
     }          
     
-    //check password
     const checkPassword = values => {  
         fetch("/check_admin_password",{
             method: "POST",

@@ -13,7 +13,6 @@ import { useState} from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-// handle form state 
 const initialValues = {
     date: "",
     event_time :""  ,
@@ -22,7 +21,6 @@ const initialValues = {
     address :""
 }
 
-// Validation using Yup library 
 const validationSchema = Yup.object({
  
     date: Yup.date().required("Date is required YYY-MM-DD"),
@@ -39,12 +37,10 @@ const AddEvent = () => {
 
     const navigate = useNavigate()
 
-    const closeErrorButton = ((error) => {
+    const closeErrorButton = (() => {
         setError(null)
     })
 
-
-    // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = (values, onSubmitProps)  => {  
         fetch("/events/add", {
             method: "POST",

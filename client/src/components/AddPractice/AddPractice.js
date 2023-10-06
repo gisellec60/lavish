@@ -13,7 +13,6 @@ import {useNavigate } from "react-router-dom"
 import ShowErrorMessages from '../ShowErrorMessages/ShowErrorMessages';
 import { useState} from "react";
 
-// handle form state 
 const initialValues = {
     date: "",
     practice_time :""  ,
@@ -22,7 +21,6 @@ const initialValues = {
     address :""
 }
 
-// Validation using Yup library 
 const validationSchema = Yup.object({
  
     date: Yup.date().required("Date is required YYY-MM-DD"),
@@ -39,11 +37,10 @@ const AddPractice = () => {
 
     const navigate = useNavigate()
 
-    const closeErrorButton = ((error) => {
+    const closeErrorButton = (() => {
         setError(null)
     })
 
-    // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = (values,onSubmitProps) => {  
         fetch("/practices/add", {
             method: "POST",

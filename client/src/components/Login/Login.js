@@ -5,15 +5,23 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
+import LoginError from '../ErrorMessages/LoginError'
+import { useState } from "react"
+
 import "./styles.css"
 
 const initialValues = {
-    username: 'phoenix@gmail.com',
-    password: 'thisismypassword'
+    username: '',
+    password: ''
 }
 
 export const Login = ({onLogin}) => {
-    
+
+    const [error, setError] = useState(null)
+
+    const closeErrorButton = ((error) => {
+        setError(null)
+    })    
     const navigate = useNavigate()
 
     const onSubmit = values => {  
@@ -32,7 +40,7 @@ export const Login = ({onLogin}) => {
             }else { 
                res.json().then((error) => { 
                   console.log("Error returned", error)
-                  navigate('/signup')
+                  setError(error)
                 })
             }   
         })
@@ -62,7 +70,10 @@ export const Login = ({onLogin}) => {
                 </Col>  
             </Row>  
         </Container>        
-
+        {
+            error ? <LoginError error = {error} onCloseButton={closeErrorButton} />
+            : null
+        }
     </div>
   )
 }

@@ -13,7 +13,6 @@ import { useState} from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-// handle form state 
  const initialValues = {
     first: '',
     last: '',
@@ -53,11 +52,10 @@ export const AddDancer = () => {
 
     const navigate = useNavigate()
 
-    const closeErrorButton = ((error) => {
+    const closeErrorButton = (() => {
         setError(null)
     })
 
-    // handle form submission onSubmit and formik.handleSubmit 
     const onSubmit = (values, onSubmitProps) => {  
         fetch("/dancers/add", {
             method: "POST",

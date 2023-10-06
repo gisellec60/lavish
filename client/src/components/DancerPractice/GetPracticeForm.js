@@ -9,12 +9,10 @@ import Button from 'react-bootstrap/Button'
 import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
 
-   // handle form state 
    const initialValues = {
-    email: 'fernandezchristopher@yahoo.com'
+    email: ''
     }
 
-    // Validation using Yup library 
     const validationSchema = Yup.object({
         email:Yup.string().email('invaled email format').required('E-mail is Required')
     })
@@ -24,7 +22,7 @@ const GetPracticeForm = ({setDancer,setPractices, showDancerListing,setShowDance
 
     const [error, setError] = useState(null)
     
-    const closeErrorButton = ((error) => {
+    const closeErrorButton = (() => {
         setError(null)
     })
 

@@ -47,10 +47,6 @@ export const Navigation = ({setUser, user}) => {
             Login
           </NavLink> 
 
-          {/* <NavLink exact to="/admin" className="linkStyles"  activeStyle={{color:"white",}} >
-            Admin
-          </NavLink>  */}
-
           {user ? <NavLink exact to="/admin" className="linkStyles"  activeStyle={{color:"white",}} >
             Admin
           </NavLink> :null  }

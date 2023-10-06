@@ -5,7 +5,6 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
-import "./styles.css"
 import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
 
@@ -13,11 +12,11 @@ const initialValues = {
     email: ''
 }
 
-export const DeleteDancer = () => {
+export const DeleteDancer = ({setUser}) => {
 
     const [error, setError] = useState(null)
 
-    const closeErrorButton = ((error) => {
+    const closeErrorButton = (() => {
         setError(null)
     })
 
@@ -30,10 +29,16 @@ export const DeleteDancer = () => {
         .then(res => {
             if (res.ok){ 
                 alert("Dancer was deleted succesfully")
-                navigate("/portal")  
+                res.json().then((res)=> {
+                    console.log("Response", res)  
+                    if (res != null){
+                        setUser(null)
+                        navigate("/")  
+                    }    
+                })     
             }else{
                 res.json().then((error)=> {
-                    console.log("Error Returned",error);    
+                    console.log("Error Returned",error)    
                     setError(error)
                 })
             }    
