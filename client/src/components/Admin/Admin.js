@@ -14,18 +14,20 @@ import { useState} from "react";
 const adminValue = {
     name: '',
     email: '',
-    password: ""
+    password: "",
+    picked: '',
 }
 
 const passwordValue = {
     password: ""
 }
 
-const validationSchema = Yup.object({
-    name: Yup.string().required('First Name is Required'),
-    email:Yup.string().email('invaled email format').required('E-mail is Required'),
-    password: Yup.string().required("Must enter a password"),
-})
+// const validationSchema = Yup.object({
+//     name: Yup.string().required('First Name is Required'),
+//     email:Yup.string().email('invaled email format').required('E-mail is Required'),
+//     password: Yup.string().required("Must enter a password"),
+//     picked: Yup.string().required("Select One")
+// })
 
 const passwordSchema = Yup.object({
     password: Yup.string().required("Must enter a password"),
@@ -41,7 +43,7 @@ export const Admin = ({onSignUp}) => {
     })
 
     const addAdmin = values => {  
-           
+        console.log("form data",values)   
         fetch("/admin",{
             method: "POST",
             headers: {
@@ -102,7 +104,7 @@ export const Admin = ({onSignUp}) => {
                         password  ?
                             <Formik 
                                 initialValues = {adminValue}
-                                validationSchema = {validationSchema}
+                                // validationSchema = {validationSchema}
                                 onSubmit = {addAdmin} >
                                     <Form>
                                         <h2 className="heading">Admin Page</h2>
@@ -118,7 +120,18 @@ export const Admin = ({onSignUp}) => {
                                         <label htmlFor ='password' style={{color: "white"}}> Password</label>
                                         <Field type = 'password' id='password' name='password' />
                                         <ErrorMessage name = 'password' component={TextError}/>
+                                        <div role="group" className="my-radio-group">
+                                            <h3 style={{color: 'white'}} className="border-parent"> Parent? </h3>
+                                            <label htmlFor ='true' style={{color: "white"}} className="true"> True 
+                                            <Field type = 'radio' id='true' name='picked' value="true" />
+                                            </label>
 
+                                            <label htmlFor ='false' style={{color: "white"}} className="false"> False 
+                                            <Field type = 'radio' id='false' name='picked' value="false" />
+                                            </label>
+
+                                            <ErrorMessage name = 'isparent' component={TextError}/>
+                                        </div>        
                                         <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                                     </Form>
                                 </Formik>  

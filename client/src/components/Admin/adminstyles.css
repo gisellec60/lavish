@@ -12,3 +12,20 @@
     position:relative;
     top:150px;
 }
+
+.my-radio-group{
+    display:flex;
+    border:5px;
+
+}
+
+.true {
+    position:relative;
+    left:10px;
+    border:5px;
+}
+.false {
+    position:relative;
+    left:20px;
+    border:px;
+}
