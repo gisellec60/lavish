@@ -31,11 +31,12 @@ const AllDancers = ({onCloseButton}) => {
 
    const dancerlist = 
      <Container fluid='md' className="event-container">
-      <h1>Dancer Roster</h1>
-       <Table responsive striped boarded variant="dark" className="noWrap">
+      <h3>Dancer Roster</h3>
+       <Table responsive striped bordered hover variant="dark" className="table-size">
             <thead >
               <tr >
-                <th>Name</th>
+                <th>#</th>
+                <th >Name</th>
                 <th>Email</th>
                 <th>Gender</th>
                 <th>Age</th>
@@ -46,10 +47,10 @@ const AllDancers = ({onCloseButton}) => {
             </thead>
             <tbody>
               {dancers.map((dancer) => {
-                console.log('line 62',dancer)
                  return (
                     <tr key={dancer.id}>
-                      <td>{dancer.first} {dancer.last}</td>
+                      <th scope="row">{dancer.id}</th>
+                      <td >{dancer.first} {dancer.last}</td>
                       <td>{dancer.email}</td> 
                       <td>{dancer.gender}</td>
                       <td>{dancer.age}</td>
@@ -61,7 +62,7 @@ const AllDancers = ({onCloseButton}) => {
               })}
             </tbody>
       </Table>
-    </Container>
+    </Container> 
         
   return( 
      <div>
