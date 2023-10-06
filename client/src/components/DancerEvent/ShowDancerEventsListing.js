@@ -12,6 +12,7 @@ function ShowDancerEventsListing({dancer, events}) {
         <Table responsive striped boarded variant="dark">
           <thead >
               <tr >
+                  <th>#</th>
                   <th>Date</th>
                   <th>event Time</th>
                   <th>Arrival Time</th>
@@ -20,9 +21,11 @@ function ShowDancerEventsListing({dancer, events}) {
               </tr>
           </thead>
           <tbody>
-          {events.map((event) => {
+          { 
+            events.map((event) => {
                     return (
                         <tr key={event.id}>
+                            <th>{event.id}</th>
                             <td>{event.date}</td>
                             <td>{event.event_time}</td> 
                             <td>{event.arrival_time}</td>

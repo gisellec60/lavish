@@ -9,9 +9,10 @@ function ShowDanceerPracticeListing({dancer, practices}) {
   const practicelist =
     <Container fluid="md" className="list-container">
       <h3 className="nameHeading">{dancer['first']} {dancer['last']}</h3>
-        <Table responsive striped boarded variant="dark">
+        <Table responsive striped boarded hoover variant="dark">
           <thead >
               <tr >
+                  <th>#</th>                    
                   <th>Date</th>
                   <th>practice Time</th>
                   <th>Arrival Time</th>
@@ -23,6 +24,7 @@ function ShowDanceerPracticeListing({dancer, practices}) {
           {practices.map((practice) => {
                     return (
                         <tr key={practice.id}>
+                          <th>{practice.id}</th>
                             <td>{practice.date}</td>
                             <td>{practice.practice_time}</td> 
                             <td>{practice.arrival_time}</td>

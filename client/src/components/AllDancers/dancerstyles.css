@@ -2,22 +2,3 @@
     white-space: normal;
 }
 
-.col-width {
-    position:relative;
-    width:10px;
-}
-
-.event-container {
-    position: relative;
-    /* background-color: goldenrod; */
-    top:150px;
-    border:5px;
-    width:1150px;
-
-}
-
-.table-size{
-    position:relative;
-    width:500px;
-
-}

@@ -50,12 +50,12 @@ const AllDancers = ({onCloseButton}) => {
                  return (
                     <tr key={dancer.id}>
                       <th scope="row">{dancer.id}</th>
-                      <td >{dancer.first} {dancer.last}</td>
-                      <td>{dancer.email}</td> 
-                      <td>{dancer.gender}</td>
-                      <td>{dancer.age}</td>
-                      <td>{dancer.dob}</td>
-                      <td>{dancer.phone}</td>
+                        <td >{dancer.first} {dancer.last}</td>
+                        <td>{dancer.email}</td> 
+                        <td>{dancer.gender}</td>
+                        <td>{dancer.age}</td>
+                        <td>{dancer.dob}</td>
+                        <td>{dancer.phone}</td>
                       <td>{dancer['Parent']['first']} {dancer['Parent']['last']}</td>
                   </tr>
                 )

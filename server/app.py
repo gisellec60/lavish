@@ -476,6 +476,7 @@ class ModifyDancer(Resource):
                 data = request.json
                 for key,value in data.items():
                     if key == "first":
+                        print("this is value of first",value)
                         dancer.first=value
                     elif key == "last":
                         dancer.last=value
