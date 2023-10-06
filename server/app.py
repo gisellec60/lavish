@@ -325,41 +325,55 @@ class Signup(Resource):
   
 class DeleteDancer(Resource):
     def delete(self,username):
+       
        # Only parent or Admin is authorized to delete a dancer 
        # When deleting a dancer we also delete the dancer from the following:
-       # remove dancer from the user table.
-       # delete the parent if dancer is the only child in the dance club
-       # delete the emergency contact this is the only dancer for that contact
+       #    remove dancer from the user table.
+       #    delete the parent if dancer is the only child in the dance club
+       #    delete the emergency contact this is the only dancer for that contact
+       #    if Parent is logged in they are immediately logged out unless they're an admin
+       # dancer is automatically deleted from any association tables
 
        dancer = Dancer.query.filter_by(username=username).first()
-       users= User.query.all()
-       parents = Parent.query.all()
-       emergencies = Emergency.query.all()
-       session['admin'] = True
        
+       # Everything rides on dancer existing
+       # if dancer exist then we link everthing else to that dancer to be deleted.       
        if dancer:
-            if session.get('admin') or session.get('username') == dancer.parent_username:
+            
+            parent = Parent.query.filter_by(id=dancer.parent_id).first()
+            user = User.query.filter_by(username=session.get("username")).first()
+            emergency = Emergency.query.filter_by(id=dancer.emergency_id).first()
+            users=User.query.all()
+
+            # if current user is admin or the parent        
+            if user.isadmin or parent.id == dancer.parent_id:
                 #remove dancer from user table    
                 for user in users:
                     if user.username == dancer.username:
                         db.session.delete(user)
 
-                #remove parent if dancer is only child
-                for parent in parents:
-                    if dancer.parent_id == parent.id:
-                        if len(parent.dancers) == 1: 
-                            db.session.delete(parent)
-
+                # remove parent from parent and user table if dancer is only child
+                if len(parent.dancers) == 1: 
+                    db.session.delete(parent)
+ 
                 #remove emergency contact if dancer is the only one using this contact                   
-                for emergency in emergencies:
-                    if dancer.emergency_id == emergency.id:
-                        if len(emergency.dancers) == 1: 
-                            db.session.delete(emergency)
+                if len(emergency.dancers) == 1: 
+                    db.session.delete(emergency)
 
                 #Finally, delete dancer and commit change
                 db.session.delete(dancer)
+
+                # If parent is not an admin they're removed from user table and logged out.
+                for user in users:
+                    if user.username == parent.username:
+                        if not user.isadmin:
+                           db.session.delete(user)
+                           if session.get("username") == parent.username:
+                                session['username'] = None  
+                                db.session.commit()        
+                                return ["Message: ","555"], 201
                 db.session.commit() 
-                return {},204 
+                return {}, 204
             else:
                 return ["Message: ","User Not Authorized"], 401  
        else:
@@ -368,13 +382,13 @@ class DeleteDancer(Resource):
 class Dancers(Resource):
     def get(self):
         
-        #Only admin can list all the dancer information:
-        session['isadmin'] = True
+        # Only admin can list all the dancer information:
 
+        user = User.query.filter_by(username=session.get('username')).first()
         dancers = list_dancers_schema.dump(Dancer.query.all())
 
         if dancers:
-            if session.get("isadmin"):
+            if user.isadmin:
                 response = make_response (dancers, 200)
                 return response
             else:
@@ -453,11 +467,11 @@ class ModifyDancer(Resource):
 
         dancer = Dancer.query.filter_by(id=id).first() 
         parent = Parent.query.filter_by(id=dancer.parent_id).first()
-        user = User.query.filter_by(username=dancer.username).first()
+        user = User.query.filter_by(username=session.get('username')).first()
+        dancer_user = User.query.filter_by(username=dancer.username).first()
 
-        session['isadmin'] = True
-
-        if session.get('username') == dancer.username or session.get('isadmin') or session.get('username') == parent.username:    
+        print("this is user",user)
+        if user.isadmin or session.get('username') == dancer.username or session.get('username') == parent.username:    
             if dancer:
                 data = request.json
                 for key,value in data.items():
@@ -468,7 +482,7 @@ class ModifyDancer(Resource):
                     elif key == "email":
                         dancer.email = value
                         dancer.username = value
-                        user.username = value
+                        dancer_user.username = value
                     elif key == "phone":
                         dancer.phone = value
                     elif key == "gender":
@@ -476,7 +490,7 @@ class ModifyDancer(Resource):
                     elif key == "dob":
                         dancer.dob = value
                     elif key == "bio":
-                        dancer.bio == value
+                        dancer.bio = value
                     elif key == "image":
                         dancer.image = value
                 
@@ -496,14 +510,15 @@ class ModifyDancer(Resource):
 
 class DancerByID(Resource):
    def get(self,email):
+       
        #Only dancer, Parent, or admin
        dancer = Dancer.query.filter_by(email=email).first() 
-
-       session["isadmin"]=True
-
+           
        if dancer:
             parent = Parent.query.filter_by(id=dancer.parent_id).first()
-            if session.get("username") == dancer.username or session.get("username") == parent.username or session.get('isadmin'):
+            user = User.query.filter_by(username=session.get("username")).first()
+
+            if session.get("username") == dancer.username or session.get("username") == parent.username or user.isadmin:
                 action = request.args.get('action')
                 if action == "none":
                     response = make_response(singular_dancer_schema.dump(dancer), 201)
@@ -538,11 +553,12 @@ class Parents(Resource):
     def get(self):
         # Only admin can list all parent information
 
-        session["isadmin"] = True
+        user = User.query.filter_by(username=session.get("username"))
+
         parents = list_parentlist_schema.dump(Parent.query.all())
                
         if parents:
-            if session.get("isadmin"):
+            if user.isadmin:
                 response = make_response (parents,200)
                 return response
             else:
@@ -554,25 +570,26 @@ class ParentByID(Resource):
        #Only Parent and Admin has access
        
        parent = Parent.query.filter_by(id=id).first() 
+       user = User.query.filter_by(username=session.get("username"))
        
-       session["isadmin"] = True
        if parent:
-            if session.get("isadmin") or session.get("user_id") == parent.id:
+            if user.isadmin or session.get("username") == parent.username :
                 response = make_response(singular_parentlist_schema.dump(parent), 201)
                 return response
-            return [{"Message":"User Not authorized" }], 401  
+            return ["Message:","User Not authorized"], 401  
        else:
-           return [{"Message":"Invalid Parent" }], 404  
+           return ["Message:","Invalid Parent" ], 404  
        
 class ModifyParent(Resource):
     def patch(self,id):
         #Only parent or admin is authorized
 
-        parent = Parent.query.filter_by(id=id).first()    
-        session['user_id'] = parent.id  
+        parent = Parent.query.filter_by(id=id).first()   
+        parent_user = User.query.filter_by(username=parent.username).first()
+        user = User.query.filter_by(username=session.get("username"))
         
         if parent:
-            if session.get('user_id') == parent.id or session.get('admin'):
+            if session.get('user_id') == parent.id or user.isadmin:
                 data = request.json
                 for key,value in data.items():
                     if key == "first":
@@ -582,6 +599,7 @@ class ModifyParent(Resource):
                     elif key == "email":
                         parent.email = value
                         parent.username = value
+                        parent_user.username=value
                     elif key == "phone":
                         parent.phone = value
                     elif key == "address":
@@ -607,9 +625,9 @@ class Events(Resource):
 class AddEvent(Resource):
     def post(self):
         #Only admin can add an event
-        session["isadmin"] = True
+        user = User.query.filter_by(username=session.get("username"))
 
-        if session.get("isadmin"):
+        if user.isadmin:
             data = request.get_json()
             date = datetime.strptime(data['date'],'%Y-%m-%d').date()
 
@@ -630,9 +648,10 @@ class AddEvent(Resource):
     
 class ModifyEvent(Resource):
     def patch(self,id):
+        
+        user = User.query.filter_by(username=session.get("username"))
 
-        session["isadmin"] = True
-        if session.get("isadmin"):
+        if user.isadmin:
 
             event = Event.query.filter_by(id=id).first() 
 
@@ -661,9 +680,9 @@ class DeleteEvent(Resource):
     def delete(self,id):
 
         #only admin can delete an event
-        session["isadmin"] = True
-
-        if session.get("isadmin"):
+        user = User.query.filter_by(username=session.get("username"))
+        
+        if user.isadmin:
             event = Event.query.filter_by(id=id).first()
             
             if event:
@@ -713,8 +732,10 @@ class Practices(Resource):
 
 class PracticeByID(Resource):
     def get(self,id):
-        session["isadmin"] = True
-        if session.get("isadmin"):
+       
+        user = User.query.filter_by(username=session.get("username"))
+
+        if user.isadmin:
             action = request.args.get('action')
 
             practice = Practice.query.filter_by(id=id).first() 
@@ -741,8 +762,9 @@ class AddPractice(Resource):
     def post(self):
         # Only admin can add to the practice schedule
 
-        session["isadmin"] = True
-        if session.get("isadmin"):
+        user = User.query.filter_by(username=session.get("username"))
+        
+        if user.isadmin:
             data = request.get_json()
             date = datetime.strptime(data['date'],'%Y-%m-%d').date()
 
@@ -764,9 +786,8 @@ class AddPractice(Resource):
 class ModifyPractice(Resource):
     def patch(self,id):
         #only Admin can modify practice schedule
-
-        session["isadmin"] = True
-        if session.get("isadmin"):
+        user = User.query.filter_by(username=session.get("username"))
+        if user.isadmin:
             practice = Practice.query.filter_by(id=id).first() 
 
             if practice:
@@ -794,9 +815,9 @@ class ModifyPractice(Resource):
 class DeletePractice(Resource):
     def delete(self,id):
         #Only admin can delete practice from schedule
+        user = User.query.filter_by(username=session.get("username"))
 
-        session["isadmin"] = True
-        if session.get("isadmin"):
+        if user.isadmin:
             practice = Practice.query.filter_by(id=id).first()
             
             if practice:
@@ -812,10 +833,11 @@ class Users(Resource):
     def get(self):
 
         #Only admin has access to list of user
-        session["isadmin"] = True
+        user = User.query.filter_by(username=session.get("username"))
+        
         users = list_users_schema.dump(User.query.all()) 
         
-        if session.get('isadmin'):
+        if user.isamin:
             if users:
                 if session.get("isadmin"):
                     response = make_response (users,200)
@@ -828,9 +850,10 @@ class Users(Resource):
 
 class ListBalances(Resource):
     def get(self):
-
-        session["isadmin"] = True
-        if session.get("isadmin"):
+        
+        user = User.query.filter_by(username=session.get("username"))
+        
+        if user.isadmin:
             list_balance=[]
             parents = Parent.query.all()
             for parent in parents:
@@ -846,14 +869,15 @@ class ListBalances(Resource):
 
 class AddToEvent(Resource):
     def post(self,id1,id2):
-       session["isadmin"] = False 
-       session['user_id'] = id1
-
+     
+       user = User.query.filter_by(username=session.get("username"))
        dancer = Dancer.query.filter_by(id=id1).first()
        event = Event.query.filter_by(id=id2).first()
+       parent = Parent.query.filter_by(id=dancer.parent_id)
+       
        if dancer:
            if event:
-              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+              if user.isadmin or user.username == dancer.username or user.username == parent.username:
                     if event in dancer.events:
                         return [{"message":"Dancer already exist for this event"}], 208
                     else:
@@ -869,14 +893,15 @@ class AddToEvent(Resource):
 
 class AddToPractice(Resource):
     def post(self,id1,id2):
-       session["isadmin"] = False 
-       session['user_id'] = id1
-
+      
+       user = User.query.filter_by(username=session.get("username"))
        dancer = Dancer.query.filter_by(id=id1).first()
+       parent = Parent.query.filter_by(id=dancer.parent_id)
        practice = Practice.query.filter_by(id=id2).first()
+
        if dancer:
            if practice:
-              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+              if user.isadmin or dancer.id == id1 or user.username == parent.usernam:
                     if practice in dancer.practices:
                         return [{"message":"Dancer already exist for this event"}], 208
                     else:
@@ -892,14 +917,15 @@ class AddToPractice(Resource):
 
 class DeleteFromPractice(Resource):
     def delete(self, id1, id2):
-       session["isadmin"] = False 
-       session['user_id'] = id1
-
+      
+       user = User.query.filter_by(username=session.get("username"))
        dancer = Dancer.query.filter_by(id=id1).first()
+       parent = Parent.query.filter_by(id=dancer.parent_id)
        practice = Practice.query.filter_by(id=id2).first()
+      
        if dancer:
            if practice:
-              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+              if user.isadmin or dancer.id == id1 or user.username == parent.usernam:
                   if dancer in practice.dancers:
                       practice.dancers.remove(dancer) 
                       db.session.commit()
@@ -915,49 +941,57 @@ class DeleteFromPractice(Resource):
 
 class DeleteFromEvent(Resource):
     def delete(self, id1, id2):
-       session["isadmin"] = False 
-       session['user_id'] = id1
-
+       
+       user = User.query.filter_by(username=session.get("username"))
+       parent = Parent.query.filter_by(id=dancer.parent_id)
        dancer = Dancer.query.filter_by(id=id1).first()
        event = Event.query.filter_by(id=id2).first()
        if dancer:
            if event:
-              if session.get("isadmin") or session.get("user_id") == id1 or session.get("user_id") == dancer.parent_id:
+              if user.isadmin or dancer.id == id1 or user.username == parent.username:
                   if dancer in event.dancers:
                       event.dancers.remove(dancer) 
                       db.session.commit()
                       return {}, 204 
                   else:
-                      return [{"message":"Dancer not scheduled for event"}], 404   
+                      return ["message","Dancer not scheduled for event"], 404   
               else:
-                  return [{"message":"User not authorized"}], 401    
+                  return ["message","User not authorized"], 401    
            else:
-               return [{"message":"Event does not exist"}], 404
+               return ["message","Event does not exist"], 404
        else:               
-           return [{"message":"Dancer does not exist"}], 404        
+           return ["message","Dancer does not exist"], 404        
 
 class Admin(Resource):
     def post(self):
-
-        #Get input for Admin
-        data = request.get_json()
-
-        #add admin to user table
-        user = User(
-            name = data['name'],
-            username = data['email'],
-            isparent = False,
-            isadmin = True
-        )   
-        password = data['password']
-        user.password_hash =  password
-        db.session.add(user)
-        db.session.commit()
-
-        session["username"] = user.username
-        response = make_response (singular_user_schema.dump(user),200)
-        return response
         
+        user=User.query.filter_by(username=session.get("username")).first() 
+        if user.isadmin:
+            #Get input for Admin
+            data = request.get_json()
+            print("picked", data["picked"] ) 
+            if data["picked"]:
+                print ("do you get here?")
+                puser = User.query.filter_by(username=data["email"]).first()
+                puser.isadmin = True
+            else:
+                #add admin to user table
+                user = User(
+                    name = data['name'],
+                    username = data['email'],
+                    isparent = False,
+                    isadmin = True
+                )   
+                password = data['password']
+                user.password_hash =  password
+                db.session.add(user)
+
+            db.session.commit()
+
+            response = make_response (singular_user_schema.dump(user),200)
+            return response
+        else:
+            return ["Message: ","User Not Authorized"], 401 
 
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<string:email>', endpoint='dancer/<string:email>')

@@ -28,6 +28,8 @@ with app.app_context():
     Practice.query.delete()
     print('Deleting existing User table ...\n')
     User.query.delete()
+    print('Deleting existing Password table ...\n')
+    Password.query.delete()
 
     dancers = []
     sex = ["male","female"]
@@ -91,6 +93,15 @@ with app.app_context():
         )
         user.password_hash = user.username + 'password'
         users.append(user)
+
+    user = User(
+            name = "Giselle Smith" ,
+            username="giselle@gmail.com",
+            isparent=False,
+            isadmin =True
+        ) 
+    user.password_hash = user.username + 'password'   
+    users.append(user) 
     
     for parent in parents:
         user = User(

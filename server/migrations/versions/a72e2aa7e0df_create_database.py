@@ -1,8 +1,8 @@
-"""create
+"""create database
 
-Revision ID: 25b6779d0ade
+Revision ID: a72e2aa7e0df
 Revises: 
-Create Date: 2023-09-24 15:34:33.843543
+Create Date: 2023-10-06 13:16:04.344051
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '25b6779d0ade'
+revision = 'a72e2aa7e0df'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -47,6 +47,12 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
+    op.create_table('password',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('practices',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=True),
@@ -56,13 +62,12 @@ def upgrade():
     sa.Column('address', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('user',
+    op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
     sa.Column('isparent', sa.Boolean(), nullable=False),
     sa.Column('isadmin', sa.Boolean(), nullable=False),
-    sa.Column('userid', sa.Integer(), nullable=True),
     sa.Column('_password_hash', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -106,8 +111,9 @@ def downgrade():
     op.drop_table('practice_dancer')
     op.drop_table('event_dancer')
     op.drop_table('dancers')
-    op.drop_table('user')
+    op.drop_table('users')
     op.drop_table('practices')
+    op.drop_table('password')
     op.drop_table('parents')
     op.drop_table('events')
     op.drop_table('emergencies')
