@@ -481,7 +481,7 @@ class AddDancer(Resource):
                 response = make_response([singular_dancer_schema.dump(dancer)], 201)
                 return response
             else:
-                return  ["Message:"," User Not Authorized"], 401
+                return  ["Message:"," Only the Parent or and Admin can add a dancer" ], 401
         else:
             return  ["Message:","Parent does not exist"], 401    
 

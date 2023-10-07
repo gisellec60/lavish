@@ -4,11 +4,11 @@ import Table from 'react-bootstrap/Table';
 import "./danceEventStyle.css"
 
 function ShowDancerEventsListing({dancer, events}) {
-  console.log("this is dancer and events", dancer, events)
-
+ 
+  
   const eventlist =
     <Container fluid="md" className="list-container">
-      <h3 className="nameHeading">{dancer['first']} {dancer['last']}</h3>
+      <h3 className="nameHeading">{dancer['first']} {dancer['last']} </h3>
         <Table responsive striped boarded variant="dark">
           <thead >
               <tr >

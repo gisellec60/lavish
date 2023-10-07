@@ -1,6 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles.css"
+import "./mod_styles.css"
 import { useState } from "react"
 import ModifyForm from "./ModifyForm"
 import GetDancer from "./GetDancer"

@@ -5,14 +5,14 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import CloseButton from 'react-bootstrap/CloseButton';
 
-import "./error_styles.css"
+ import "./error_styles.css"
 
 const UserExistError = ({error, onCloseButton }) => {
   return (
     <Container fluid="md">
-      <Row className="row-no-user">
+      <Row className="errorMessage">
         <Col >
-           <p className='text'>{error}</p>
+           <p className='text_error'>{error}</p>
            <p> Click "X" to try again or to return to Portal.
            </p>
            <CloseButton arial-lable="close" onClick={onCloseButton}/>

@@ -62,6 +62,7 @@ const GetForm = ({setDancer,showDancerListing,setShowDancerListing}) => {
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
+                        <h2 className="heading">Show Dancer</h2>  
                             <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
                             <Field type = 'email' id='email' name='email' />
                             <ErrorMessage name = 'email' />

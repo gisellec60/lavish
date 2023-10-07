@@ -73,7 +73,7 @@ export const DeleteDancer = ({setUser, setIsParent, setIsAdmin}) => {
                         validationSchema={validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
-
+                        <h2 className="heading">Delete Dancer</h2>  
                             <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
                             <Field type = 'email' id='email' name='email' />
                             <ErrorMessage name = 'email' component={TextError} />

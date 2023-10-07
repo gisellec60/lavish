@@ -19,12 +19,12 @@ import Button from '@mui/material/Button';
     email: '',
     phone: '',
     gender: '',
+    dob: '',
     age: '',
     dob: '',
-    bio: '',
     image: '',
+    bio: '',
     password: '',
-    username:'' ,
     pemail:''
 }
 
@@ -34,29 +34,26 @@ const validationSchema = Yup.object({
 first: Yup.string().required('First Name is Required'),
 last: Yup.string().required('Last Name is Required'),
 email:Yup.string().email('invaled email format').required('E-mail is Required'),
-pemail:Yup.string().email('invaled email format').required('E-mail is Required'),
 phone: Yup.string().required('Phone number is Required'),
 gender: Yup.string().required("Gender is required"),
 dob: Yup.date().required("Date of birth required YYY-MM-DD"),
-bio: Yup.string().min(50,"Must be at least 50 chars long").required('Must enter a bio of 50 chars or more.'),
 age: Yup.number().min(10,"must be at least 10yrs" ).max(20,"Age must be less than 21yrs").integer().positive().required("Enter Age"),
 image: Yup.string().url().nullable(),
+bio: Yup.string().min(50,"Must be at least 50 chars long").required('Must enter a bio of 50 chars or more.'),
 password: Yup.string().required("Must enter a password"),
-
+pemail:Yup.string().email('invaled email format').required('E-mail is Required'),
 })
 
-export const AddDancer = ({isAdmin, isParent}) => {
+export const AddDancer = () => {
 
     const [error, setError] = useState(null)
     const [addDancer, setAddDancer] = useState("True")
-    const [authorized, setAuthorized ] = useState(null)
 
     const navigate = useNavigate()
 
     const closeErrorButton = (() => {
         setError(null)
     })
-
     
     const onSubmit = (values, onSubmitProps) => {  
         fetch("/dancers/add", {
@@ -88,7 +85,6 @@ export const AddDancer = ({isAdmin, isParent}) => {
     
     return (
         <>
-        
         <Container>
             <Row>
                 <Col></Col> 
@@ -109,6 +105,11 @@ export const AddDancer = ({isAdmin, isParent}) => {
                                     <label htmlFor ='last' style={{color: "white"}}>Last Name</label>
                                     <Field type = 'text' id='last' name='last' />
                                     <ErrorMessage name = 'last' component={TextError} />
+
+                                    <label htmlFor ='email' style={{color: "white"}}>Email</label>
+                                    <Field type = 'email' id='email' name='email' />
+                                    <ErrorMessage name = 'email' component={TextError}/>
+
 
                                     <label htmlFor ='phone' style={{color: "white"}}>Phone</label>
                                     <Field type = 'text' id='phone' name='phone'/>
@@ -138,10 +139,6 @@ export const AddDancer = ({isAdmin, isParent}) => {
                                     <Field type = 'password' id='password' name='password' />
                                     <ErrorMessage name = 'password' component={TextError}/>
 
-                                    <label htmlFor ='email' style={{color: "white"}}>Email</label>
-                                    <Field type = 'email' id='email' name='email' />
-                                    <ErrorMessage name = 'email' component={TextError}/>
-
                                     <label htmlFor ='pemail' style={{color: "white"}}>Parent Email or Username</label>
                                     <Field type = 'pemail' id='pemail' name='pemail' />
                                     <ErrorMessage name = 'pemail' component={TextError}/>
@@ -168,3 +165,18 @@ export const AddDancer = ({isAdmin, isParent}) => {
      )
 
 }
+
+// const initialValues = {
+//     first: 'Deja',
+//     last: 'Thompson',
+//     email: 'deja@gmail.com',
+//     phone: '919-270-2142',
+//     gender: 'female',
+//     dob: '2023-01-01',
+//     age: '17',
+//     dob: '2023-01-01',
+//     image: '',
+//     bio: 'I love dancing. I have been dance since I was 8. So glad to be a part of this team',
+//     password: 'pass',
+//     pemail:'millerjohn@example.net'
+// }

@@ -14,12 +14,7 @@ const ShowErrorMessages = ({error, onCloseButton }) => {
       <Row className="row1">
         <Col >
            <p className='text'>{error}</p>
-           <p>This indicates either the dancer's or parent's email is already
-            in use or the Parent or dancer does not exist. </p>
-            
-             <p>Verify email is correct then Click 'X' to re-enter email. </p>
-            <p>Note: To return to Home page click "Home" on top right, 
-            for Portal click "Portal" (must be logged in to access Portal)       
+           <p>Click "x" to try again or to return to the Portal       
            </p>
            <CloseButton arial-lable="close" onClick={onCloseButton}/>
         </Col>
