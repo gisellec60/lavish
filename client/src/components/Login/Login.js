@@ -11,17 +11,33 @@ import { useState } from "react"
 import "./styles.css"
 
 const initialValues = {
-    username: '',
-    password: ''
+    username: 'giselle@gmail.com',
+    password: 'giselle@gmail.compassword'
 }
 
-export const Login = ({onLogin}) => {
+export const Login = ({onLogin, setIsAdmin, setIsParent}) => {
 
     const [error, setError] = useState(null)
 
     const closeErrorButton = ((error) => {
         setError(null)
-    })    
+    })   
+    
+    const handleIsAdmin = ((user) => {
+        const userObject = user[0]
+        const isAdmin = userObject.isadmin
+        console.log("isAdmin:",isAdmin)
+        if (isAdmin)
+            setIsAdmin(isAdmin)
+    })
+
+    const handleIsParent = ((user) => {
+        const userObject = user[0]
+        const isParent = userObject.isparent
+        if (isParent)
+           setIsParent(isParent)
+    })
+
     const navigate = useNavigate()
 
     const onSubmit = values => {  
@@ -35,7 +51,12 @@ export const Login = ({onLogin}) => {
         .then(res => {
             if (res.ok) {
                alert("Login successful")
-               res.json().then((user) => onLogin(user))
+               res.json().then((user) => {
+                  console.log("ths is user",user)
+                  handleIsAdmin(user)
+                  handleIsParent(user)
+                  onLogin(user)
+               })
                navigate("/portal")
             }else { 
                res.json().then((error) => { 

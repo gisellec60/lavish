@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import "./styles.css";
 
-export const Navigation = ({setUser, user}) => {
+export const Navigation = ({setUser, user, setIsAdmin, setIsParent}) => {
 
   const navigate = useNavigate();
 
@@ -13,13 +13,23 @@ export const Navigation = ({setUser, user}) => {
     )
     .then((r) => {
       if (r.ok) {
+        handleIsAdmin()
+        handleIsParent()
         setUser(null)
         navigate("/") 
       }
     });
   }
 
-  const activeLinkStyle ={
+   const handleIsParent = (() =>{
+       setIsParent(null)
+   })
+
+   const handleIsAdmin = (() =>{
+    setIsAdmin(null)
+  })
+
+   const activeLinkStyle ={
     color:"white"
   }
 

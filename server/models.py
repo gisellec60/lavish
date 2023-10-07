@@ -159,7 +159,7 @@ class User(db.Model):
             self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
-        return f'Id: {self.id} User:{self.username} '
+        return f'Id: {self.id} User:{self.username} isAdmin:{self.isadmin} isParent:{self.isparent}'
     
 class Password(db.Model):
      

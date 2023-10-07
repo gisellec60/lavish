@@ -6,9 +6,16 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
+import UserNotAuthorized from '../ErrorMessages/UserNotAuthorized'
 
-const ModifyPracticeForm= ({practiceObj,setShowModifyPracticeForm, showModifyPracticeForm}) => {
+const ModifyPracticeForm= ({onClose, practiceObj,setShowModifyPracticeForm, showModifyPracticeForm}) => {
+   
     const [errors, setErrors] = useState([])
+
+    const closeErrorButton = (() => {
+        setErrors(null)
+        onClose()
+    })
 
     // handle form state 
   console.log("this is practice form" ,practiceObj.date, practiceObj['date'])
@@ -45,6 +52,7 @@ const ModifyPracticeForm= ({practiceObj,setShowModifyPracticeForm, showModifyPra
     }    
       
     return (
+    <div>   
      <Container >
            <Row>
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
@@ -78,7 +86,12 @@ const ModifyPracticeForm= ({practiceObj,setShowModifyPracticeForm, showModifyPra
                     </Formik>
                 </Col>  
             </Row>  
-        </Container>  
+        </Container>
+        {
+            errors ? <UserNotAuthorized errors = {errors} onCloseButton={closeErrorButton} />
+           : null
+        }
+      </div>
   )
 }
 

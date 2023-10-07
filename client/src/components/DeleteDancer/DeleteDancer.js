@@ -29,9 +29,9 @@ export const DeleteDancer = ({setUser}) => {
         .then(res => {
             if (res.ok){ 
                 alert("Dancer was deleted succesfully")
-                res.json().then((res)=> {
-                    console.log("Response", res)  
-                    if (res != null){
+                res.json().then((text)=> {
+                    console.log("Message", text)  
+                    if (text = "None" ){
                         setUser(null)
                         navigate("/")  
                     }    

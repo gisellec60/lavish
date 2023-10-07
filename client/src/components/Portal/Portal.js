@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import { Link } from "react-router-dom";
-import ListGroup from 'react-bootstrap/ListGroup';
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ExampleCarouselImage from '../ExampleCarouselImage/ExampleCarouselImage';
@@ -12,7 +11,7 @@ import SpotLight from '../DivaNews/SpotLight';
 import DivaNews from '../DivaNews/DivaNews';
 import "./styles.css"
 
-export const Portal = ({dancer}) => {
+export const Portal = ({isAdmin}) => {
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -77,7 +76,9 @@ export const Portal = ({dancer}) => {
                         </Carousel.Item>
                     </Carousel>
                 </Col>
-                <Col className="col-2 sidebar " >
+                {
+                 isAdmin ?
+                  <Col className="col-2 sidebar " >
                     <ul class="list-group" className="list-group">
                         <li>Admin Portal</li>
                         <li class="list-group-item">
@@ -121,7 +122,9 @@ export const Portal = ({dancer}) => {
                         </li>
                         <li class="list-group-item">Balances</li>   
                     </ul>
-                </Col>
+                 </Col>
+                   :null
+                }  
             </Row> 
       </Container>
     </div>

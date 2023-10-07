@@ -112,6 +112,15 @@ class UserSchema(ma.SQLAlchemySchema):
 singular_user_schema = UserSchema()
 list_users_schema = UserSchema(many=True)
 
+class AdminSchema(ma.SQLAlchemySchema):
+        class Meta:
+            model = User 
+        isparent = ma.auto_field()
+        isadmin = ma.auto_field()
+
+singular_admin_schema = AdminSchema()
+list_admins_schema = AdminSchema(many=True)
+
 class EmergencySchema(ma.SQLAlchemySchema):
         class Meta:
             model = Emergency 
@@ -185,10 +194,11 @@ def login():
     
     data =request.get_json()
     user = User.query.filter_by(username=data['username']).first()
+    print("user: ",user)
     if user:
         if user.authenticate(data['password']):
             session["username"] = user.username
-            response = make_response ([singular_user_schema.dump(user)]), 201
+            response = make_response ([singular_admin_schema.dump(user)]), 201
             return response
         else:
            return ["message:", " Password incorrect"], 401
@@ -320,7 +330,7 @@ class Signup(Resource):
         
         session["username"] = parent.username
 
-        response = make_response([singular_dancer_schema.dump(dancer)],201)
+        response = make_response([singular_parent_schema.dump(parent)],201)
         return response
   
 class DeleteDancer(Resource):
@@ -371,7 +381,7 @@ class DeleteDancer(Resource):
                            if session.get("username") == parent.username:
                                 session['username'] = None  
                                 db.session.commit()        
-                                return ["Message: ","555"], 201
+                                return ["None"], 201
                 db.session.commit() 
                 return {}, 204
             else:
@@ -386,7 +396,6 @@ class Dancers(Resource):
 
         user = User.query.filter_by(username=session.get('username')).first()
         dancers = list_dancers_schema.dump(Dancer.query.all())
-
         if dancers:
             if user.isadmin:
                 response = make_response (dancers, 200)
@@ -787,7 +796,7 @@ class AddPractice(Resource):
 class ModifyPractice(Resource):
     def patch(self,id):
         #only Admin can modify practice schedule
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
         if user.isadmin:
             practice = Practice.query.filter_by(id=id).first() 
 
@@ -808,27 +817,28 @@ class ModifyPractice(Resource):
                 db.session.commit()
                 response = make_response(singular_event_schema.dump(practice), 202)    
             else:
-                return [{"Message": "No Events Scheduled"}], 404
+                return ["Message", "No Events Scheduled"], 404
             return response
         else:
-            return [{"Message": "User not authorized"}], 401
+            return ["Message", "User not authorized"], 401
 
 class DeletePractice(Resource):
     def delete(self,id):
-        #Only admin can delete practice from schedule
-        user = User.query.filter_by(username=session.get("username"))
 
+        #Only admin can delete practice from schedule
+        user = User.query.filter_by(username=session.get("username")).first()
+        
         if user.isadmin:
+            print("user.isadmin:", user.isadmin)
             practice = Practice.query.filter_by(id=id).first()
-            
             if practice:
                 db.session.delete(practice)
                 db.session.commit()
                 return {}, 204
             else:
-                return [{"Message":"Event Not Found"}], 404   
+                return ["Message","Event Not Found"], 404   
         else:
-            return [{"Message":"User not authorized"}]    
+            return ["Message","User not authorized"],401    
 
 class Users(Resource):
     def get(self):

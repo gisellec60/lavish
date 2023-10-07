@@ -179,7 +179,7 @@ with app.app_context():
        name='admin'
     )
 
-    admin.password_hash = admin.name + 'password'
+    admin.password_hash = 'mypassword'
     db.session.add(admin) 
 
     db.session.commit()

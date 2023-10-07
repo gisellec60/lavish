@@ -4,11 +4,16 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+import UserNotAuthorized from '../ErrorMessages/UserNotAuthorized'
 
 const DeletePractice = () => {
 
    const [practices, setEvents] = useState([])
    const [error, setError] = useState(null)
+
+   const closeErrorButton = (() => {
+       setError(null)
+   })
   
     useEffect(() => {
         fetch("/practices")
@@ -36,6 +41,9 @@ const DeletePractice = () => {
          .then (res => {
             if (res.ok) { 
                 alert("Practice was deleted succesfully")
+                res.json().then((res)=>{
+                    console.log("this is res",res)
+                })
                 handleDeleteTask(id) 
             }else{
                 res.json().then((error)=> {
@@ -86,6 +94,10 @@ const DeletePractice = () => {
     return (
     <div>
       {eventList}
+      {
+            error ? <UserNotAuthorized error = {error} onCloseButton={closeErrorButton} />
+            : null
+      }
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import ModifyPracticeForm from '../ModifyPractice/ModifyPracticeForm';
 import ModifyShowPractice from '../ModifyPractice/ModifyShowPractice';
 
-const ModifyPractice = () => {
+const ModifyPractice = ({onClose}) => {
 
     const [showModifyPracticeForm, setShowModifyPracticeForm] = useState(false)
     const [practiceObj, setPracticeObj] = useState(null)
@@ -11,7 +11,7 @@ const ModifyPractice = () => {
     return (
      <>    
         <div>
-         { showModifyPracticeForm ? <ModifyPracticeForm practiceObj={practiceObj} setShowModifyPracticeForm={setShowModifyPracticeForm} 
+         { showModifyPracticeForm ? <ModifyPracticeForm onClose={onClose} practiceObj={practiceObj} setShowModifyPracticeForm={setShowModifyPracticeForm} 
                                    showModifyPracticeForm={showModifyPracticeForm}  /> :
          <ModifyShowPractice setShowModifyPracticeForm={setShowModifyPracticeForm}
                            showModifyPracticeForm={showModifyPracticeForm} setPracticeObj={setPracticeObj}/> } 

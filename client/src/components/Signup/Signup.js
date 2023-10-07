@@ -27,7 +27,7 @@ const initialValues = {
     p_address: '805 Grandview Lane, Durham NC 27703',
     p_email: 'chanee@gmail.com',
     p_phone: '123-345-7890',
-    p_password: 'mypasswordisher',
+    p_password: 'pass',
     e_name: 'Vaughn Brito', 
     e_phone: '567-789-1234',
     e_email: 'von@gmail.com'
@@ -57,7 +57,7 @@ e_email:Yup.string().email('invaled email format').required('E-mail is Required'
 e_phone: Yup.string().required('Phone number is Required')
 })
 
-export const Signup = ({onSignUp}) => {
+export const Signup = ({onSignUp, setIsParent }) => {
     const [error, setError] = useState(null)
 
     const closeErrorButton = ((error) => {
@@ -78,9 +78,10 @@ export const Signup = ({onSignUp}) => {
             if (res.ok) {
                alert("Signup succesful")
                res.json()
-               .then((newDancer) => {
-                console.log(newDancer);
-                onSignUp(newDancer)
+               .then((newParent) => {
+                console.log(newParent);
+                setIsParent(newParent)
+                onSignUp(newParent)
                 })
             }else{
                 res.json().then((error)=> {

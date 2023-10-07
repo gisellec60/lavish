@@ -27,6 +27,8 @@ import DancerPractices from "./components/DancerPractice/DancerPractices"
 function App() {
 
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null)
+  const [isParent, setIsParent] = useState(null)
   const [dancer, setDancer] = useState({})
 
   const navigate = useNavigate()
@@ -57,22 +59,20 @@ function App() {
   return (
     <>
       <div>  
-      <Navigation setUser={setUser} user={user}/>
+      <Navigation setUser={setUser} user={user} setIsAdmin={setIsAdmin} setIsParent={setIsParent}/>
       <Routes>
          <Route path ="/" element = {<Home />}> </Route>  
-         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} />}></Route>
-         <Route path={"/login"} element={<Login onLogin={setUser} />}></Route>
-
+         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} setIsParent={setIsParent} />}></Route>
         {
           user ? 
            <Route path={"/admin"} element={<Admin onSignUp={handleSetUser} />}></Route>
-         : <Route path={"/login"} element={<Login onLogin={setUser} />}></Route> 
+         : <Route path={"/login"} element={<Login onLogin={setUser} setIsParent={setIsParent} setIsAdmin={setIsAdmin} />}></Route> 
         }
 
         {
           user ? 
-           <Route path={"/portal"} element={<Portal dancer={dancer} />}></Route>
-           : <Route path={"/login"} element={<Login onLogin={setUser} />}></Route> 
+           <Route path={"/portal"} element={<Portal dancer={dancer} isAdmin={isAdmin} />}></Route>
+           : <Route path={"/login"} element={<Login onLogin={setUser} setIsParent={setIsParent} setIsAdmin={setIsAdmin} />}></Route> 
          }
 
          <Route path={"/addDancer"} element={<AddDancer />}></Route>
@@ -86,7 +86,7 @@ function App() {
          <Route path={"/deleteEvent"} element={<DeleteEvent />}></Route>
          <Route path={"/allEvents"} element={<AllEvents />}></Route>
          <Route path={"/modifyEvent"} element={<ModifyEvent />}></Route>
-         <Route path={"/modifyPractice"} element={<ModifyPractice />}></Route>  
+         <Route path={"/modifyPractice"} element={<ModifyPractice onClose={handleCloseButton} />}></Route>  
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
