@@ -57,7 +57,7 @@ e_email:Yup.string().email('invaled email format').required('E-mail is Required'
 e_phone: Yup.string().required('Phone number is Required')
 })
 
-export const Signup = ({onSignUp, setIsParent }) => {
+export const Signup = ({onSignUp, handleIsParent }) => {
     const [error, setError] = useState(null)
 
     const closeErrorButton = ((error) => {
@@ -80,7 +80,7 @@ export const Signup = ({onSignUp, setIsParent }) => {
                res.json()
                .then((newParent) => {
                 console.log(newParent);
-                setIsParent(newParent)
+                handleIsParent(newParent)
                 onSignUp(newParent)
                 })
             }else{

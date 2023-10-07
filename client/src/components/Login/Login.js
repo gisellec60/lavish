@@ -7,15 +7,22 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import LoginError from '../ErrorMessages/LoginError'
 import { useState } from "react"
+import * as Yup  from 'yup'
+import {TextError} from "../TextError"
 
 import "./styles.css"
 
 const initialValues = {
-    username: 'giselle@gmail.com',
+    email: 'giselle@gmail.com',
     password: 'giselle@gmail.compassword'
 }
 
-export const Login = ({onLogin, setIsAdmin, setIsParent}) => {
+const validationSchema = Yup.object( {
+    email:Yup.string().email('invaled email format').required('E-mail is Required'),
+    password: Yup.string().required("Must enter a password")
+})
+
+export const Login = ({onLogin,handleIsAdmin,handleIsParent }) => {
 
     const [error, setError] = useState(null)
 
@@ -23,21 +30,6 @@ export const Login = ({onLogin, setIsAdmin, setIsParent}) => {
         setError(null)
     })   
     
-    const handleIsAdmin = ((user) => {
-        const userObject = user[0]
-        const isAdmin = userObject.isadmin
-        console.log("isAdmin:",isAdmin)
-        if (isAdmin)
-            setIsAdmin(isAdmin)
-    })
-
-    const handleIsParent = ((user) => {
-        const userObject = user[0]
-        const isParent = userObject.isparent
-        if (isParent)
-           setIsParent(isParent)
-    })
-
     const navigate = useNavigate()
 
     const onSubmit = values => {  
@@ -74,16 +66,17 @@ export const Login = ({onLogin, setIsAdmin, setIsParent}) => {
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 
                         initialValues = {initialValues}
+                        validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
                             <h1 className="heading">Login</h1> 
-                            <label htmlFor ='username' style={{color: "white"}}>Username or E-mail</label>
-                            <Field type = 'username' id='username' name='username' />
-                            <ErrorMessage name = 'username' />
+                            <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
+                            <Field type = 'email' id='email' name='email' />
+                            <ErrorMessage name = 'email' component={TextError} />
 
                             <label htmlFor ='password' style={{color: "white"}}>Password</label>
                             <Field type = 'password' id='password' name='password' />
-                            <ErrorMessage name = 'password' />
+                            <ErrorMessage name = 'password' component={TextError}/>
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>

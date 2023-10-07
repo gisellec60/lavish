@@ -193,13 +193,20 @@ def login():
     #User Table is for user verification
     
     data =request.get_json()
-    user = User.query.filter_by(username=data['username']).first()
+    user = User.query.filter_by(username=data['email']).first()
     print("user: ",user)
     if user:
         if user.authenticate(data['password']):
             session["username"] = user.username
-            response = make_response ([singular_admin_schema.dump(user)]), 201
-            return response
+                      
+            return (
+             {
+                "username" : user.username,
+                "isparent" : user.isparent,
+                "isadmin"  : user.isadmin
+             }
+            )
+        
         else:
            return ["message:", " Password incorrect"], 401
     else:
@@ -220,8 +227,10 @@ def check_session():
     if user:
         return (
             {
-              "username" : user.username
-            }
+              "username" : user.username,
+              "isparent" : user.isparent,
+              "isadmin"  : user.isadmin
+             }
  
             ),200
     else:
@@ -328,10 +337,16 @@ class Signup(Resource):
         newdancer.emergency_id = newemergency.id
         db.session.commit()
         
-        session["username"] = parent.username
+        session["username"] = parent.username 
 
-        response = make_response([singular_parent_schema.dump(parent)],201)
-        return response
+        return (
+            {
+              "username" : user.username,
+              "isparent" : user.isparent,
+              "isadmin"  : user.isadmin
+             }
+ 
+            ),201
   
 class DeleteDancer(Resource):
     def delete(self,username):

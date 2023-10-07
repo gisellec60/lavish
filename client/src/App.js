@@ -36,11 +36,27 @@ function App() {
   useEffect(() => {
     fetch("/check_session").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => {
+          console.log(user) 
+          handleIsAdmin(user)
+          handleIsParent(user)
+          setUser(user)
+       });
+        console.log(user)
         navigate('/')
       }
     });
   }, []);
+
+  const handleIsAdmin = ((user) => {
+    if (user.isadmin)
+        setIsAdmin(user.isadmin)
+  })
+
+  const handleIsParent = ((user) => {
+     if (user.isparent)
+        setIsParent(user.isparent)
+  })
 
    const handleSetUser = ((user) => {
        setUser(user)
@@ -62,17 +78,17 @@ function App() {
       <Navigation setUser={setUser} user={user} setIsAdmin={setIsAdmin} setIsParent={setIsParent}/>
       <Routes>
          <Route path ="/" element = {<Home />}> </Route>  
-         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} setIsParent={setIsParent} />}></Route>
+         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} handleIsParent={handleIsParent} />}></Route>
         {
           user ? 
            <Route path={"/admin"} element={<Admin onSignUp={handleSetUser} />}></Route>
-         : <Route path={"/login"} element={<Login onLogin={setUser} setIsParent={setIsParent} setIsAdmin={setIsAdmin} />}></Route> 
+         : <Route path={"/login"} element={<Login onLogin={setUser} handleIsParent={handleIsParent} handleIsAdmin={handleIsAdmin} />}></Route> 
         }
 
         {
           user ? 
            <Route path={"/portal"} element={<Portal dancer={dancer} isAdmin={isAdmin} />}></Route>
-           : <Route path={"/login"} element={<Login onLogin={setUser} setIsParent={setIsParent} setIsAdmin={setIsAdmin} />}></Route> 
+           : <Route path={"/login"} element={<Login onLogin={setUser} handleIsParent={handleIsParent} handleIsAdmin={handleIsAdmin}/>}></Route> 
          }
 
          <Route path={"/addDancer"} element={<AddDancer />}></Route>
