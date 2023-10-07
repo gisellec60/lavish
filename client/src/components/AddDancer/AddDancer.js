@@ -45,10 +45,11 @@ password: Yup.string().required("Must enter a password"),
 
 })
 
-export const AddDancer = () => {
+export const AddDancer = ({isAdmin, isParent}) => {
 
     const [error, setError] = useState(null)
     const [addDancer, setAddDancer] = useState("True")
+    const [authorized, setAuthorized ] = useState(null)
 
     const navigate = useNavigate()
 
@@ -56,6 +57,7 @@ export const AddDancer = () => {
         setError(null)
     })
 
+    
     const onSubmit = (values, onSubmitProps) => {  
         fetch("/dancers/add", {
             method: "POST",
@@ -86,6 +88,7 @@ export const AddDancer = () => {
     
     return (
         <>
+        
         <Container>
             <Row>
                 <Col></Col> 
