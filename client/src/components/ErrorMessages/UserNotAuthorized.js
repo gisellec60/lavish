@@ -13,8 +13,7 @@ const UserNotAuthorized = ({error, onCloseButton}) => {
         <Row className="row-not-authorized">
             <Col >
             <p className='text'>{error}</p>
-            <p>Only the someone with admin priviledges can access "All Dancers."
-                Click "X" to return to Portal.
+            <p> Click "X" to return to Portal.
             </p>
             <CloseButton arial-lable="close" onClick={onCloseButton}/>
             </Col>

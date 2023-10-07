@@ -360,7 +360,6 @@ class DeleteDancer(Resource):
        # dancer is automatically deleted from any association tables
 
        dancer = Dancer.query.filter_by(username=username).first()
-       
        # Everything rides on dancer existing
        # if dancer exist then we link everthing else to that dancer to be deleted.       
        if dancer:
@@ -369,10 +368,11 @@ class DeleteDancer(Resource):
             user = User.query.filter_by(username=session.get("username")).first()
             emergency = Emergency.query.filter_by(id=dancer.emergency_id).first()
             users=User.query.all()
-
+            
             # if current user is admin or the parent        
-            if user.isadmin or parent.id == dancer.parent_id:
+            if user.isadmin or parent.username == user.username:
                 #remove dancer from user table    
+
                 for user in users:
                     if user.username == dancer.username:
                         db.session.delete(user)
@@ -400,7 +400,7 @@ class DeleteDancer(Resource):
                 db.session.commit() 
                 return {}, 204
             else:
-                return ["Message: ","User Not Authorized"], 401  
+                return ["Message: ","Only Parent or Admin can delete a dancer"], 401  
        else:
             return ["Message: ","User Not Found"], 404  
 
@@ -569,7 +569,7 @@ class DancerByID(Resource):
                     return ["Message","Invalid action"], 444 
                 return response
             else: 
-               return ["Message","User Not Authorized"], 401 
+               return ["Message: ","Only Parent or Admin can access a dancer information"], 401 
        else:
             response = make_response(["Message"," Dancer does not exist"], 404)
             return response

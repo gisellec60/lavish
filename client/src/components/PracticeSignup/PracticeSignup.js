@@ -4,22 +4,23 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import CloseButton from 'react-bootstrap/CloseButton';
+import "./p_styles.css"
 
-import "./error_styles.css"
-
-const UserExistError = ({error, onCloseButton }) => {
+const PracticeSignup = ({onClose}) => {
+   
+  
   return (
     <Container fluid="md">
       <Row className="row-no-user">
         <Col >
-           <p className='text'>{error}</p>
-           <p> Click "X" to try again or to return to Portal.
+           <p className='text'>🚧 Under Construction 🚧 </p>
+           <p> Signup for Practice Link is not ready
            </p>
-           <CloseButton arial-lable="close" onClick={onCloseButton}/>
+           <CloseButton arial-lable="close" onClick={onClose}/>
         </Col>
       </Row>
     </Container>
      )
 }
 
-export default UserExistError
+export default PracticeSignup

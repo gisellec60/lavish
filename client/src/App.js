@@ -19,10 +19,14 @@ import DancerEvents from "./components/DancerEvent/DancerEvents"
 import AllEvents from "./components/AllEvents/AllEvents"
 import DeleteEvent from "./components/DeleteEvent/DeleteEvent"
 import ModifyEvent from "./components/ModifyEvent/ModifyEvent"
+import EventRegistration from "./components/EventRegistration/EventRegistration"
+
+
 import AllPractices from "./components/AllPractices/AllPractices"
 import DeletePractice from "./components/DeletePractice/DeletePractice"
 import ModifyPractice from "./components/ModifyPractice/ModifyPractice"
 import DancerPractices from "./components/DancerPractice/DancerPractices"
+import PracticeSignup from "./components/PracticeSignup/PracticeSignup"
 
 function App() {
 
@@ -78,7 +82,7 @@ function App() {
       <Navigation setUser={setUser} user={user} setIsAdmin={setIsAdmin} setIsParent={setIsParent}/>
       <Routes>
          <Route path ="/" element = {<Home />}> </Route>  
-         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} handleIsParent={handleIsParent} />}></Route>
+         <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} handleIsParent={handleIsParent} setIsParent={setIsParent}  />}></Route>
         {
           user ? 
            <Route path={"/admin"} element={<Admin onSignUp={handleSetUser} />}></Route>
@@ -94,18 +98,22 @@ function App() {
          <Route path={"/addDancer"} element={<AddDancer />}></Route>
          <Route path={"/allDancers"} element={<AllDancers onCloseButton={handleCloseButton}/>}></Route>
          <Route path={"/modifyDancer"} element={<ModifyDancer onModifyDancer={handleModifyDancer} />}></Route>
-         <Route path={"/deleteDancer"} element={<DeleteDancer setUser={setUser} />}></Route>
+         <Route path={"/deleteDancer"} element={<DeleteDancer setUser={setUser} setIsAdmin={setIsAdmin} setIsParent={setIsParent} />}></Route>
          <Route path={"/listDancer"} element={<ListDancer  />}></Route>
          <Route path={"/dancer/events"} element={<DancerEvents  />}></Route>
          <Route path={"/dancer/practices"} element={<DancerPractices />}></Route>
+         
          <Route path={"/addEvent"} element={<AddEvent />}></Route>
          <Route path={"/deleteEvent"} element={<DeleteEvent />}></Route>
          <Route path={"/allEvents"} element={<AllEvents />}></Route>
          <Route path={"/modifyEvent"} element={<ModifyEvent />}></Route>
+         <Route path={"/event/signup"} element={<EventRegistration onClose={handleCloseButton}/>}></Route>
+         
          <Route path={"/modifyPractice"} element={<ModifyPractice onClose={handleCloseButton} />}></Route>  
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
+         <Route path={"/practice/signup"} element={<PracticeSignup onClose={handleCloseButton}/>}></Route>
       </Routes> 
       </div>
     </> 

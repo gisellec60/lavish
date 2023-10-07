@@ -7,18 +7,34 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
+import * as Yup  from 'yup'
+import {TextError} from "../TextError"
 
 const initialValues = {
     email: ''
 }
 
-export const DeleteDancer = ({setUser}) => {
+const validationSchema = Yup.object( {
+    email:Yup.string().email('invaled email format').required('E-mail is Required'),
+})
+
+
+export const DeleteDancer = ({setUser, setIsParent, setIsAdmin}) => {
 
     const [error, setError] = useState(null)
 
     const closeErrorButton = (() => {
         setError(null)
     })
+
+    const handleIsParent = (() =>{
+        setIsParent(null)
+    })
+ 
+    const handleIsAdmin = (() =>{
+         setIsAdmin(null)
+   })
+ 
 
     const navigate = useNavigate()
 
@@ -32,6 +48,8 @@ export const DeleteDancer = ({setUser}) => {
                 res.json().then((res)=> {
                     console.log("Message", res)  
                     if (res = "None" ){
+                        handleIsAdmin()
+                        handleIsParent()
                         setUser(null)
                         navigate("/")  
                     }    
@@ -52,12 +70,13 @@ export const DeleteDancer = ({setUser}) => {
                <Col className="placement" md={{ span: 6, offset: 3 }}>     
                     <Formik 
                         initialValues = {initialValues}
+                        validationSchema={validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
 
                             <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
                             <Field type = 'email' id='email' name='email' />
-                            <ErrorMessage name = 'email' />
+                            <ErrorMessage name = 'email' component={TextError} />
 
                             <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>

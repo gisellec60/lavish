@@ -33,15 +33,18 @@ export const Portal = ({isAdmin}) => {
             <Row>
                 <Col className ="col-2 sidebar" >
                     <ul class="list-group" className="list-group">
-                        <li>Parent</li>
+                        <h5 style={{color:"goldenrod"}}>Parent</h5>
                         <li class="list-group-item">
                             <Link to="/addDancer"> Add Dancer</Link>
                         </li>  
                         <li class="list-group-item">
+                            <Link to="/modifyDancer"> Modify Dancer</Link>
+                        </li>
+                        <li class="list-group-item">
                             <Link to="/deleteDancer"> Delete Dancer</Link>
                         </li>                        
                         <li class="list-group-item">
-                            <Link to="/listDancer"> Dancer Information </Link>
+                            <Link to="/listDancer"> Access Dancer</Link>
                         </li> 
                         <li class="list-group-item">
                              <Link to="/dancer/practices "> Dancer Practice </Link>
@@ -51,15 +54,21 @@ export const Portal = ({isAdmin}) => {
                         </li> 
                     </ul>
                     <ul class="list-group" className="list-group">
-                       <li>Dancers</li> 
+                       <h5 style={{color:"goldenrod"}}>Dancers</h5> 
                        <li class="list-group-item">
-                         <Link to="/dancer/events "> Competitions </Link>
+                         <Link to="/dancer/events ">Events Schedule</Link>
                         </li> 
                       <li class="list-group-item">
-                        <Link to="/dancer/practices">Practice </Link>
+                        <Link to="/dancer/practices">Practice Schedule </Link>
                       </li> 
                       <li class="list-group-item">
-                         <Link to="/listDancer">Dancer by UserName </Link>
+                         <Link to="/listDancer">Access Dancer </Link>
+                      </li>
+                      <li class="list-group-item">
+                         <Link to="/practice/signup">Signup Practice </Link>
+                      </li>
+                      <li class="list-group-item">
+                         <Link to="/event/signup">Register for Event </Link>
                       </li>
                     </ul>
                 </Col>    

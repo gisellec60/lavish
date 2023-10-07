@@ -1,0 +1,19 @@
+.row-no-user{
+    position: relative;
+    top:150px; 
+    border: 10px solid goldenrod;
+    background-color: wheat;
+    height: 160px;
+    width: 500px;
+    justify-self: center;
+    left:400px;
+    text-align:center
+} 
+
+.text {
+    color: red;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bolder;
+}
+
+
