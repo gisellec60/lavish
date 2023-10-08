@@ -35,6 +35,9 @@ export const Portal = ({isAdmin}) => {
                     <ul class="list-group" className="list-group">
                         <h5 style={{color:"goldenrod"}}>Parent</h5>
                         <li class="list-group-item">
+                            <Link to="/admin"> Add Admin</Link>
+                        </li>  
+                        <li class="list-group-item">
                             <Link to="/addDancer"> Add Dancer</Link>
                         </li>  
                         <li class="list-group-item">
@@ -89,7 +92,10 @@ export const Portal = ({isAdmin}) => {
                  isAdmin ?
                   <Col className="col-2 sidebar " >
                     <ul class="list-group" className="list-group">
-                        <li>Admin Portal</li>
+                        <h5 style={{color:"goldenrod"}}>Admin</h5>
+                        <li class="list-group-item">
+                            <Link to="/admin"> Add Admin</Link>
+                        </li> 
                         <li class="list-group-item">
                             <Link to="/addDancer"> Add Dancer</Link>
                         </li> 

@@ -10,8 +10,6 @@ import { useState } from "react"
 import * as Yup  from 'yup'
 import {TextError} from "../TextError"
 
-import "./styles.css"
-
 const initialValues = {
     email: 'giselle@gmail.com',
     password: 'giselle@gmail.compassword'

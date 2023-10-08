@@ -13,21 +13,35 @@ import { useState} from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
- const initialValues = {
-    first: '',
-    last: '',
-    email: '',
-    phone: '',
-    gender: '',
-    dob: '',
-    age: '',
-    dob: '',
-    image: '',
-    bio: '',
-    password: '',
-    pemail:''
-}
+//  const initialValues = {
+//     first: '',
+//     last: '',
+//     email: '',
+//     phone: '',
+//     gender: '',
+//     dob: '',
+//     age: '',
+//     dob: '',
+//     image: '',
+//     bio: '',
+//     password: '',
+//     pemail:''
+// }
 
+const initialValues = {
+    first: 'Deja',
+    last: 'Thompson',
+    email: 'deja@gmail.com',
+    phone: '919-270-2142',
+    gender: 'female',
+    dob: '2023-01-01',
+    age: '17',
+    dob: '2023-01-01',
+    image: '',
+    bio: 'I love dancing. I have been dance since I was 8. So glad to be a part of this team',
+    password: 'pass',
+    pemail:'millerjohn@example.net'
+}
 
 // Validation using Yup library 
 const validationSchema = Yup.object({

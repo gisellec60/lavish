@@ -31,27 +31,25 @@ const GetDancer = ({setDancer, showDancer, setShowDancer}) => {
     const handleShowDancer = (() => {
         setShowDancer(!showDancer)
      })
-
     const onSubmit = values => { 
         fetch(`/dancers/${values["email"]}?action=none`)
         .then(res => {
-            if (!res.ok){ 
-                throw new Error('Network response was not ok');
-             }
-             return Response.json() //Returns a promise that resolves to Json data
-            })    
-        .then((dancer) => {     
-            setDancer(dancer)
-            handleShowDancer()
-        }) 
-        .catch(error => {
-            console.log("Error Returned",error);    
-            // onError(error) 
-            setError(error)
+            if (res.ok) {
+                res.json()
+                .then((dancer) => {
+                  console.log("this dancer", dancer)   
+                  setDancer(dancer)
+                }) 
+            }else{
+                res.json().then((error)=> {
+                  console.log("Error Returned",error);    
+                  setError(error)
+                })      
+            }
         })
-    }
+     }
 
-    return (
+     return (
       <>  
       
         <Container className="location" >

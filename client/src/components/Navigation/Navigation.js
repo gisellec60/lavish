@@ -53,18 +53,17 @@ export const Navigation = ({setUser, user, setIsAdmin, setIsParent}) => {
           {user ? <NavLink exact to="/portal" className="linkStyles" activeStyle={activeLinkStyle} >
             Portal
           </NavLink> :null  }
-          <NavLink exact to="/login" className="linkStyles"  activeStyle={{color:"white",}} >
-            Login
-          </NavLink> 
 
-          {user ? <NavLink exact to="/admin" className="linkStyles"  activeStyle={{color:"white",}} >
-            Admin
-          </NavLink> :null  }
-
-          <NavLink exact to="/logout" className="linkStyles"  activeStyle={{color:"white",}}
-            onClick={() => {handleLogout()}} >
+          {user ?
+            <NavLink exact to="/logout" className="linkStyles"  activeStyle={{color:"white",}}
+              onClick={() => {handleLogout()}} >
             Logout
-          </NavLink> 
+            </NavLink> 
+          :
+            <NavLink exact to="/login" className="linkStyles"  activeStyle={{color:"white",}} >
+            Login
+            </NavLink> 
+          }
           </div>
         </Col>
       </Row>

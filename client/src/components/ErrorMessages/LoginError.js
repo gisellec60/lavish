@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import CloseButton from 'react-bootstrap/CloseButton';
-// import "./styles.css"
+import "./error_styles.css"
 
 const LoginError = ({error, onCloseButton}) => {
   return (
