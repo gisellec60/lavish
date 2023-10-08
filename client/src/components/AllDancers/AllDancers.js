@@ -16,7 +16,7 @@ const AllDancers = ({onCloseButton}) => {
         if (res.ok) {
             res.json()
             .then((users) => {
-                console.log("line26:",users)
+                console.log(users)
                 setDancers(users)
             })
         }else{

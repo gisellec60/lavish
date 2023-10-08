@@ -18,12 +18,17 @@ import UserExistError from '../ErrorMessages/UserExistError'
     })
     
 
-const GetPracticeForm = ({setDancer,setPractices, showDancerListing,setShowDancerListing}) => {
+const GetPracticeForm = ({empty, setEmpty,setDancer,setPractices, showDancerListing,setShowDancerListing}) => {
 
     const [error, setError] = useState(null)
     
     const closeErrorButton = (() => {
         setError(null)
+    })
+
+    const handleEmptyEvents = ((practice) =>{
+        if (practice.length == 0)
+        setEmpty(!empty)
     })
 
     const handleGetDancer = ((email) => {
@@ -55,6 +60,7 @@ const GetPracticeForm = ({setDancer,setPractices, showDancerListing,setShowDance
                   console.log("this practices", practices)   
                   setPractices(practices)
                   handleGetDancer(email)
+                  handleEmptyEvents(practices)
                 }) 
             }else{
                 res.json().then((error)=> {

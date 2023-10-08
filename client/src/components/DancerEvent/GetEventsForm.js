@@ -9,7 +9,6 @@ import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
 import UserExistError from '../ErrorMessages/UserExistError'
-// import ShowDancerListing from '../ShowDancerListing/ShowDancerListing';
 
    // handle form state 
    const initialValues = {
@@ -22,12 +21,17 @@ import UserExistError from '../ErrorMessages/UserExistError'
     })
     
 
-const GetEventsForm = ({setDancer,setEvents, showDancerListing,setShowDancerListing}) => {
+const GetEventsForm = ({setDancer,setEvents, empty, setEmpty, showDancerListing,setShowDancerListing}) => {
 
     const [error, setError] = useState(null)
     
     const closeErrorButton = ((error) => {
         setError(null)
+    })
+
+    const handleEmptyEvents = ((events) =>{
+        if (events.length == 0)
+        setEmpty(!empty)
     })
 
     const handleGetDancer = ((email) => {
@@ -46,29 +50,30 @@ const GetEventsForm = ({setDancer,setEvents, showDancerListing,setShowDancerList
                 })      
             }
         })
-        setShowDancerListing(!showDancerListing)
-     })
+       setShowDancerListing(!showDancerListing)
+    })
 
     const onSubmit = values => { 
         const email = values["email"]
         fetch(`/dancers/${values["email"]}?action=events`)
-        .then(res => {
-            if (res.ok) {
-                res.json()
-                .then((events) => {
-                  console.log("this events", events)   
-                  setEvents(events)
-                  handleGetDancer(email)
-                }) 
-            }else{
-                res.json().then((error)=> {
-                  console.log("Error Returned",error);    
-                  setError(error)
-                })      
-            }
-        })
-    }
+            .then(res => {
+                if (res.ok) {
+                    res.json()
+                    .then((events) => {
+                        console.log("this events", events)   
+                        setEvents(events)
+                        handleGetDancer(email)
+                        handleEmptyEvents(events)
+                    }) 
+                }else{
+                    res.json().then((error)=> {
+                        console.log("Error Returned",error);    
+                        setError(error)
+                    })      
+                }
+            })      
 
+    }
     return (
     <>
      <Container className="location">

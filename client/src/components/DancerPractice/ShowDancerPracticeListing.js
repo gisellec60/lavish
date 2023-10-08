@@ -3,12 +3,15 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import "./dancePracticeStyle.css"
 
-function ShowDanceerPracticeListing({dancer, practices}) {
+function ShowDanceerPracticeListing({dancer, practices, empty}) {
   console.log("this is dancer and practices", dancer, practices)
 
   const practicelist =
     <Container fluid="md" className="list-container">
-      <h3 className="nameHeading">{dancer['first']} {dancer['last']}</h3>
+      {
+        empty ? <h3 className="nameHeading">{dancer['first']} {dancer['last']} : No Practices Scheduled</h3>
+        : <h3 className="nameHeading">{dancer['first']} {dancer['last']}</h3>
+      }
         <Table responsive striped boarded hoover variant="dark">
           <thead >
               <tr >

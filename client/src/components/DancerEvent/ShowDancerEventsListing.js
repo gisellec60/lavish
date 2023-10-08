@@ -3,12 +3,16 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import "./danceEventStyle.css"
 
-function ShowDancerEventsListing({dancer, events}) {
+function ShowDancerEventsListing({dancer, events, empty}) {
  
   
   const eventlist =
     <Container fluid="md" className="list-container">
-      <h3 className="nameHeading">{dancer['first']} {dancer['last']} </h3>
+     {
+       empty ? 
+            <h3 className="nameHeading">{dancer['first']} {dancer['last']} : No Events Scheduled</h3>
+          : <h3 className="nameHeading">{dancer['first']} {dancer['last']}  </h3>
+     }
         <Table responsive striped boarded variant="dark">
           <thead >
               <tr >

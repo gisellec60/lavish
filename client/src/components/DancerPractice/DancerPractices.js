@@ -7,13 +7,14 @@ const DancerPractice = () => {
   
   const [dancer, setDancer] = useState([])
   const [practices, setPractices] = useState ([])
+  const [empty, setEmpty] = useState(false)
   const [showDancerListing, setShowDancerListing] = useState (false)
   
   return (
     <div>
       {
-        showDancerListing ? <ShowDancerPracticeListing dancer={dancer} setDancer={setDancer} practices={practices} setPractices={setPractices} />  :
-        <GetPracticeForm setDancer={setDancer} setPractices={setPractices} showDancerListing={showDancerListing} setShowDancerListing={setShowDancerListing}  />
+        showDancerListing ? <ShowDancerPracticeListing dancer={dancer} setDancer={setDancer} practices={practices} setPractices={setPractices}  empty={empty} />  :
+        <GetPracticeForm setDancer={setDancer} setPractices={setPractices} showDancerListing={showDancerListing} setShowDancerListing={setShowDancerListing}  empty={empty} setEmpty={setEmpty} />
       }
     </div>
   )
