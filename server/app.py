@@ -15,6 +15,7 @@ ma = Marshmallow(app)
 # by faker I need to do some updates that cannot happen without an id. We don't have access to 
 # id's until seed.py is ran so I added the updates here.  I will revist this if time permits.
 
+# If parent is not connected to a dancer remove the parent 
 def clean_parents():
     parent_list=[]
     parents = Parent.query.all()
@@ -42,6 +43,13 @@ def clean_emergency():
     for emergency in emergencies:
         if emergency.id not in emergency_list:            
             db.session.delete(emergency)
+    db.session.commit()
+
+def clean_dancers():
+    dancers = Dancer.query.all()
+    for dancer in dancers:
+        if (not dancer.parent_id) or not (dancer.emergency_id):
+            db.session.delete(dancer)
     db.session.commit()
 
 # I calculate age every time app runs to keep age current. 
@@ -365,38 +373,35 @@ class DeleteDancer(Resource):
        if dancer:
             
             parent = Parent.query.filter_by(id=dancer.parent_id).first()
-            user = User.query.filter_by(username=session.get("username")).first()
+            auth_user = User.query.filter_by(username=session.get("username")).first()
             emergency = Emergency.query.filter_by(id=dancer.emergency_id).first()
             users=User.query.all()
-            
+            print("parent", parent)
+            print("dancer ",dancer)
             # if current user is admin or the parent        
-            if user.isadmin or parent.username == user.username:
+            if auth_user.isadmin or parent.username == auth_user.username:
                 #remove dancer from user table    
 
                 for user in users:
                     if user.username == dancer.username:
                         db.session.delete(user)
 
-                # remove parent from parent and user table if dancer is only child
-                if len(parent.dancers) == 1: 
-                    db.session.delete(parent)
- 
-                #remove emergency contact if dancer is the only one using this contact                   
-                if len(emergency.dancers) == 1: 
-                    db.session.delete(emergency)
-
-                #Finally, delete dancer and commit change
+                #delete dancer 
                 db.session.delete(dancer)
 
+                # remove parent from parent table if dancer is only child
                 # If parent is not an admin they're removed from user table and logged out.
-                for user in users:
-                    if user.username == parent.username:
-                        if not user.isadmin:
-                           db.session.delete(user)
-                           if session.get("username") == parent.username:
-                                session['username'] = None  
-                                db.session.commit()        
-                                return ["None"], 201
+                if len(parent.dancers) == 1: 
+                    db.session.delete(emergency)
+                    db.session.delete(parent)
+                    if auth_user.username == parent.username:
+                        if not auth_user.isadmin:
+                            #delete parent from user table remove session
+                            db.session.delete(auth_user)
+                            session['username'] = None  
+                            db.session.commit()        
+                            return ["None"], 201
+                print("do you get here?")            
                 db.session.commit() 
                 return {}, 204
             else:
@@ -1055,6 +1060,7 @@ if __name__ == '__main__':
     with app.app_context():
         clean_parents()
         clean_emergency()
+        clean_dancers()
         keep_age_current()
     app.run(port=5555,debug=True)
 
