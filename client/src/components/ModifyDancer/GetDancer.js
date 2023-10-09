@@ -36,8 +36,7 @@ const GetDancer = ({setDancer, showDancer, setShowDancer}) => {
         fetch(`/dancers/${values["email"]}?action=none`)
         .then(res => {
             if (res.ok) {
-                res.json()
-                .then((dancer) => {
+                res.json().then((dancer) => {
                   console.log(dancer)   
                   setDancer(dancer)
                   handleShowDancer()

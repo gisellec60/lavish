@@ -44,15 +44,17 @@ export const DeleteDancer = ({setUser, setIsParent, setIsAdmin}) => {
         })
         .then(res => {
             if (res.ok){ 
-                alert("Dancer was deleted succesfully")
-                res.json().then((res)=> {
-                    console.log("Message", res)  
-                    if (res = "None" ){
+                res.text().then((msg)=> {
+                    alert("Dancer was deleted succesfully")
+                    console.log("Message", msg)  
+                    if (msg = "None" ){
+                        console.log("do you get here?")
                         handleIsAdmin()
                         handleIsParent()
                         setUser(null)
-                        navigate("/")  
                     }    
+                    console.log("do you get here to navigate?")
+                    navigate("/")  
                 })     
             }else{
                 res.json().then((error)=> {

@@ -40,7 +40,7 @@ const initialValues = {
     image: '',
     bio: 'I love dancing. I have been dance since I was 8. So glad to be a part of this team',
     password: 'pass',
-    pemail:'millerjohn@example.net'
+    pemail:'hross@example.net'
 }
 
 // Validation using Yup library 

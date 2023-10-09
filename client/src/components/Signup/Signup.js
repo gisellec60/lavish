@@ -21,7 +21,7 @@ const initialValues = {
     dob: '2007-02-01',
     bio: 'I started off in cheer but found that my passion was in majorette dancing.',
     image: '',
-    password: 'mypasswordisme',
+    password: 'pass',
     p_first: 'Chanee',
     p_last: 'Carson',
     p_address: '805 Grandview Lane, Durham NC 27703',
