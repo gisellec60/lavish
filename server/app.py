@@ -650,7 +650,7 @@ class Events(Resource):
 class AddEvent(Resource):
     def post(self):
         #Only admin can add an event
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
 
         if user.isadmin:
             data = request.get_json()
@@ -787,7 +787,7 @@ class AddPractice(Resource):
     def post(self):
         # Only admin can add to the practice schedule
 
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
         
         if user.isadmin:
             data = request.get_json()

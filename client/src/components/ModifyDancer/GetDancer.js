@@ -31,14 +31,16 @@ const GetDancer = ({setDancer, showDancer, setShowDancer}) => {
     const handleShowDancer = (() => {
         setShowDancer(!showDancer)
      })
+
     const onSubmit = values => { 
         fetch(`/dancers/${values["email"]}?action=none`)
         .then(res => {
             if (res.ok) {
                 res.json()
                 .then((dancer) => {
-                  console.log("this dancer", dancer)   
+                  console.log(dancer)   
                   setDancer(dancer)
+                  handleShowDancer()
                 }) 
             }else{
                 res.json().then((error)=> {
