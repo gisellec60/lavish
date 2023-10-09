@@ -46,9 +46,8 @@ export const DeleteDancer = ({setUser, setIsParent, setIsAdmin}) => {
             if (res.ok){ 
                 res.text().then((msg)=> {
                     alert("Dancer was deleted succesfully")
-                    console.log("Message", msg)  
-                    if (msg = "None" ){
-                        console.log("do you get here?")
+                    if (msg === "Remove_Session" ){
+                        console.log("do you get here?",msg)
                         handleIsAdmin()
                         handleIsParent()
                         setUser(null)

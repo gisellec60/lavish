@@ -376,8 +376,6 @@ class DeleteDancer(Resource):
             auth_user = User.query.filter_by(username=session.get("username")).first()
             emergency = Emergency.query.filter_by(id=dancer.emergency_id).first()
             users=User.query.all()
-            print("parent", parent)
-            print("dancer ",dancer)
             # if current user is admin or the parent        
             if auth_user.isadmin or parent.username == auth_user.username:
                 #remove dancer from user table    
@@ -391,17 +389,20 @@ class DeleteDancer(Resource):
 
                 # remove parent from parent table if dancer is only child
                 # If parent is not an admin they're removed from user table and logged out.
+                print("length is: ",len(parent.dancers) )
                 if len(parent.dancers) == 1: 
+                    print("do you get here?")    
                     db.session.delete(emergency)
                     db.session.delete(parent)
                     if auth_user.username == parent.username:
                         if not auth_user.isadmin:
+                            print("you should not be here")
                             #delete parent from user table remove session
                             db.session.delete(auth_user)
                             session['username'] = None  
                             db.session.commit()        
-                            return ["None"], 201
-                print("do you get here?")            
+                            return ["Remove_Session"], 201
+                print("its me!!")        
                 db.session.commit() 
                 return {}, 204
             else:
