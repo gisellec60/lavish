@@ -225,7 +225,7 @@ def logout():
     if session.get("username"):
         session['username'] = None
         return {}, 204
-    return {"message": "unauthorized"}, 404
+    return ["message:", "User not Found"], 404
 
 @app.route("/check_session", methods = ["GET"])
 def check_session():
@@ -242,7 +242,7 @@ def check_session():
  
             ),200
     else:
-            return {"Message": "Unauthorized"}, 401  
+            return ["Message", "Unauthorized"], 401  
 
 @app.route("/check_admin_password", methods = ["POST"])
 def check_admin_password():
@@ -376,6 +376,9 @@ class DeleteDancer(Resource):
             auth_user = User.query.filter_by(username=session.get("username")).first()
             emergency = Emergency.query.filter_by(id=dancer.emergency_id).first()
             users=User.query.all()
+            p_length=len(parent.dancers)
+            e_length=len(emergency.dancers)
+
             # if current user is admin or the parent        
             if auth_user.isadmin or parent.username == auth_user.username:
                 #remove dancer from user table    
@@ -389,10 +392,14 @@ class DeleteDancer(Resource):
 
                 # remove parent from parent table if dancer is only child
                 # If parent is not an admin they're removed from user table and logged out.
-                print("length is: ",len(parent.dancers) )
-                if len(parent.dancers) == 1: 
-                    print("do you get here?")    
+                print("length is: ",p_length )
+                print("length is: ", e_length)
+                
+                if e_length == 1:
                     db.session.delete(emergency)
+                
+                if p_length == 1: 
+                    print("do you get here?")    
                     db.session.delete(parent)
                     if auth_user.username == parent.username:
                         if not auth_user.isadmin:
@@ -401,7 +408,7 @@ class DeleteDancer(Resource):
                             db.session.delete(auth_user)
                             session['username'] = None  
                             db.session.commit()        
-                            return ["Remove_Session"], 201
+                            return ("Remove_Session"), 201
                 print("its me!!")        
                 db.session.commit() 
                 return {}, 204
