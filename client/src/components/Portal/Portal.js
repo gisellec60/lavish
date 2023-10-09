@@ -35,9 +35,6 @@ export const Portal = ({isAdmin}) => {
                     <ul class="list-group" className="list-group">
                         <h5 style={{color:"goldenrod"}}>Parent</h5>
                         <li class="list-group-item">
-                            <Link to="/admin"> Add Admin</Link>
-                        </li>  
-                        <li class="list-group-item">
                             <Link to="/addDancer"> Add Dancer</Link>
                         </li>  
                         <li class="list-group-item">
