@@ -141,7 +141,11 @@ There is  more functionality that needs to be added:
 
 As I grow as a developer the app will grow so,...***stay tuned***
 
- 
+
+<video src="image/video1346273114%20(240p).mp4" controls title="Title"></video>
+
+
+
 
 
 
