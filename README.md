@@ -108,15 +108,24 @@ Everyone:
 - List Practice Schedule
 - Event Schedule
 
- ### Adding a Dancer:
- *NOTE:* A dancer will not be added to the roster without a parent registered and an emergency contact. 
+## Some Caveats:
+While most actions are straight forward there are some that require a little more handling under the covers to keep the integrity of the app. 
+
+ ### **Adding a Dancer:**
+ A dancer will not be added to the roster without a parent and an emergency contact. 
 
  The initial sign up for parent and dancer is through the Signup option on the main menu. Any subsequent dancers added to that parent are done through **Add Dancer** on the Portal. 
 
-### Add Admin
-Only an an Admin can add someone as an Admin. You don't have to be registerd to be added as an Admin. If a parent is added as an Admin their portal view will changed to admin view.   
+### **Add Admin**
+Only an an Admin can add someone as an Admin. You don't have to be registerd to be added as an Admin. If a parent is added as an Admin their portal view will change to admin view.   
 
-### What's Next?
+### **Delete Dancer**
+When a dancer is deleted the parent is removed from the parent and user tables and logged out of the app ***except***:
+- Parent is an admin  
+  **or**
+- Parent still has dancers registered
+
+# What's Next?
 
 There is  more functionality that needs to be added:
 
@@ -130,7 +139,7 @@ There is  more functionality that needs to be added:
 - List Payment balances
 - Send reminder email for late payments
 
-As I grow as a developer the app will grow...**stay tuned**
+As I grow as a developer the app will grow so,...***stay tuned***
 
  
 
