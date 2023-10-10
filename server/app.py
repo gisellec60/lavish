@@ -542,7 +542,7 @@ class ModifyDancer(Resource):
                 response = make_response([singular_dancer_schema.dump(dancer)], 202)       
                 return response
             else:
-                return [{"Message":"User Not Found"}], 404  
+                return [{"Message": "User Not Found"}], 404  
         else:
             return [{"Message":"User Not Authorized"}], 401 
 
@@ -582,7 +582,7 @@ class DancerByID(Resource):
                     return ["Message","Invalid action"], 444 
                 return response
             else: 
-               return ["Message: ","Only Parent or Admin can access a dancer information"], 401 
+               return ["Message: ","Only Dancer, Parent or Admin can access a dancer's information"], 401 
        else:
             response = make_response(["Message"," Dancer does not exist"], 404)
             return response

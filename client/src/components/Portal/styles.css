@@ -46,3 +46,9 @@
     font-size:15px;
     font-family:Arial, Helvetica, sans-serif
 }
+
+#desc {
+    font-size:small;
+    color:goldenrod;
+    font-style:italic
+}

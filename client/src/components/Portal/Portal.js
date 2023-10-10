@@ -31,7 +31,7 @@ export const Portal = ({isAdmin}) => {
             </Row> 
             <Row>'' </Row>
             <Row>
-                <Col className ="col-2 sidebar" >
+                <Col className ="col-3 sidebar" >
                     <ul class="list-group" className="list-group">
                         <h5 style={{color:"goldenrod"}}>Parent</h5>
                         <li class="list-group-item">
@@ -47,25 +47,44 @@ export const Portal = ({isAdmin}) => {
                             <Link to="/listDancer"> Access Dancer</Link>
                         </li> 
                         <li class="list-group-item">
-                             <Link to="/dancer/practices "> Dancer Practice </Link>
+                             <Link to="/dancer/practices "> Dancer's Practice Schedule </Link>
                         </li> 
                         <li class="list-group-item">
-                             <Link to="/dancer/events "> Dancer Events </Link>
+                             <Link to="/dancer/events "> Dancer's Events Schedule</Link>
                         </li> 
+                        <li class="list-group-item">
+                            <Link to="/practice/signup">Signup for Practice </Link>
+                       </li>
+                       <li class="list-group-item">
+                            <Link to="/event/signup">Register for Event </Link>
+                       </li>
+                       <li class="list-group-item">
+                            <Link to="/practice/signup">Delete Dancer from Practice </Link>
+                       </li>
+                       <li class="list-group-item">
+                            <Link to="/event/signup">Delete Dancer from Event </Link>
+                       </li>
                     </ul>
                     <ul class="list-group" className="list-group">
-                       <h5 style={{color:"goldenrod"}}>Dancers</h5> 
+                       <h1></h1> 
+                       <h5 style={{color:"goldenrod"}}>Dancer</h5> 
                        <li class="list-group-item">
-                         <Link to="/dancer/events ">Events Schedule</Link>
+                         <Link to="/dancer/events ">Dancer's Event Schedule</Link>
                         </li> 
                       <li class="list-group-item">
-                        <Link to="/dancer/practices">Practice Schedule </Link>
+                        <Link to="/dancer/practices">Dancer's Practice Schedule </Link>
                       </li> 
                       <li class="list-group-item">
                          <Link to="/listDancer">Access Dancer </Link>
                       </li>
                       <li class="list-group-item">
-                         <Link to="/practice/signup">Signup Practice </Link>
+                            <Link to="/allEvents"> Events Schedule</Link>
+                      </li> 
+                      <li class="list-group-item">
+                            <Link to="/allPractices"> Practice Schedule</Link>
+                      </li> 
+                      <li class="list-group-item">
+                         <Link to="/practice/signup">Signup for Practice </Link>
                       </li>
                       <li class="list-group-item">
                          <Link to="/event/signup">Register for Event </Link>
@@ -109,7 +128,7 @@ export const Portal = ({isAdmin}) => {
                               <Link to="/allDancers"> All Dancers</Link>
                         </li>  
                         <li class="list-group-item">
-                            <Link to="/allEvents"> All Events</Link>
+                            <Link to="/allEvents"> Events Schedule</Link>
                         </li> 
                         <li class="list-group-item">
                             <Link to="/addEvent"> Add Event</Link>
@@ -121,7 +140,7 @@ export const Portal = ({isAdmin}) => {
                             <Link to="/modifyEvent"> Modify Event</Link>
                         </li>
                         <li class="list-group-item">
-                            <Link to="/allPractices"> All Practices</Link>
+                            <Link to="/allPractices"> Practice Schedule</Link>
                         </li> 
                         <li class="list-group-item">
                              <Link to="/addPractice"> Add Practice</Link>
