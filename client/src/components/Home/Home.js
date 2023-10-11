@@ -8,9 +8,9 @@ import Col from  'react-bootstrap/Col'
 export const Home = () =>  {
   return (
   <div>
-    <Container fluid="md">
+    <Container fluid>
          <Row>
-                <Col className = "columns1" md={2} >
+                <Col className = "columns1" xsm ={12} sm={10} md={2} >
                     <h1 className='productions-heading' ><span className='heading-highlight'>L</span>avish <span className='heading-highlight'>D</span>ivas <span className='heading-highlight'>M</span>ajorette <span className='heading-highlight'>D</span>ance </h1> 
                 </Col>
          </Row>

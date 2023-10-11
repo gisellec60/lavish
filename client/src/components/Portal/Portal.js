@@ -20,7 +20,7 @@ export const Portal = ({isAdmin}) => {
 
   return (
     <div>
-        <Container className = "portal-container" >
+        <Container fluid className = "portal-container" >
 
            <Row>
                <Col className="header">
@@ -31,7 +31,7 @@ export const Portal = ({isAdmin}) => {
             </Row> 
             <Row>'' </Row>
             <Row>
-                <Col className ="col-3 sidebar" >
+                <Col className ="col-2 sidebar" >
                     <ul class="list-group" className="list-group">
                         <h5 style={{color:"goldenrod"}}>Parent</h5>
                         <li class="list-group-item">
@@ -91,7 +91,7 @@ export const Portal = ({isAdmin}) => {
                       </li>
                     </ul>
                 </Col>    
-                <Col className="main-content">
+                <Col className="main-content" >
                      <Carousel activeIndex={index} onSelect={handleSelect}>
                         <Carousel.Item>
                             <ExampleCarouselImage text="First slide" />

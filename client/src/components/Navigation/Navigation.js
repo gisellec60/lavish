@@ -34,15 +34,16 @@ export const Navigation = ({setUser, user, setIsAdmin, setIsParent}) => {
   }
 
   return (
-    <Container fluid="md">
+    <Container fluid >
       <Row>
-        <Col md={6}>
+        <Col sm={12} md={6} >
           <div className="navigation">
              <h1 className="nav-title">Lavish Divas Majorette Dance</h1>
           </div>  
       </Col>
-      <Col md={1}></Col>
-      <Col md={4}>
+      {/* <Col md={1}></Col> */}
+      <Col sm={{ span: 8, offset: 3 }} md={{ span: 3, offset: 3 }}>
+      {/* <Col md={4}> */}
         <div className="nav-menu">
           <NavLink to="/" exact className="linkStyles"  >
             Home
