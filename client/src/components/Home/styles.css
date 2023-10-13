@@ -25,3 +25,18 @@
     filter: brightness(1.0);
 }
 
+/* .wide {
+    height:900px;
+} */
+
+.columns2 {
+    position:relative;
+    top: 50px;
+    right: 90px; 
+}
+
+/* .columns1 {
+    position:relative;
+    top:-150px;
+    
+} */

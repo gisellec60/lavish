@@ -15,7 +15,7 @@ export const Home = () =>  {
                 </Col>
          </Row>
          <Row>
-                <Col  className="columns2"  md={{ span: 4, offset: 3 }} >
+                <Col  className="columns2"  >
                    <img className="hero-image" src="https://www.clker.com/cliparts/0/S/k/i/k/0/dance-logo-hi.png" alt="majorette dancer" />
                 </Col>  
           </Row>
@@ -24,4 +24,7 @@ export const Home = () =>  {
 
   )
 }
+
+// xsm ={12} sm={10} md={2}
+// md={{ span: 4, offset: 3 }}
 

@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "2.2.2"
-flask-sqlalchemy = "==3.0.2"
-sqlalchemy-serializer = "1.4.1"
-flask-migrate = "4.0.0"
+flask = "*"
+flask-sqlalchemy = "*"
+sqlalchemy-serializer = "*"
+flask-migrate = "*"
 ipdb = "*"
 faker = "15.3.2"
-flask-restful = "0.3.9"
+flask-restful = "*"
 sqlalchemy = "*"
 flask-bcrypt = "==1.0.1"
 flask-marshmallow = "*"
