@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import request, session, make_response
+from flask import request, session, make_response,render_template
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from flask_marshmallow import Marshmallow 
@@ -9,6 +9,12 @@ from models import Parent, Dancer, Event, Practice, Emergency, User,Password
 from datetime import date, datetime
 
 ma = Marshmallow(app)
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
+
 
 #------------------------------------------- Run Before App --------------------------------------------
 # Since faker is not perfect sometimes we need to augment it. For me to clean up the data seeded
