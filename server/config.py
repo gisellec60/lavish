@@ -1,11 +1,18 @@
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import os
+
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+)
 
 app = Flask(__name__)
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
@@ -26,4 +33,4 @@ bcrypt = Bcrypt(app)
 
 api = Api(app)
 
-# CORS(app)
+CORS(app)
