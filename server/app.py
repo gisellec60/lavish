@@ -16,6 +16,7 @@ def index(id=0):
     return render_template("index.html")
 
 
+
 #------------------------------------------- Run Before App --------------------------------------------
 # Since faker is not perfect sometimes we need to augment it. For me to clean up the data seeded
 # by faker I need to do some updates that cannot happen without an id. We don't have access to 
