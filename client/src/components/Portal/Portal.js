@@ -20,99 +20,57 @@ export const Portal = ({isAdmin}) => {
 
   return (
     <div>
+         
         <Container fluid className = "portal-container" >
-
+         {
+           isAdmin ?
+           <>
            <Row>
                <Col className="header">
                     <div className="lavish-heading">
-                        Lavish Divas Majorette Dance Portal
+                        Lavish Divas Admin Portal
                     </div>   
                 </Col>
             </Row> 
             <Row>'' </Row>
+            
             <Row>
                 <Col className ="col-2 sidebar" >
                     <ul class="list-group" className="list-group">
+
+                        {/* Parent Side */}
                         <h5 style={{color:"goldenrod"}}>Parent</h5>
                         <li class="list-group-item">
-                            <Link to="/addDancer"> Add Dancer</Link>
+                            <Link to="/addDancer"> Search Parent</Link>
                         </li>  
                         <li class="list-group-item">
-                            <Link to="/modifyDancer"> Modify Dancer</Link>
+                            <Link to="/modifyDancer"> Modify Parent</Link>
                         </li>
                         <li class="list-group-item">
-                            <Link to="/deleteDancer"> Delete Dancer</Link>
+                            <Link to="/deleteDancer"> Delete Parent</Link>
                         </li>                        
                         <li class="list-group-item">
-                            <Link to="/listDancer"> Access Dancer</Link>
+                            <Link to="/listbalances">  List Balances </Link>
                         </li> 
                         <li class="list-group-item">
-                             <Link to="/dancer/practices "> Dancer's Practice Schedule </Link>
+                             <Link to="/dancer/practices "> List Dancer(s) </Link>
                         </li> 
                         <li class="list-group-item">
-                             <Link to="/dancer/events "> Dancer's Events Schedule</Link>
+                             <Link to="/dancer/events "> All Parents</Link>
                         </li> 
                         <li class="list-group-item">
-                            <Link to="/practice/signup">Signup for Practice </Link>
+                            <Link to="/practice/signup"> Balances </Link>
                        </li>
                        <li class="list-group-item">
-                            <Link to="/event/signup">Register for Event </Link>
+                            <Link to="/event/signup"> Payment </Link>
                        </li>
-                       <li class="list-group-item">
-                            <Link to="/practice/signup">Delete Dancer from Practice </Link>
-                       </li>
-                       <li class="list-group-item">
-                            <Link to="/event/signup">Delete Dancer from Event </Link>
-                       </li>
-                    </ul>
-                    <ul class="list-group" className="list-group">
+                     </ul>
+
+                     {/* Dancer side */}
+                     <ul class="list-group" className="list-group">
                        <h1></h1> 
                        <h5 style={{color:"goldenrod"}}>Dancer</h5> 
                        <li class="list-group-item">
-                         <Link to="/dancer/events ">Dancer's Event Schedule</Link>
-                        </li> 
-                      <li class="list-group-item">
-                        <Link to="/dancer/practices">Dancer's Practice Schedule </Link>
-                      </li> 
-                      <li class="list-group-item">
-                         <Link to="/listDancer">Access Dancer </Link>
-                      </li>
-                      <li class="list-group-item">
-                            <Link to="/allEvents"> Events Schedule</Link>
-                      </li> 
-                      <li class="list-group-item">
-                            <Link to="/allPractices"> Practice Schedule</Link>
-                      </li> 
-                      <li class="list-group-item">
-                         <Link to="/practice/signup">Signup for Practice </Link>
-                      </li>
-                      <li class="list-group-item">
-                         <Link to="/event/signup">Register for Event </Link>
-                      </li>
-                    </ul>
-                </Col>    
-                <Col className="main-content" >
-                     <Carousel activeIndex={index} onSelect={handleSelect}>
-                        <Carousel.Item>
-                            <ExampleCarouselImage text="First slide" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <SpotLight text="Second slide" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <DivaNews text="Third slide" />
-                        </Carousel.Item>
-                    </Carousel>
-                </Col>
-                {
-                 isAdmin ?
-                  <Col className="col-2 sidebar " >
-                    <ul class="list-group" className="list-group">
-                        <h5 style={{color:"goldenrod"}}>Admin</h5>
-                        <li class="list-group-item">
-                            <Link to="/admin"> Add Admin</Link>
-                        </li> 
-                        <li class="list-group-item">
                             <Link to="/addDancer"> Add Dancer</Link>
                         </li> 
                         <li class="list-group-item">
@@ -128,6 +86,34 @@ export const Portal = ({isAdmin}) => {
                               <Link to="/allDancers"> All Dancers</Link>
                         </li>  
                         <li class="list-group-item">
+                              <Link to="/dancer/events ">Dancer's Event Schedule</Link>
+                        </li> 
+                        <li class="list-group-item">
+                              <Link to="/dancer/practices">Dancer's Practice Schedule </Link>
+                        </li> 
+                    </ul>   
+                </Col>  
+
+                 {/* Carousel */}
+                <Col className="main-content" >
+                     <Carousel activeIndex={index} onSelect={handleSelect}>
+                        <Carousel.Item>
+                            <ExampleCarouselImage text="First slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <SpotLight text="Second slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <DivaNews text="Third slide" />
+                        </Carousel.Item>
+                    </Carousel>
+                </Col>
+
+                {/* Events */}
+                <Col className="col-2 sidebar " >
+                    <ul class="list-group" className="list-group">
+                        <h5 style={{color:"goldenrod"}}>Events</h5>
+                         <li class="list-group-item">
                             <Link to="/allEvents"> Events Schedule</Link>
                         </li> 
                         <li class="list-group-item">
@@ -140,6 +126,15 @@ export const Portal = ({isAdmin}) => {
                             <Link to="/modifyEvent"> Modify Event</Link>
                         </li>
                         <li class="list-group-item">
+                            <Link to="/eventDancers"> List Dancers</Link>
+                        </li>
+
+                        </ul>
+
+                        {/* Practice */}
+                        <ul class="list-group" className="list-group">
+                        <h5 style={{color:"goldenrod"}}>Practice</h5>
+                        <li class="list-group-item">
                             <Link to="/allPractices"> Practice Schedule</Link>
                         </li> 
                         <li class="list-group-item">
@@ -150,15 +145,283 @@ export const Portal = ({isAdmin}) => {
                         </li>     
                         <li class="list-group-item">
                              <Link to="/modifyPractice"> Modify Practice</Link>
-                        </li>
-                        <li class="list-group-item">Balances</li>   
+                        </li>     
+                        <li class="list-group-item">
+                            <Link to="/practiceDancers"> List Dancers</Link>
+                       </li>
                     </ul>
+                    <ul class="list-group" className="list-group">
+                        <h5 style={{color:"goldenrod"}}>Other</h5>
+                        <li class="list-group-item">
+                            <Link to="/admin"> Add Admin</Link>
+                        </li> 
+                     </ul>    
                  </Col>
-                   :null
-                }  
             </Row> 
-      </Container>
-    </div>
+           </>
+
+        //Parent and Dancer Portal
+         :
+         <>
+         <Row>
+         <Col className="header">
+              <div className="lavish-heading">
+                  Lavish Divas Majorette Dance Portal
+              </div>   
+          </Col>
+      </Row> 
+      <Row>'' </Row>
+      
+      <Row>
+          <Col className ="col-2 sidebar" >
+              <ul class="list-group" className="list-group">
+                  <h5 style={{color:"goldenrod"}}>Parent</h5>
+                  <li class="list-group-item">
+                      <Link to="/addDancer"> Add Dancer</Link>
+                  </li>  
+                  <li class="list-group-item">
+                      <Link to="/modifyDancer"> Modify Dancer</Link>
+                  </li>
+                  <li class="list-group-item">
+                      <Link to="/deleteDancer"> Delete Dancer</Link>
+                  </li>                        
+                  <li class="list-group-item">
+                      <Link to="/listDancer"> Access Dancer</Link>
+                  </li> 
+                  <li class="list-group-item">
+                       <Link to="/dancer/practices "> Dancer's Practice Schedule </Link>
+                  </li> 
+                  <li class="list-group-item">
+                       <Link to="/dancer/events "> Dancer's Events Schedule</Link>
+                  </li> 
+                  <li class="list-group-item">
+                      <Link to="/practice/signup">Signup for Practice </Link>
+                 </li>
+                 <li class="list-group-item">
+                      <Link to="/event/signup">Register for Event </Link>
+                 </li>
+                 <li class="list-group-item">
+                      <Link to="/practice/signup">Delete Dancer from Practice </Link>
+                 </li>
+                 <li class="list-group-item">
+                      <Link to="/event/signup">Delete Dancer from Event </Link>
+                 </li>
+              </ul>
+              <ul class="list-group" className="list-group">
+                 <h1></h1> 
+                 <h5 style={{color:"goldenrod"}}>Dancer</h5> 
+                 <li class="list-group-item">
+                   <Link to="/dancer/events ">Dancer's Event Schedule</Link>
+                  </li> 
+                <li class="list-group-item">
+                  <Link to="/dancer/practices">Dancer's Practice Schedule </Link>
+                </li> 
+                <li class="list-group-item">
+                   <Link to="/listDancer">Access Dancer </Link>
+                </li>
+                <li class="list-group-item">
+                      <Link to="/allEvents"> Events Schedule</Link>
+                </li> 
+                <li class="list-group-item">
+                      <Link to="/allPractices"> Practice Schedule</Link>
+                </li> 
+                <li class="list-group-item">
+                   <Link to="/practice/signup">Signup for Practice </Link>
+                </li>
+                <li class="list-group-item">
+                   <Link to="/event/signup">Register for Event </Link>
+                </li>
+              </ul>
+          </Col>    
+          <Col className="main-content" >
+               <Carousel activeIndex={index} onSelect={handleSelect}>
+                  <Carousel.Item>
+                      <ExampleCarouselImage text="First slide" />
+                  </Carousel.Item>
+                  <Carousel.Item>
+                      <SpotLight text="Second slide" />
+                  </Carousel.Item>
+                  <Carousel.Item>
+                      <DivaNews text="Third slide" />
+                  </Carousel.Item>
+              </Carousel>
+          </Col>
+          <Col className="col-2 sidebar " >
+              <ul class="list-group" className="list-group">
+                  <h5 style={{color:"goldenrod"}}>Admin</h5>
+                  <li class="list-group-item">
+                      <Link to="/admin"> Add Admin</Link>
+                  </li> 
+                  <li class="list-group-item">
+                      <Link to="/addDancer"> Add Dancer</Link>
+                  </li> 
+                  <li class="list-group-item">
+                      <Link to="/deleteDancer"> Delete Dancer</Link>
+                  </li>    
+                  <li class="list-group-item">
+                      <Link to="/modifyDancer"> Modify Dancer</Link>
+                  </li>
+                  <li class="list-group-item">
+                        <Link to="/listDancer"> Search Dancer</Link>
+                  </li> 
+                  <li class="list-group-item">
+                        <Link to="/allDancers"> All Dancers</Link>
+                  </li>  
+                  <li class="list-group-item">
+                      <Link to="/allEvents"> Events Schedule</Link>
+                  </li> 
+                  <li class="list-group-item">
+                      <Link to="/addEvent"> Add Event</Link>
+                  </li> 
+                  <li class="list-group-item">
+                      <Link to="/deleteEvent"> Delete Event</Link>
+                  </li>
+                  <li class="list-group-item">
+                      <Link to="/modifyEvent"> Modify Event</Link>
+                  </li>
+                  <li class="list-group-item">
+                      <Link to="/allPractices"> Practice Schedule</Link>
+                  </li> 
+                  <li class="list-group-item">
+                       <Link to="/addPractice"> Add Practice</Link>
+                  </li> 
+                  <li class="list-group-item">
+                       <Link to="/deletePractice"> Delete Practice</Link>
+                  </li>     
+                  <li class="list-group-item">
+                       <Link to="/modifyPractice"> Modify Practice</Link>
+                  </li>
+                  <li class="list-group-item">Balances</li>   
+              </ul>
+           </Col>
+      </Row> 
+      <Row>
+      <Col className ="col-2 sidebar" >
+          <ul class="list-group" className="list-group">
+              <h5 style={{color:"goldenrod"}}>Parent</h5>
+              <li class="list-group-item">
+                  <Link to="/addDancer"> Add Dancer</Link>
+              </li>  
+              <li class="list-group-item">
+                  <Link to="/modifyDancer"> Modify Dancer</Link>
+              </li>
+              <li class="list-group-item">
+                  <Link to="/deleteDancer"> Delete Dancer</Link>
+              </li>                        
+              <li class="list-group-item">
+                  <Link to="/listDancer"> Access Dancer</Link>
+              </li> 
+              <li class="list-group-item">
+                   <Link to="/dancer/practices "> Dancer's Practice Schedule </Link>
+              </li> 
+              <li class="list-group-item">
+                   <Link to="/dancer/events "> Dancer's Events Schedule</Link>
+              </li> 
+              <li class="list-group-item">
+                  <Link to="/practice/signup">Signup for Practice </Link>
+             </li>
+             <li class="list-group-item">
+                  <Link to="/event/signup">Register for Event </Link>
+             </li>
+             <li class="list-group-item">
+                  <Link to="/practice/signup">Delete Dancer from Practice </Link>
+             </li>
+             <li class="list-group-item">
+                  <Link to="/event/signup">Delete Dancer from Event </Link>
+             </li>
+          </ul>
+          <ul class="list-group" className="list-group">
+             <h1></h1> 
+             <h5 style={{color:"goldenrod"}}>Dancer</h5> 
+             <li class="list-group-item">
+               <Link to="/dancer/events ">Dancer's Event Schedule</Link>
+              </li> 
+            <li class="list-group-item">
+              <Link to="/dancer/practices">Dancer's Practice Schedule </Link>
+            </li> 
+            <li class="list-group-item">
+               <Link to="/listDancer">Access Dancer </Link>
+            </li>
+            <li class="list-group-item">
+                  <Link to="/allEvents"> Events Schedule</Link>
+            </li> 
+            <li class="list-group-item">
+                  <Link to="/allPractices"> Practice Schedule</Link>
+            </li> 
+            <li class="list-group-item">
+               <Link to="/practice/signup">Signup for Practice </Link>
+            </li>
+            <li class="list-group-item">
+               <Link to="/event/signup">Register for Event </Link>
+            </li>
+          </ul>
+      </Col>    
+      <Col className="main-content" >
+           <Carousel activeIndex={index} onSelect={handleSelect}>
+              <Carousel.Item>
+                  <ExampleCarouselImage text="First slide" />
+              </Carousel.Item>
+              <Carousel.Item>
+                  <SpotLight text="Second slide" />
+              </Carousel.Item>
+              <Carousel.Item>
+                  <DivaNews text="Third slide" />
+              </Carousel.Item>
+          </Carousel>
+      </Col>
+      <Col className="col-2 sidebar " >
+          <ul class="list-group" className="list-group">
+              <h5 style={{color:"goldenrod"}}>Admin</h5>
+              <li class="list-group-item">
+                  <Link to="/admin"> Add Admin</Link>
+              </li> 
+              <li class="list-group-item">
+                  <Link to="/addDancer"> Add Dancer</Link>
+              </li> 
+              <li class="list-group-item">
+                  <Link to="/deleteDancer"> Delete Dancer</Link>
+              </li>    
+              <li class="list-group-item">
+                  <Link to="/modifyDancer"> Modify Dancer</Link>
+              </li>
+              <li class="list-group-item">
+                    <Link to="/listDancer"> Search Dancer</Link>
+              </li> 
+              <li class="list-group-item">
+                    <Link to="/allDancers"> All Dancers</Link>
+              </li>  
+              <li class="list-group-item">
+                  <Link to="/allEvents"> Events Schedule</Link>
+              </li> 
+              <li class="list-group-item">
+                  <Link to="/addEvent"> Add Event</Link>
+              </li> 
+              <li class="list-group-item">
+                  <Link to="/deleteEvent"> Delete Event</Link>
+              </li>
+              <li class="list-group-item">
+                  <Link to="/modifyEvent"> Modify Event</Link>
+              </li>
+              <li class="list-group-item">
+                  <Link to="/allPractices"> Practice Schedule</Link>
+              </li> 
+              <li class="list-group-item">
+                   <Link to="/addPractice"> Add Practice</Link>
+              </li> 
+              <li class="list-group-item">
+                   <Link to="/deletePractice"> Delete Practice</Link>
+              </li>     
+              <li class="list-group-item">
+                   <Link to="/modifyPractice"> Modify Practice</Link>
+              </li>
+              <li class="list-group-item">Balances</li>   
+          </ul>
+       </Col>
+  </Row> 
+  </>         
+  }
+    </Container>
+ </div>
   )
 }
 
