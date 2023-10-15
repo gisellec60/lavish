@@ -25,7 +25,7 @@ function ParentPortal() {
                   <Row>
                         <Col className="header">
                             <div className="lavish-heading">
-                                Lavish Divas Majorette Dance Portal
+                                Lavish Divas Majorette Dancer and Parent Portal
                             </div>   
                         </Col>
                     </Row> 
@@ -79,7 +79,7 @@ function ParentPortal() {
                         </Carousel.Item>
                     </Carousel>
                     </Col>
-                    <Col>
+                    <Col  className ="col-2 sidebar">
                     <ul class="list-group" className="list-group">
                             <h1></h1> 
                             <h5 style={{color:"goldenrod"}}>Dancer</h5> 
