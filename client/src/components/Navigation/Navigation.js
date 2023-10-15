@@ -36,12 +36,12 @@ export const Navigation = ({setUser, user, setIsAdmin, setIsParent}) => {
   return (
     <Container fluid >
       <Row>
-        <Col >
+        <Col xs={12} sm={12} md={6} >
           <div className="navigation">
              <h1 className="nav-title">Lavish Divas Majorette Dance</h1>
           </div>  
-      </Col>
-      <Col sm={{ span: 3, offset: 3 }}>
+        </Col>
+      <Col xs={12} sm={12} md={{span:4, offset: 2}}>
         <div className="nav-menu">
           <NavLink to="/" exact className="linkStyles"  >
             Home
@@ -72,3 +72,4 @@ export const Navigation = ({setUser, user, setIsAdmin, setIsParent}) => {
 
 // sm={12} md={6}
 //sm={{ span: 8, offset: 3 }} md={{ span: 3, offset: 3 }}
+// md={{span:4, offset: 2}}

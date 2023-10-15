@@ -2,6 +2,7 @@
     display: flex;
     justify-content:space-between;
     margin: 2%;
+    white-space:nowrap
   }
   
   .nav-title {
@@ -37,10 +38,11 @@
     position: "relative";
     display: "inline-block";
     width: "200px";
-    padding: "2px";
+    padding: "3px";
     color:goldenrod; 
-    top:"120px";
-    left:"170px"
+    margin-right: 10px;
+    /* top:"120px";
+    left:"170px" */
   }  
 
   .active-Link {

@@ -35,8 +35,6 @@
     right: 90px; 
 }
 
-/* .columns1 {
-    position:relative;
-    top:-150px;
-    
-} */
+.noWrap {
+    flex-wrap: nowrap;
+}
