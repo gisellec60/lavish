@@ -104,7 +104,7 @@ export const Signup = ({onSignUp, handleIsParent }) => {
                         onSubmit = {onSubmit} >
                         <Form className="location-signup">
                             <h2 className="heading">SignUp Page</h2>
-                            <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
+                            <label className="label-parent" style={{color: "goldenrod"}}>Dancer Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                             <Field type = 'text' id='first' name='first' />
                             <ErrorMessage name = 'first' component={TextError}/>
@@ -146,7 +146,7 @@ export const Signup = ({onSignUp, handleIsParent }) => {
                             <ErrorMessage name = 'password' component={TextError}/>
 
                             <h1></h1>
-                            <label className="labelfonts"style={{color: "goldenrod"}}>Parent Information</label>
+                            <label className="label-parent"style={{color: "goldenrod"}}>Parent Information</label>
                             <label htmlFor ='p_first' style={{color: "white"}}>first</label>
                             <Field type = 'text' id='p_first' name='p_first' />
                             <ErrorMessage name = 'p_first' component={TextError}/>
@@ -172,7 +172,7 @@ export const Signup = ({onSignUp, handleIsParent }) => {
                             <ErrorMessage name = 'p_password' component={TextError}/>
 
                             <h1></h1>
-                            <label className="labelfonts" style={{color: "goldenrod"}}>Emergency Contact</label>
+                            <label className="label-parent" style={{color: "goldenrod"}}>Emergency Contact</label>
                             
                             <label htmlFor ='e_name' style={{color: "white"}}>Name</label>
                             <Field type = 'text' id='e_name' name='e_name' />
