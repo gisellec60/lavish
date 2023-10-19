@@ -1,14 +1,18 @@
 label {
     font-weight: bold;
     display: flex;
-    margin-bottom:5px
+    margin-bottom:5px;
+    left:150px;
   }
 
 .labelfonts {
     font-weight: bold;
-    color: white;
+    color: goldenrod;
+    font-size:large
+
   }
 
+  
   body{
     background-color:black;
     font-size:x-large;
@@ -33,17 +37,24 @@ label {
     
   }
  
-  .heading {
+   .heading {
     position:relative;
     left:180px;
     top:-50px; 
+    left:;
+
   }
-  
+   
   .location-signup{
     position:relative;
-    top:140px;
-  }
+    top: -50px;
+    background:black
+  } 
 
   .error {
     color:red;
+  }
+
+  .row {
+    background:black
   }

@@ -46,10 +46,6 @@ const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) 
         })
     }    
       
-    // const handleReturn = (() => {
-    //       navigate('/modifyEvent')  
-    //   })   
-    
     return (
      <Container >
            <Row>

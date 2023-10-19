@@ -694,7 +694,7 @@ class AddEvent(Resource):
 class ModifyEvent(Resource):
     def patch(self,id):
         
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
 
         if user.isadmin:
 

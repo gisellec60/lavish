@@ -2,7 +2,7 @@ import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
-import "./styles.css"
+import "./signupstyles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
@@ -94,15 +94,15 @@ export const Signup = ({onSignUp, handleIsParent }) => {
 
     return (
       <>
-      <Container className="location-signup">
-            <Row>
-                <Col></Col> 
+      <Container >
+            <Row className='background'>
+                <Col className="location-signup"></Col> 
                 <Col xs={12} md={8}>     
                     <Formik 
                         initialValues = {initialValues}
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
-                        <Form>
+                        <Form className="location-signup">
                             <h2 className="heading">SignUp Page</h2>
                             <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
@@ -145,6 +145,7 @@ export const Signup = ({onSignUp, handleIsParent }) => {
                             <Field type = 'password' id='password' name='password' />
                             <ErrorMessage name = 'password' component={TextError}/>
 
+                            <h1></h1>
                             <label className="labelfonts"style={{color: "goldenrod"}}>Parent Information</label>
                             <label htmlFor ='p_first' style={{color: "white"}}>first</label>
                             <Field type = 'text' id='p_first' name='p_first' />
@@ -170,6 +171,7 @@ export const Signup = ({onSignUp, handleIsParent }) => {
                             <Field type = 'password' id='p_password' name='p_password' />
                             <ErrorMessage name = 'p_password' component={TextError}/>
 
+                            <h1></h1>
                             <label className="labelfonts" style={{color: "goldenrod"}}>Emergency Contact</label>
                             
                             <label htmlFor ='e_name' style={{color: "white"}}>Name</label>
