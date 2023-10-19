@@ -27,6 +27,7 @@ import DeletePractice from "./components/DeletePractice/DeletePractice"
 import ModifyPractice from "./components/ModifyPractice/ModifyPractice"
 import DancerPractices from "./components/DancerPractice/DancerPractices"
 import PracticeSignup from "./components/PracticeSignup/PracticeSignup"
+import PracticeDancers from "./components/PracticeDancers/PracticeDancers"
 
 function App() {
 
@@ -115,6 +116,7 @@ function App() {
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
          <Route path={"/practice/signup"} element={<PracticeSignup onClose={handleCloseButton}/>}></Route>
+         <Route path={"/practiceDancers"} element={<PracticeDancers onClose={handleCloseButton}/>}></Route>
       </Routes> 
       </div>
     </> 

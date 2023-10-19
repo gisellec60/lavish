@@ -1,0 +1,22 @@
+.heading {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  
+  .subheading {
+      position:relative;
+      color: black;
+      top: -30px;
+   
+  }
+  
+  .labelfonts {
+    position:relative;
+    top:-90px;
+    font-size:xx-large;
+    left:25px;
+  }
+
+  .container {
+    position:relative;
+    top: 40px;
+  }

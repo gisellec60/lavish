@@ -12,8 +12,6 @@ const ModifyPracticeForm= ({onClose, practiceObj,setShowModifyPracticeForm, show
    
     const [errors, setErrors] = useState(null)
 
-    console.log("this is error", errors)
-
     const closeErrorButton = (() => {
         setErrors(null)
         onClose()

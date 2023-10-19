@@ -778,11 +778,10 @@ class Practices(Resource):
 class PracticeByID(Resource):
     def get(self,id):
        
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
 
         if user.isadmin:
             action = request.args.get('action')
-
             practice = Practice.query.filter_by(id=id).first() 
 
             if practice:
@@ -798,10 +797,10 @@ class PracticeByID(Resource):
                             not_listed.append(dancer)
                     response = make_response(list_dancers_schema.dump(not_listed), 201)          
             else:
-                response = make_response([{"Message": "Invalid Event"}], 404)
+                return (["Message: ", "Invalid Action Practice"], 404)
             return response
         else:
-            return [{"Message": "User not authorized"}], 401
+            return ["Message: ", "User not authorized"], 401
 
 class AddPractice(Resource):
     def post(self):
