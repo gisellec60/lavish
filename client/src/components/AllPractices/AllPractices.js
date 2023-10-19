@@ -28,7 +28,7 @@ const AllPractice = () => {
         })
         }, []);
   
-    const eventList = 
+    const practiceList = 
         <Container fluid='md' className="practice-container">
             <h3>Practice Schedule</h3>
             <Table responsive striped boarded variant="dark">
@@ -59,7 +59,7 @@ const AllPractice = () => {
 
     return (
     <div>
-      {eventList}
+      {practiceList}
     </div>
   )
 }

@@ -20,7 +20,7 @@ import AllEvents from "./components/AllEvents/AllEvents"
 import DeleteEvent from "./components/DeleteEvent/DeleteEvent"
 import ModifyEvent from "./components/ModifyEvent/ModifyEvent"
 import EventRegistration from "./components/EventRegistration/EventRegistration"
-
+import EventDancers from "./components/EventDancers/EventDancers"
 
 import AllPractices from "./components/AllPractices/AllPractices"
 import DeletePractice from "./components/DeletePractice/DeletePractice"
@@ -108,7 +108,8 @@ function App() {
          <Route path={"/allEvents"} element={<AllEvents />}></Route>
          <Route path={"/modifyEvent"} element={<ModifyEvent />}></Route>
          <Route path={"/event/signup"} element={<EventRegistration onClose={handleCloseButton}/>}></Route>
-         
+         <Route path={"/eventDancers"} element={<EventDancers onClose={handleCloseButton}/>}></Route>
+
          <Route path={"/modifyPractice"} element={<ModifyPractice onClose={handleCloseButton} />}></Route>  
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
          <Route path={"/allPractices"} element={<AllPractices />}></Route>
