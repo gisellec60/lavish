@@ -6,12 +6,11 @@ import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import "./modifyevents.css"
 
 const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) => {
     const [errors, setErrors] = useState([])
 
-    const navigate = useNavigate()
     // handle form state 
   console.log("this is event form" ,eventObj.date, eventObj['date'])
 
@@ -54,7 +53,7 @@ const ModifyEventForm = ({eventObj,setShowModifyEventForm,showModifyEventForm}) 
                         initialValues = {initialValues}
                         onSubmit = {onSubmit} >
                         <Form>
-                            <label className="labelfonts" style={{color: "goldenrod"}}>Edit Information</label>    
+                            <label className="labelfonts" style={{color: "goldenrod"}}>Edit Event Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>Date</label>
                             <Field type = 'text' id='date' name='date' />
                             <ErrorMessage name = 'date' />

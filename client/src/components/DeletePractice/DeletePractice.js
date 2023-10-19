@@ -41,9 +41,6 @@ const DeletePractice = () => {
          .then (res => {
             if (res.ok) { 
                 alert("Practice was deleted succesfully")
-                res.json().then((res)=>{
-                    console.log("this is res",res)
-                })
                 handleDeleteTask(id) 
             }else{
                 res.json().then((error)=> {
