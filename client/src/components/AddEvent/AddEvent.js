@@ -42,6 +42,7 @@ const AddEvent = () => {
     })
 
     const onSubmit = (values, onSubmitProps)  => {  
+        console.log("this is value", values)
         fetch("/events/add", {
             method: "POST",
             headers: {

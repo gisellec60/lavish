@@ -1,0 +1,10 @@
+.heading {
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.subheading {
+    position:relative;
+    color: white;
+    top: -70px;
+ 
+}

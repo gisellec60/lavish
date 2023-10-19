@@ -725,8 +725,8 @@ class DeleteEvent(Resource):
     def delete(self,id):
 
         #only admin can delete an event
-        user = User.query.filter_by(username=session.get("username"))
-        
+        user = User.query.filter_by(username=session.get("username")).first()
+        print ("This is user",user)
         if user.isadmin:
             event = Event.query.filter_by(id=id).first()
             

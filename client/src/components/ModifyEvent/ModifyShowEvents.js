@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
+import "./modifyevents.css"
 
 const ModifyShowEvents = ({showModifyEventForm, setShowModifyEventForm, setEventObj }) => {
 
@@ -34,7 +35,8 @@ const ModifyShowEvents = ({showModifyEventForm, setShowModifyEventForm, setEvent
 
     const eventList = 
         <Container fluid='md' className="event-container">
-            <h3>Event Table : click event to modify </h3>
+            <h3 className='heading'>Schedule of Events</h3>
+            <h4 className="subheading">Select an Event to modify</h4>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >
