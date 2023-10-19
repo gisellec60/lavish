@@ -10,7 +10,9 @@ import UserNotAuthorized from '../ErrorMessages/UserNotAuthorized'
 
 const ModifyPracticeForm= ({onClose, practiceObj,setShowModifyPracticeForm, showModifyPracticeForm}) => {
    
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
+
+    console.log("this is error", errors)
 
     const closeErrorButton = (() => {
         setErrors(null)
@@ -18,7 +20,7 @@ const ModifyPracticeForm= ({onClose, practiceObj,setShowModifyPracticeForm, show
     })
 
     // handle form state 
-  console.log("this is practice form" ,practiceObj.date, practiceObj['date'])
+  console.log("this is practice form" ,errors)
 
   const initialValues = {
     date: practiceObj['date'],
@@ -60,7 +62,7 @@ const ModifyPracticeForm= ({onClose, practiceObj,setShowModifyPracticeForm, show
                         initialValues = {initialValues}
                         onSubmit = {onSubmit} >
                         <Form>
-                            <label className="labelfonts" style={{color: "goldenrod"}}>Edit Information</label>    
+                            <label className="labelfonts" style={{color: "goldenrod"}}>Edit Practice Information</label>    
                             <label htmlFor ='first' style={{color: "white"}}>Date</label>
                             <Field type = 'text' id='date' name='date' />
                             <ErrorMessage name = 'date' />
