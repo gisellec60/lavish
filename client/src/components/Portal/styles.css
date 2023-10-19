@@ -7,7 +7,8 @@
 .main-content{
   background-color:wheat;
   min-height:500px;
-  border:5px solid goldenrod
+  border:5px solid goldenrod;
+  /* white-space:nowrap */
  }
 
 

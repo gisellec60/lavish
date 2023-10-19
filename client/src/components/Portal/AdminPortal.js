@@ -24,7 +24,7 @@ export const AdminPortal = () => {
     <div>
         <Container fluid className = "portal-container" >
         <Row>
-        <Col className="header">
+        <Col className="header" xs={12} sm={12} md={12}>
                 <div className="lavish-heading">
                     Lavish Divas Admin Portal
                 </div>   
@@ -33,7 +33,7 @@ export const AdminPortal = () => {
         <Row>'' </Row>
     
         <Row>
-        <Col className ="col-2 sidebar" >
+        <Col className ="col-2 sidebar"  xs={12} sm={12} md={2}>
             <ul class="list-group" className="list-group">
 
                 {/* Parent Side */}
@@ -93,7 +93,7 @@ export const AdminPortal = () => {
         </Col>  
 
             {/* Carousel */}
-        <Col className="main-content" >
+        <Col className="main-content" xs={12} sm={12} md={8} >
                 <Carousel activeIndex={index} onSelect={handleSelect}>
                 <Carousel.Item>
                     <ExampleCarouselImage text="First slide" />
@@ -108,7 +108,7 @@ export const AdminPortal = () => {
         </Col>
 
         {/* Events */}
-        <Col className="col-2 sidebar " >
+        <Col className="col-2 sidebar " xs={12} sm={12} md={2}>
             <ul class="list-group" className="list-group">
                 <h5 style={{color:"goldenrod"}}>Events</h5>
                     <li class="list-group-item">
