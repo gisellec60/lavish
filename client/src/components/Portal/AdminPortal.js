@@ -33,7 +33,7 @@ export const AdminPortal = () => {
         <Row>'' </Row>
     
         <Row>
-        <Col className ="col-2 sidebar"  xs={12} sm={12} md={2}>
+        <Col className ="col-2 sidebar"  xs ={12} sm={12} md={2} >
             <ul class="list-group" className="list-group">
 
                 {/* Parent Side */}
@@ -160,3 +160,4 @@ export const AdminPortal = () => {
   )
 }
 
+// xs ={{ span: 6, offset:4 }} sm={{ span: 6, offset: 6 }} md={{span:2, offset:0}}
