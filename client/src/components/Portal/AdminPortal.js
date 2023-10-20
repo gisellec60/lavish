@@ -54,14 +54,14 @@ export const AdminPortal = () => {
                         <Link to="/dancer/practices "> List Dancer(s) </Link>
                 </li> 
                 <li class="list-group-item">
-                        <Link to="/dancer/events "> All Parents</Link>
+                        <Link to="/parents"> All Parents</Link>
                 </li> 
                 <li class="list-group-item">
-                    <Link to="/practice/signup"> Balances </Link>
+                    <Link to="/balances"> Balances </Link>
                 </li>
-                <li class="list-group-item">
-                    <Link to="/event/signup"> Payment </Link>
-                </li>
+                {/* <li class="list-group-item">
+                    <Link to="/"> Payment </Link>
+                </li> */}
                 </ul>
 
                 {/* Dancer side */}

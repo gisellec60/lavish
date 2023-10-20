@@ -2,7 +2,7 @@ import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup  from 'yup'
-import "./styles.css"
+import "./adddancerstyles.css"
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
@@ -111,7 +111,7 @@ export const AddDancer = () => {
                            addDancer ?
                             
                                 <Form >
-                                    <label className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</label>    
+                                    <h4 className="labelfonts" style={{color: "goldenrod"}}>Dancer Information</h4>    
                                     <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                                     <Field type = 'text' id='first' name='first' />
                                     <ErrorMessage name = 'first' component={TextError} />

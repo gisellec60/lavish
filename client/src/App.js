@@ -29,6 +29,8 @@ import DancerPractices from "./components/DancerPractice/DancerPractices"
 import PracticeSignup from "./components/PracticeSignup/PracticeSignup"
 import PracticeDancers from "./components/PracticeDancers/PracticeDancers"
 
+import AllParents from "./components/Parents/AllParents/AllParents"
+
 function App() {
 
   const [user, setUser] = useState(null);
@@ -117,6 +119,8 @@ function App() {
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
          <Route path={"/practice/signup"} element={<PracticeSignup onClose={handleCloseButton}/>}></Route>
          <Route path={"/practiceDancers"} element={<PracticeDancers onClose={handleCloseButton}/>}></Route>
+      
+         <Route path={"/parents"} element={<AllParents isAdmin={isAdmin} />}></Route>
       </Routes> 
       </div>
     </> 

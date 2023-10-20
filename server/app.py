@@ -598,7 +598,7 @@ class Parents(Resource):
     def get(self):
         # Only admin can list all parent information
 
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
 
         parents = list_parentlist_schema.dump(Parent.query.all())
                
@@ -607,8 +607,8 @@ class Parents(Resource):
                 response = make_response (parents,200)
                 return response
             else:
-                return [{"Message":"User Not Authorized"}], 401
-        return [{"Message":"Dancers Not Found"}], 404  
+                return ["Message: ","User Not Authorized"], 401
+        return ["Message: ","Dancers Not Found"], 404  
 
 class ParentByID(Resource):
    def get(self,id):
