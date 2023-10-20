@@ -10,10 +10,14 @@ color:black;
 width:800px;
 }
 
-.heading{
-    font-size: xx-large;
-    font-weight:bolder
-  }
+.dancerheading{
+    font-size: large;
+    font-weight:bolder;
+}
+
+.nodancers{
+    color:red;
+}
 
 .subheading{
     position:relative;

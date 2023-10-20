@@ -1,7 +1,11 @@
-.heading {
+.dancerheading {
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size:large; 
   }
   
+ .nodancers{
+   color:red;
+ } 
   .subheading {
       position:relative;
       color: black;

@@ -35,7 +35,7 @@ const ShowDancers = ({practiceObj, empty, setEmpty}) => {
     <Container fluid='md' className="container">
      {
        empty ? 
-            <h3 className="dancerheading"> {practiceObj.venue} - {practiceObj.date} : No Dancers Scheduled</h3>
+            <h3 className="dancerheading nodancers"> {practiceObj.venue} - {practiceObj.date} : No Dancers Scheduled</h3>
           : <h3 className="dancerheading">{practiceObj.venue} - {practiceObj.date}  </h3>
      }
 

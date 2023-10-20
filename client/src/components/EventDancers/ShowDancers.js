@@ -4,11 +4,14 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table'
 import "./eventdancer.css"
 
-const ShowDancers = ({eventObj}) => {
+const ShowDancers = ({eventObj,empty, setEmpty}) => {
 
     const [dancerList, setDancerList] = useState([])
 
-    console.log("this is 44544444444444 obj", eventObj)  
+    const handleEmptyDancers = ((dancers) =>{
+      if (dancers.length == 0)
+          setEmpty(!empty)
+    })
     
     useEffect(() => {
         fetch(`/events/${eventObj.id}?action=dancers`)
@@ -18,6 +21,7 @@ const ShowDancers = ({eventObj}) => {
                 .then((dancers) => {
                 console.log("these are dancers", dancers)   
                 setDancerList(dancers)
+                handleEmptyDancers(dancers)
                 }) 
             }else{
                 res.json().then((error)=> {
@@ -29,7 +33,12 @@ const ShowDancers = ({eventObj}) => {
 
    const listDancers = 
     <Container fluid='md' className="container">
-     <h3 className="dancerheading">{eventObj.venue} - {eventObj.date}</h3>
+     { 
+       empty ?
+        <h3 className="dancerheading nodancers">{eventObj.venue} - {eventObj.date} : No Dancers Scheduled</h3>
+         :
+        <h3 className="dancerheading">{eventObj.venue} - {eventObj.date}</h3> 
+     } 
       <Table responsive striped bordered hover variant="dark" className="table-size">
            <thead >
              <tr >
