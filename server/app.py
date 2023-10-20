@@ -615,15 +615,21 @@ class ParentByID(Resource):
        #Only Parent and Admin has access
        
        parent = Parent.query.filter_by(id=id).first() 
-       user = User.query.filter_by(username=session.get("username"))
-       
+       user = User.query.filter_by(username=session.get("username")).first()
+
        if parent:
+            action = request.args.get('action')
             if user.isadmin or session.get("username") == parent.username :
-                response = make_response(singular_parentlist_schema.dump(parent), 201)
+                if action == "none":
+                    response = make_response(singular_parent_schema.dump(parent), 201)
+                elif action == "dancers":
+                    response = make_response(list_dancers_schema.dump(parent.dancers), 201)
+                else:
+                    return ["Message: ", "Invalid Action"], 444    
                 return response
-            return ["Message:","User Not authorized"], 401  
+            return ["Message: ","User Not authorized"], 401  
        else:
-           return ["Message:","Invalid Parent" ], 404  
+           return ["Message: ","Invalid Parent" ], 404  
        
 class ModifyParent(Resource):
     def patch(self,id):
