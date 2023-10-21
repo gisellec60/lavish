@@ -1,0 +1,19 @@
+.container {
+    position:relative;
+    top: 150px;
+}
+
+.size{
+    width:300px;
+}
+
+.loc {
+    position:relative;
+    top: 55px;
+    left: -150px;
+}
+
+.form-location{
+    position:relative;
+    top: -55px;
+}

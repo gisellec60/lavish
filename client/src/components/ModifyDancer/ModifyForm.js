@@ -49,12 +49,14 @@ const ModifyForm = ({dancer}) => {
   return (
      <Container >
            <Row>
-               <Col className="placement" md={{ span: 6, offset: 3 }}>     
+               <Col className="placement" md={{ span: 6, offset: 3 }}>    
+                    <h4 className="labelfonts" style={{color: "goldenrod"}}>Edit Information</h4>     
                     <Formik 
                         initialValues = {initialValues}
-                        onSubmit = {onSubmit} >
-                        <Form>
-                        <label className="labelfonts" style={{color: "goldenrod"}}>Edit Information</label>    
+                        onSubmit = {onSubmit} 
+                        >
+                        <Form className="form-location">
+
                             <label htmlFor ='first' style={{color: "white"}}>First Name</label>
                             <Field type = 'text' id='first' name='first' />
                             <ErrorMessage name = 'first' />
@@ -83,7 +85,7 @@ const ModifyForm = ({dancer}) => {
                             <Field type = 'password' id='password' name='password' />
                             <ErrorMessage name = 'password'/>
 
-                            <Button variant="primary" size="lg" type="submit"> Submit</Button>{' '}
+                            <Button className="loc" variant="primary" size="lg" type="submit"> Submit</Button>{' '}
                         </Form>
                     </Formik>
                 </Col>  
