@@ -54,15 +54,15 @@ const GetParent = ({setParent,showParent,setShowParent}) => {
 
     return (
     <>
-     <Container className="location">
+     <Container>
            <Row>
-               <Col className="placement" md={{ span: 6, offset: 3 }}>     
+               <Col className="placement" md={{ span: 6, offset: 3 }}>    
+                    <h2 className="heading">Show Parent</h2>  
                     <Formik 
                         initialValues = {initialValues}
                         validationSchema = {validationSchema}
                         onSubmit = {onSubmit} >
                         <Form>
-                        <h2 className="heading">Show Parent</h2>  
                             <label htmlFor ='email' style={{color: "white"}}>Username or E-mail</label>
                             <Field type = 'email' id='email' name='email' />
                             <ErrorMessage name = 'email' />

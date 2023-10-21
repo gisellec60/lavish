@@ -415,14 +415,11 @@ class DeleteDancer(Resource):
 
                 # remove parent from parent table if dancer is only child
                 # If parent is not an admin they're removed from user table and logged out.
-                print("length is: ",p_length )
-                print("length is: ", e_length)
                 
                 if e_length == 1:
                     db.session.delete(emergency)
                 
                 if p_length == 1: 
-                    print("do you get here?")    
                     db.session.delete(parent)
                     if auth_user.username == parent.username:
                         if not auth_user.isadmin:
@@ -432,7 +429,6 @@ class DeleteDancer(Resource):
                             session['username'] = None  
                             db.session.commit()        
                             return ("Remove_Session"), 201
-                print("its me!!")        
                 db.session.commit() 
                 return {}, 204
             else:
@@ -648,6 +644,7 @@ class ParentByID(Resource):
            return ["Message: ","Invalid Parent" ], 404  
        
 class ModifyParent(Resource):
+   
     def patch(self,id):
         #Only parent or admin is authorized
 
@@ -678,6 +675,66 @@ class ModifyParent(Resource):
         else:
             return ["Message :","Parent Not Found"], 404  
         return response
+
+class DeleteParent(Resource):
+    def delete(self,username):
+
+       # Only Admin is authorized to delete a Parent 
+       # If Parent is an admin they are not removed from user table
+       # Parent is removed from Parent Table
+       # When deleting a Parent we also delete any dancers associated with Parent:
+       #    remove dancer(s) from the user table.
+       #    remove dancers(s) from dancer table.
+       # Remove any emergency contacts they are not associated with any dancers not of the Parent.
+       # dancer(s) are automatically deleted from any association tables
+       
+       parent = Parent.query.filter_by(username=username).first()
+             
+       if parent:
+           user = User.query.filter_by(username=session.get("username")).first() 
+           print("user is ", user)
+           if user.isadmin:
+               dancers = Dancer.query.all()
+               users = User.query.all()
+               inparent_dancer=[]
+               dancer_emerg=[]
+               p_dancer = Dancer.query.filter_by(parent_id = parent.id).first()
+               p_user = User.query.filter_by(username = parent.username).first()
+               emergency = Emergency.query.filter_by(id = p_dancer.emergency_id).first()
+
+               # Find all dancers belong to Parent and remove them from dancer and user tables 
+               for dancer in parent.dancers:
+                   # collect dancers that belong to parent for comparison later 
+                   inparent_dancer.append(dancer)
+                   for user in users:
+                       if dancer.username == user.username:
+                          db.session.delete(user)
+                          db.session.delete(dancer) 
+              
+               # Before removing emergency contact make sure they are not associated with
+               # any other dancers 
+               for dancer in dancers:
+                    # if dancer does not belong to parent check if they share emergency contact wiht
+                    # dancers that belong to Parent.
+                    if dancer not in inparent_dancer:
+                        if dancer.emergency_id == emergency.id:  
+                            dancer_emerg.append(dancer)  
+
+                # if there is no one else associated with emergency contact remove contact
+               if len(dancer_emerg) == 0:
+                  db.session.delete(emergency)   
+
+                # if parent is not an admin remove them from the user table.
+               if not p_user.isadmin:
+                   db.session.delete(p_user)                             
+
+               db.session.delete(parent)    
+               db.session.commit()                                 
+                   
+           else:
+              return ["Message: ","Only an Admin can delete a parent"], 401     
+       else:
+           return ["Message: ","Parent Not Found"], 404       
 
 class Events(Resource):
     def get(self):
@@ -1069,7 +1126,8 @@ api.add_resource(ModifyDancer,'/dancers/modify/<int:id>', endpoint='dancer/modif
 
 api.add_resource(Parents, '/parents', endpoint='parents')
 api.add_resource(ParentByID,'/parent/<string:email>', endpoint='parent/<string:email>')
-api.add_resource(ModifyParent,'/parents/modify/<int:id>', endpoint='parent/modify/id')
+api.add_resource(ModifyParent,'/parents/modify/<string:username>', endpoint='parent/modify/username')
+api.add_resource(DeleteParent,'/parents/delete/<string:username>', endpoint='parent/delete/username')
 
 api.add_resource(Events, '/events', endpoint='events')
 api.add_resource(EventByID, '/events/<int:id>', endpoint='event/id')
