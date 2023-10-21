@@ -39,13 +39,13 @@ export const AdminPortal = () => {
                 {/* Parent Side */}
                 <h5 style={{color:"goldenrod"}}>Parent</h5>
                 <li class="list-group-item">
-                    <Link to="/addDancer"> Search Parent</Link>
+                    <Link to="/listParent"> Search Parent</Link>
                 </li>  
                 <li class="list-group-item">
-                    <Link to="/modifyDancer"> Modify Parent</Link>
+                    <Link to="/modifyParent"> Modify Parent</Link>
                 </li>
                 <li class="list-group-item">
-                    <Link to="/deleteDancer"> Delete Parent</Link>
+                    <Link to="/deleteParent"> Delete Parent</Link>
                 </li>                        
                 <li class="list-group-item">
                     <Link to="/listbalances">  List Balances </Link>

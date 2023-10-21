@@ -161,6 +161,22 @@ class ParentSchema(ma.SQLAlchemySchema):
 singular_parent_schema = ParentSchema()
 list_parents_schema = ParentSchema(many=True)
 
+class FullParentSchema(ma.SQLAlchemySchema):
+        class Meta:
+            model = Parent 
+
+        id = ma.auto_field()
+        first  = ma.auto_field()
+        last  = ma.auto_field()
+        email = ma.auto_field()
+        phone = ma.auto_field()
+        address = ma.auto_field()
+        username = ma.auto_field()
+        balance = ma.auto_field()
+      
+singular_fullparent_schema = FullParentSchema()
+list_fullparents_schema = FullParentSchema(many=True)
+
 class DancerSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Dancer 
@@ -611,17 +627,17 @@ class Parents(Resource):
         return ["Message: ","Dancers Not Found"], 404  
 
 class ParentByID(Resource):
-   def get(self,id):
+   def get(self,email):
        #Only Parent and Admin has access
        
-       parent = Parent.query.filter_by(id=id).first() 
+       parent = Parent.query.filter_by(email=email).first() 
        user = User.query.filter_by(username=session.get("username")).first()
 
        if parent:
             action = request.args.get('action')
             if user.isadmin or session.get("username") == parent.username :
                 if action == "none":
-                    response = make_response(singular_parent_schema.dump(parent), 201)
+                    response = make_response(singular_fullparent_schema.dump(parent), 201)
                 elif action == "dancers":
                     response = make_response(list_dancers_schema.dump(parent.dancers), 201)
                 else:
@@ -637,7 +653,7 @@ class ModifyParent(Resource):
 
         parent = Parent.query.filter_by(id=id).first()   
         parent_user = User.query.filter_by(username=parent.username).first()
-        user = User.query.filter_by(username=session.get("username"))
+        user = User.query.filter_by(username=session.get("username")).first()
         
         if parent:
             if session.get('user_id') == parent.id or user.isadmin:
@@ -658,9 +674,9 @@ class ModifyParent(Resource):
                     db.session.commit()    
                 response = make_response([singular_parentlist_schema.dump(parent)], 202) 
             else:
-                return  [{"Message":"User Not Authorized"}], 401            
+                return  ["Message :", "User Not Authorized"], 401            
         else:
-            return [{"Message":"Parent Not Found"}], 404  
+            return ["Message :","Parent Not Found"], 404  
         return response
 
 class Events(Resource):
@@ -1052,7 +1068,7 @@ api.add_resource(DeleteDancer,'/dancers/delete/<string:username>', endpoint='dan
 api.add_resource(ModifyDancer,'/dancers/modify/<int:id>', endpoint='dancer/modify/<int:id>')
 
 api.add_resource(Parents, '/parents', endpoint='parents')
-api.add_resource(ParentByID,'/parents/<int:id>', endpoint='parent/id')
+api.add_resource(ParentByID,'/parent/<string:email>', endpoint='parent/<string:email>')
 api.add_resource(ModifyParent,'/parents/modify/<int:id>', endpoint='parent/modify/id')
 
 api.add_resource(Events, '/events', endpoint='events')

@@ -30,6 +30,8 @@ import PracticeSignup from "./components/PracticeSignup/PracticeSignup"
 import PracticeDancers from "./components/PracticeDancers/PracticeDancers"
 
 import AllParents from "./components/Parents/AllParents/AllParents"
+import SearchParent from "./components/Parents/SearchParent/SearchParent"
+import ModifyParent from "./components/Parents/ModifyParent/ModifyParent"
 
 function App() {
 
@@ -121,6 +123,10 @@ function App() {
          <Route path={"/practiceDancers"} element={<PracticeDancers onClose={handleCloseButton}/>}></Route>
       
          <Route path={"/parents"} element={<AllParents isAdmin={isAdmin} />}></Route>
+         <Route path={"/listParent"} element={<SearchParent />}></Route>
+         <Route path={"/modifyParent"} element={<ModifyParent />}></Route>
+
+
       </Routes> 
       </div>
     </> 
