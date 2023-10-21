@@ -47,9 +47,7 @@ export const AdminPortal = () => {
                 <li class="list-group-item">
                     <Link to="/deleteParent"> Delete Parent</Link>
                 </li>                        
-                <li class="list-group-item">
-                    <Link to="/listbalances">  List Balances </Link>
-                </li> 
+                
                 <li class="list-group-item">
                         <Link to="/dancer/practices "> List Dancer(s) </Link>
                 </li> 
