@@ -1,7 +1,7 @@
 import React from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./getParent.css"
+// import "./GetDancers.css"
 import * as Yup  from 'yup'
 import Container from 'react-bootstrap/Container'
 import Row from  'react-bootstrap/Row'
@@ -21,7 +21,7 @@ import UserExistError from '../../ErrorMessages/UserExistError'
     })
     
 
-const GetParent = ({setParent,showParent,setShowParent}) => {
+const GetDancers = ({showDancers,setShowDancers, setDancers}) => {
 
     const [error, setError] = useState(null)
     
@@ -30,17 +30,17 @@ const GetParent = ({setParent,showParent,setShowParent}) => {
     })
 
      const handleListing = (() => {
-        setShowParent(!showParent)
+        setShowDancers(!showDancers)
      })
 
     const onSubmit = values => { 
-        fetch(`/parent/${values["email"]}?action=none`)
+        fetch(`/parent/${values["email"]}?action=dancers`)
         .then(res => {
             if (res.ok) {
                 res.json()
-                .then((parent) => {
-                  setParent(parent)
-                  console.log("this parent", parent) 
+                .then((dancers) => {
+                  setDancers(dancers)
+                  console.log("this dancers", dancers) 
                   handleListing()
                 }) 
             }else{
@@ -56,7 +56,7 @@ const GetParent = ({setParent,showParent,setShowParent}) => {
     <>
      <Container>
            <Row>
-               <Col className="placement" md={{ span: 6, offset: 3 }}>    
+               <Col className="placement" xs={{span: 6,offset:1}} sm={{span:6,offset:1}} md={{ span: 6, offset: 3 }}>    
                     <h2 className="heading">Parent</h2>  
                     <Formik 
                         initialValues = {initialValues}
@@ -84,4 +84,4 @@ const GetParent = ({setParent,showParent,setShowParent}) => {
   )
 }
 
-export default GetParent
+export default GetDancers

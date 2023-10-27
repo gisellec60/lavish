@@ -33,6 +33,7 @@ import AllParents from "./components/Parents/AllParents/AllParents"
 import SearchParent from "./components/Parents/SearchParent/SearchParent"
 import ModifyParent from "./components/Parents/ModifyParent/ModifyParent"
 import {DeleteParent} from "./components/Parents/DeleteParent/DeleteParent"
+import ParentDancers from "./components/Parents/ParentDancers/ParentDancers"
 
 function App() {
 
@@ -127,7 +128,7 @@ function App() {
          <Route path={"/listParent"} element={<SearchParent />}></Route>
          <Route path={"/modifyParent"} element={<ModifyParent />}></Route>
          <Route path={"/deleteParent"} element={<DeleteParent isAdmin={isAdmin} />}></Route>
-
+         <Route path={"/parentDancers"} element={<ParentDancers />}></Route>
 
       </Routes> 
       </div>

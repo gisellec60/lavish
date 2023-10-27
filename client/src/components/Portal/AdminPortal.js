@@ -49,7 +49,7 @@ export const AdminPortal = () => {
                 </li>                        
                 
                 <li class="list-group-item">
-                        <Link to="/dancer/practices "> List Dancer(s) </Link>
+                        <Link to="/parentDancers "> List Dancer(s) </Link>
                 </li> 
                 <li class="list-group-item">
                         <Link to="/parents"> All Parents</Link>
