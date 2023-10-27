@@ -30,19 +30,19 @@ const AllDancers = ({onCloseButton}) => {
     }, []);
 
    const dancerlist = 
-     <Container fluid='md' className="font-size ">
-      <h3>Dancer Roster</h3>
-       <Table responsive striped bordered hover variant="dark" className="table-size">
+     <Container fluid='md' className="container-size">
+        <h4 className="heading">Dancer Roster</h4>
+        <Table responsive striped bordered hover variant="dark" className="table-size">
             <thead >
-              <tr >
-                <th>#</th>
-                <th >Name</th>
-                <th>Email</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>DOB</th>
-                <th>phone</th>
-                <th>Parent</th>
+              <tr className="width">
+                <th className="id">#</th>
+                <th className="name" >Name</th>
+                <th className="email">Email</th>
+                <th className="gender">Gender</th>
+                <th className="age">Age</th>
+                <th className="dob">DOB</th>
+                <th className="phone">phone</th>
+                <th className="parent">Parent</th>
               </tr>
             </thead>
             <tbody>

@@ -30,7 +30,7 @@ const AllEvents = () => {
   
     const eventList = 
         <Container fluid='md' className="event-container">
-/home/gisellec60/development/code/phase-5/lavish/client/src/components/Portal            <h3>Event Schedule</h3>
+          <h3>Event Schedule</h3>
             <Table responsive striped boarded variant="dark">
                 <thead >
                     <tr >

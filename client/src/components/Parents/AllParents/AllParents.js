@@ -35,7 +35,6 @@ const AllParents = ({onCloseButton, isAdmin}) => {
        <Table responsive striped bordered hover variant="dark" className="table-size">
             <thead >
               <tr >
-                <th>#</th>
                 <th >Name</th>
                 <th>Email</th>
                 <th>phone</th>
@@ -45,10 +44,9 @@ const AllParents = ({onCloseButton, isAdmin}) => {
               {parents.map((parent) => {
                  return (
                     <tr key={parent.id}>
-                      <th scope="row">{parent.id}</th>
-                        <td >{parent.first} {parent.last}</td>
-                        <td>{parent.email}</td> 
-                        <td>{parent.phone}</td>
+                        <td className="name">{parent.first} {parent.last}</td>
+                        <td className="email">{parent.email}</td> 
+                        <td className="phone">{parent.phone}</td>
                   </tr>
                 )
               })}

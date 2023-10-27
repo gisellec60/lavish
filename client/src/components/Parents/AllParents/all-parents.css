@@ -3,7 +3,7 @@
     top:100px;
     font-size:large;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    width:1000px;
+    width:750px; 
     background-color:goldenrod;
 }
 
@@ -11,4 +11,15 @@
    font-size:x-large;
    font-weight:bolder;
    font-family:Georgia, 'Times New Roman', Times, serif 
+}
+
+/* .phone, .email, .name{
+    width:50px;
+} */
+
+.table-size {
+    position:relative;
+    left:10px;
+    width:700px;
+
 }
