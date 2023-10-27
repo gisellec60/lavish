@@ -3,6 +3,21 @@
 }
 
 .tablesize{
+   font-family: Georgia, 'Times New Roman', Times, serif;
+   font-size:medium
+}    
+
+
+.nameHeading {
+  position:relative ; 
+  font-size:large;
+  font-weight:bolder;
+  color:black
+}
+
+.list-container {
+    position:relative;
+    top:150px;
+    background-color:goldenrod;
     width:800px;
-    justify-self: center;
 }

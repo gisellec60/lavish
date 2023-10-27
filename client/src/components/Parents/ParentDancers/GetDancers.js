@@ -21,7 +21,7 @@ import UserExistError from '../../ErrorMessages/UserExistError'
     })
     
 
-const GetDancers = ({showDancers,setShowDancers, setDancers}) => {
+const GetDancers = ({showDancers,setShowDancers, setDancers, setParent}) => {
 
     const [error, setError] = useState(null)
     
@@ -29,11 +29,32 @@ const GetDancers = ({showDancers,setShowDancers, setDancers}) => {
         setError(null)
     })
 
-     const handleListing = (() => {
+    const handleListing = (() => {
         setShowDancers(!showDancers)
-     })
+    })
+
+    const handleGetParent = ((email) =>  { 
+        fetch(`/parent/${email}?action=none`)
+        .then(res => {
+            if (res.ok) {
+                res.json()
+                .then((parent) => {
+                  setParent(parent)
+                  console.log("this Parent", parent) 
+                  handleListing()
+                }) 
+            }else{
+                res.json().then((error)=> {
+                  console.log("Error Returned",error);    
+                  setError(error)
+                })      
+            }
+        })
+    })
+
 
     const onSubmit = values => { 
+        const email = values["email"]
         fetch(`/parent/${values["email"]}?action=dancers`)
         .then(res => {
             if (res.ok) {
@@ -41,7 +62,7 @@ const GetDancers = ({showDancers,setShowDancers, setDancers}) => {
                 .then((dancers) => {
                   setDancers(dancers)
                   console.log("this dancers", dancers) 
-                  handleListing()
+                  handleGetParent(email)
                 }) 
             }else{
                 res.json().then((error)=> {

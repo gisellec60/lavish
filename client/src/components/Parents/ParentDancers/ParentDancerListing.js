@@ -3,11 +3,11 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import "./parentdancers.css"
 
-function ShowDancerEventsListing({dancers}) {
+function ShowDancerEventsListing({dancers,parent}) {
    
   const eventlist =
     <Container fluid="md" className="list-container">
-        {/* <h3 className="nameHeading">{dancer[Parent]['first']} {dancer[Parent]['last']}  </h3> */}
+        <h4 className="nameHeading">{parent.first} {parent.last}  </h4>
         <Table responsive striped boarded variant="dark" className="tablesize" >
           <thead >
               <tr className="table_style">
