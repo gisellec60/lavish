@@ -87,6 +87,10 @@ export const AdminPortal = () => {
                 <li class="list-group-item">
                         <Link to="/dancer/practices">Dancer's Practice Schedule </Link>
                 </li> 
+                <li class="list-group-item">
+                        <Link to="/dancer/addtopractice">Add To Practice Schedule </Link>
+                </li> 
+
             </ul>   
         </Col>  
 

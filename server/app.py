@@ -1025,7 +1025,7 @@ class AddToPractice(Resource):
 
        if dancer:
            if practice:
-              if user.isadmin or dancer.id == id1 or user.username == parent.usernam:
+              if user.isadmin or dancer.id == id1 or user.username == parent.username:
                     if practice in dancer.practices:
                         return [{"message":"Dancer already exist for this event"}], 208
                     else:

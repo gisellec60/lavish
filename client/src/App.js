@@ -28,6 +28,7 @@ import ModifyPractice from "./components/ModifyPractice/ModifyPractice"
 import DancerPractices from "./components/DancerPractice/DancerPractices"
 import PracticeSignup from "./components/PracticeSignup/PracticeSignup"
 import PracticeDancers from "./components/PracticeDancers/PracticeDancers"
+import AddToPractice from "./components/AddToPractice/AddToPractice"
 
 import AllParents from "./components/Parents/AllParents/AllParents"
 import SearchParent from "./components/Parents/SearchParent/SearchParent"
@@ -125,7 +126,8 @@ function App() {
          <Route path={"/deletePractice"} element={<DeletePractice />}></Route>
          <Route path={"/practice/signup"} element={<PracticeSignup onClose={handleCloseButton}/>}></Route>
          <Route path={"/practiceDancers"} element={<PracticeDancers onClose={handleCloseButton}/>}></Route>
-      
+         <Route path={"/dancer/addtopractice"} element={<AddToPractice onClose={handleCloseButton}/>}></Route>
+
          <Route path={"/parents"} element={<AllParents isAdmin={isAdmin} />}></Route>
          <Route path={"/listParent"} element={<SearchParent />}></Route>
          <Route path={"/modifyParent"} element={<ModifyParent />}></Route>
