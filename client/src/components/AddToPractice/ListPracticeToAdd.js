@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 
-const ListPracticeToAdd = ({showDancerList, setShowDancerList, setPracticeObj }) => {
+const ListPracticeToAdd = ({showDancerList, setShowDancerList, setPracticeObj}) => {
 
    const [practice, setPractice] = useState([])
 
@@ -14,7 +14,6 @@ const ListPracticeToAdd = ({showDancerList, setShowDancerList, setPracticeObj })
                 res.json()
                 .then((practice) => {
                     setPractice(practice)
-                    console.log(practice)
                 })
             }else{
                 res.json()
@@ -25,11 +24,6 @@ const ListPracticeToAdd = ({showDancerList, setShowDancerList, setPracticeObj })
         })
         }, []);
     
-          
-    const handleEditClick = (() => {
-        setShowDancerList(!showDancerList)
-    })
-
     const practiceList = 
         <Container fluid='md' className="event-container">
             <h3>Practice Table - click practice </h3>
@@ -46,7 +40,7 @@ const ListPracticeToAdd = ({showDancerList, setShowDancerList, setPracticeObj })
                 <tbody>
                 {practice.map((practice) => {
                     return (
-                        <tr key={practice.id} onClick={() => {setPracticeObj(practice); handleEditClick()}}>
+                        <tr key={practice.id} onClick={() => {setPracticeObj(practice);setShowDancerList(!showDancerList)}}>
                             <td >{practice.date}</td>
                             <td>{practice.practice_time}</td> 
                             <td>{practice.arrival_time}</td>
