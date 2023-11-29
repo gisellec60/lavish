@@ -1016,13 +1016,14 @@ class AddToEvent(Resource):
            return [{"message":"Dancer does not exist"}], 404      
 
 class AddToPractice(Resource):
-    def post(self,id1,id2):
+    def get(self,id1,id2):
       
-       user = User.query.filter_by(username=session.get("username"))
+       user = User.query.filter_by(username=session.get("username")).first()
        dancer = Dancer.query.filter_by(id=id1).first()
        parent = Parent.query.filter_by(id=dancer.parent_id)
        practice = Practice.query.filter_by(id=id2).first()
-
+       
+       print ("do you get here????") 
        if dancer:
            if practice:
               if user.isadmin or dancer.id == id1 or user.username == parent.username:
