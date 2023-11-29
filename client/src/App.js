@@ -35,6 +35,8 @@ import ModifyParent from "./components/Parents/ModifyParent/ModifyParent"
 import {DeleteParent} from "./components/Parents/DeleteParent/DeleteParent"
 import ParentDancers from "./components/Parents/ParentDancers/ParentDancers"
 
+import Balances from "./components/Balances/Balances"
+
 function App() {
 
   const [user, setUser] = useState(null);
@@ -90,13 +92,13 @@ function App() {
       <Routes>
          <Route path ="/" element = {<Home />}> </Route>  
          <Route path={"/signup"} element={<Signup onSignUp={handleSetUser} handleIsParent={handleIsParent} setIsParent={setIsParent}  />}></Route>
-        {
+         {
           user ? 
            <Route path={"/admin"} element={<Admin onSignUp={handleSetUser} />}></Route>
-         : <Route path={"/login"} element={<Login onLogin={setUser} handleIsParent={handleIsParent} handleIsAdmin={handleIsAdmin} />}></Route> 
-        }
+            : <Route path={"/login"} element={<Login onLogin={setUser} handleIsParent={handleIsParent} handleIsAdmin={handleIsAdmin} />}></Route> 
+         }
 
-        {
+         {
           user ? 
            <Route path={"/portal"} element={<Portal dancer={dancer} isAdmin={isAdmin} />}></Route>
            : <Route path={"/login"} element={<Login onLogin={setUser} handleIsParent={handleIsParent} handleIsAdmin={handleIsAdmin}/>}></Route> 
@@ -129,6 +131,8 @@ function App() {
          <Route path={"/modifyParent"} element={<ModifyParent />}></Route>
          <Route path={"/deleteParent"} element={<DeleteParent isAdmin={isAdmin} />}></Route>
          <Route path={"/parentDancers"} element={<ParentDancers />}></Route>
+
+         <Route path={"/balances"} element={<Balances />}></Route>
 
       </Routes> 
       </div>

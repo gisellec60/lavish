@@ -975,8 +975,8 @@ class Users(Resource):
 class ListBalances(Resource):
     def get(self):
         
-        user = User.query.filter_by(username=session.get("username"))
-        
+        user = User.query.filter_by(username=session.get("username")).first()
+        print ("this is user:", user)
         if user.isadmin:
             list_balance=[]
             parents = Parent.query.all()

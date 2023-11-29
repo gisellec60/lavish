@@ -1,0 +1,8 @@
+.container-size {
+    position:relative;
+    top:170px;
+    font-size:large;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    width:750px; 
+    background-color:goldenrod;
+}
