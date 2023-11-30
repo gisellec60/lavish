@@ -26,7 +26,7 @@ const AllPractice = () => {
                 })  
             }        
         })
-        }, []);
+    }, []);
   
     const practiceList = 
         <Container fluid='md' className="practice-container">

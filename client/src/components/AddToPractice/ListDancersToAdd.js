@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 // import "./dancerstyles.css"
 
-const ListDancersToAdd = ({onCloseButton, setDancerObj, setAddDancer, addDancer}) => {
+const ListDancersToAdd = ({onClose, practice}) => {
   
   const [dancers, setDancers] = useState([])
   const [error, setError] = useState(null)
@@ -28,6 +28,22 @@ const ListDancersToAdd = ({onCloseButton, setDancerObj, setAddDancer, addDancer}
     })
     }, []);
 
+    const handleClick  = ((dancer) => {
+        console.log("this is dancer",dancer, practice)
+        fetch(`/practices/add/${dancer["id"]}/${practice["id"]}`)
+        .then(res => {
+            if (res.ok) {
+                alert(`${dancer.first} ${dancer.last} added to practice schedule at ${practice.venue} on ${practice.date}`)        
+                onClose()
+            }else{
+                res.json()
+                .then((errors) => {
+                    console.log("Returned error", errors); 
+                })
+            }     
+        })
+   })  
+
    const dancerlist = 
      <Container fluid='md' className="container-size">
         <h4 className="heading">Dancer Roster</h4>
@@ -42,7 +58,7 @@ const ListDancersToAdd = ({onCloseButton, setDancerObj, setAddDancer, addDancer}
             <tbody>
               {dancers.map((dancer) => {
                  return (
-                    <tr key={dancer.id} onClick={() => {setDancerObj(dancer); setAddDancer(!addDancer)}}>
+                    <tr key={dancer.id} onClick={() => handleClick(dancer)}>
                       <th scope="row">{dancer.id}</th>
                         <td >{dancer.first} {dancer.last}</td>
                         <td>{dancer.username}</td> 
@@ -57,11 +73,6 @@ const ListDancersToAdd = ({onCloseButton, setDancerObj, setAddDancer, addDancer}
      <div>
        { dancerlist }    
    
-     {
-        error ?
-          <UserNotAuthorized error={error} onCloseButton={onCloseButton} />
-          : null
-     }
      </div> 
 )  
   
