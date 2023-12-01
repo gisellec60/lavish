@@ -992,12 +992,12 @@ class ListBalances(Resource):
             return [{"message" :"User not authorized"}], 401  
 
 class AddToEvent(Resource):
-    def post(self,id1,id2):
-     
-       user = User.query.filter_by(username=session.get("username"))
+    def get(self,id1,id2):
+      
+       user = User.query.filter_by(username=session.get("username")).first()
        dancer = Dancer.query.filter_by(id=id1).first()
        event = Event.query.filter_by(id=id2).first()
-       parent = Parent.query.filter_by(id=dancer.parent_id)
+       parent = Parent.query.filter_by(id=dancer.parent_id).first()
        
        if dancer:
            if event:
@@ -1020,10 +1020,9 @@ class AddToPractice(Resource):
       
        user = User.query.filter_by(username=session.get("username")).first()
        dancer = Dancer.query.filter_by(id=id1).first()
-       parent = Parent.query.filter_by(id=dancer.parent_id)
+       parent = Parent.query.filter_by(id=dancer.parent_id).first()
        practice = Practice.query.filter_by(id=id2).first()
        
-       print ("do you get here????") 
        if dancer:
            if practice:
               if user.isadmin or dancer.id == id1 or user.username == parent.username:
