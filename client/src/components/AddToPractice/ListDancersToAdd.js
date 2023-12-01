@@ -1,9 +1,10 @@
 import {React} from 'react'
-import UserNotAuthorized from '../ErrorMessages/UserNotAuthorized';
 import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
-// import "./dancerstyles.css"
+import Button from '@mui/material/Button';  
+  
+import "./addToPractice.css"
 
 const ListDancersToAdd = ({onClose, practice}) => {
   
@@ -29,12 +30,15 @@ const ListDancersToAdd = ({onClose, practice}) => {
     }, []);
 
     const handleClick  = ((dancer) => {
-        console.log("this is dancer",dancer, practice)
         fetch(`/practices/add/${dancer["id"]}/${practice["id"]}`)
         .then(res => {
             if (res.ok) {
-                alert(`${dancer.first} ${dancer.last} added to practice schedule at ${practice.venue} on ${practice.date}`)        
-                onClose()
+              if (res.status == 208){
+                alert(`${dancer.first} ${dancer.last} is already scheduled for practice at ${practice.venue} on ${practice.date}`)
+              }else{
+                alert(`${dancer.first} ${dancer.last} has been added to practice schedule \n Location: ${practice.venue} Date: ${practice.date}`)    
+              }
+              // onClose()
             }else{
                 res.json()
                 .then((errors) => {
@@ -47,6 +51,7 @@ const ListDancersToAdd = ({onClose, practice}) => {
    const dancerlist = 
      <Container fluid='md' className="container-size">
         <h4 className="heading">Dancer Roster</h4>
+        <Button className="button" variant="contained" onClick={() => {onClose()}} >Finish</Button>
         <Table responsive striped bordered hover variant="dark" className="table-size">
             <thead >
               <tr className="width">

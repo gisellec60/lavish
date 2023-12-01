@@ -7,8 +7,7 @@ const AddToPractice = ({onClose}) => {
 
     const [showDancerList, setShowDancerList] = useState(false)
     const [practiceObj, setPracticeObj] = useState(null)
-    const [dancerObj, setDancerObj] = useState(null)
-  
+
     return (
      <>    
         <div>

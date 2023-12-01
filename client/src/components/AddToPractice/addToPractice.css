@@ -1,0 +1,39 @@
+.noWrap{
+    white-space: normal;
+}
+
+.font-size{
+    font-size:medium;
+    background-color: goldenrod;
+    font-style: normal;
+    color:black;
+}
+
+/* .container {
+   color:black;
+   font-size:large;
+   width:100px;
+} */
+  
+.table-size{
+    width: 1000px;
+    font-size:medium;
+}
+
+.email, .dob, .phone, .gender{
+    width:150px;
+}
+
+.id, .gender, .age{
+    width:50px;
+}
+
+.parent, .name{
+    width:200px;
+
+}
+
+.button{
+    position:relative;
+    left:640px;
+}
