@@ -9,6 +9,12 @@ const Balances = () => {
   
   const [parents, setParents] = useState([])
   const [error, setError] = useState(null)
+  const [emailData, setEmailData] = useState({
+    to: '',
+    subject: 'Balance Information',
+    body: '',
+  });
+
 
   useEffect(() => {
     fetch("/balances")
@@ -29,6 +35,32 @@ const Balances = () => {
     })
     }, []);
 
+    const handleSendEmail = ((parent) => {
+        console.log("this is parent", parent)
+        emailData.to = "gisellec60@gmail.com"
+        emailData.body = `Dear ${parent.first} ${parent.last} \n
+        \n Just a quick reminder you have a balance of $${parent.balance}.`
+
+        console.log("this is email", emailData)
+
+        fetch('send_email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',  
+        },
+        body: JSON.stringify(emailData)
+        })
+        
+        .then(res => {
+            if (res.ok) {
+              console.log('Email sent successfully!');
+            } else {
+              console.error('Failed to send email');
+            }
+        })    
+      
+    })   
+
     const  parentList = 
         <Container fluid='md' className="container-size ">
             <h3 className="font-size">Current Balances</h3>
@@ -44,7 +76,7 @@ const Balances = () => {
               <tbody>
                 {parents.map((parent) => {
                     return (
-                        <tr key={parent.id}>
+                        <tr key={parent.id}  onClick={() => {handleSendEmail(parent)}}>
                             <td className="name">{parent.first} {parent.last}</td>
                             <td className="email">{parent.email}</td> 
                             <td className="phone">{parent.phone}</td>

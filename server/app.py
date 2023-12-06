@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from flask import request, session, make_response,render_template
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
@@ -7,6 +10,7 @@ from flask_marshmallow import Marshmallow
 from config import app, db, api
 from models import Parent, Dancer, Event, Practice, Emergency, User,Password
 from datetime import date, datetime
+from flask import request, jsonify
 
 ma = Marshmallow(app)
 
@@ -14,8 +18,6 @@ ma = Marshmallow(app)
 @app.route('/<int:id>')
 def index(id=0):
     return render_template("index.html")
-
-
 
 #------------------------------------------- Run Before App --------------------------------------------
 # Since faker is not perfect sometimes we need to augment it. For me to clean up the data seeded
@@ -217,6 +219,44 @@ singular_name_schema = DancerNames()
 list_names_schema =  DancerNames(many=True)    
 
 #-----------------------------------------End of Schemas-------------------------------------------
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    try:
+        # Extract email details from the request
+        data = request.get_json()
+        to_address = data['to']
+        subject = data['subject']
+        body = data['body']
+
+        # Gmail SMTP server and port
+        smtp_server = 'smtp.gmail.com'
+        port = 465  # For SSL
+
+        # Sender's Gmail email and password
+        sender_email = 'gisellec60@gmail.com'  # Replace with your Gmail email
+        password = 'ncgafadcpirapooy'  # Replace with your Gmail password or use app-specific password
+
+        # Create the MIME object
+        message = MIMEMultipart()
+        message['From'] = sender_email
+        message['To'] = to_address
+        message['Subject'] = subject
+
+        # Attach the body of the email
+        message.attach(MIMEText(body, 'plain'))
+
+        # Connect to the SMTP server over SSL
+        with smtplib.SMTP_SSL(smtp_server, port) as server:
+            # Log in to the Gmail account
+            server.login(sender_email, password)
+
+            # Send the email
+            server.sendmail(sender_email, to_address, message.as_string())
+
+        return (['message', 'Email sent successfully'])
+    except Exception as e:
+        print(f'Error sending email: {e}')
+        return  ['error', 'Internal server error'], 500
 
 @app.route("/login", methods = ["Post"])
 def login():
