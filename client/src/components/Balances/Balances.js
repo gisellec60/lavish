@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import "./balances.css"
 
-const Balances = () => {
+const Balances = ({onClose}) => {
   
   const [parents, setParents] = useState([])
   const [error, setError] = useState(null)
@@ -39,7 +39,7 @@ const Balances = () => {
         console.log("this is parent", parent)
         emailData.to = "gisellec60@gmail.com"
         emailData.body = `Dear ${parent.first} ${parent.last} \n
-        \n Just a quick reminder you have a balance of $${parent.balance}.`
+        \n Just a quick reminder you have a balance of $${parent.balance} on your account.`
 
         console.log("this is email", emailData)
 
@@ -53,9 +53,10 @@ const Balances = () => {
         
         .then(res => {
             if (res.ok) {
-              console.log('Email sent successfully!');
+              alert(`Email sent to ${parent.first} ${parent.last} successfully!`);
+              onClose()
             } else {
-              console.error('Failed to send email');
+              alert('Failed to send email. Check email is correct');
             }
         })    
       

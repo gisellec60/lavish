@@ -136,7 +136,7 @@ function App() {
          <Route path={"/deleteParent"} element={<DeleteParent isAdmin={isAdmin} />}></Route>
          <Route path={"/parentDancers"} element={<ParentDancers />}></Route>
 
-         <Route path={"/balances"} element={<Balances />}></Route>
+         <Route path={"/balances"} element={<Balances onClose={handleCloseButton} />}></Route>
 
       </Routes> 
       </div>
