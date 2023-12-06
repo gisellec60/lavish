@@ -63,6 +63,7 @@ const DeleteEvent = () => {
                         <th>Arrival Time</th>
                         <th>Venue</th>
                         <th>Address</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,9 +75,11 @@ const DeleteEvent = () => {
                             <td>{event.arrival_time}</td>
                             <td>{event.venue}</td>
                             <td>{event.address}</td>
-                            <IconButton aria-label="delete" onClick={() => handleDeleteClick(event.id)} >
-                              <DeleteIcon />
-                            </IconButton>
+                            <td>
+                                <IconButton aria-label="delete" onClick={() => handleDeleteClick(event.id)} >
+                                <DeleteIcon style={{color: 'goldenrod'}} />
+                                </IconButton>
+                            </td>    
                          </tr>
                     )
                  })}
