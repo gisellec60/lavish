@@ -3,6 +3,10 @@
     top:170px;
     font-size:large;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    width:750px; 
+    width:800px; 
     background-color:goldenrod;
+}
+
+.table-size {
+    width:768px;
 }

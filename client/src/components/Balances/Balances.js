@@ -3,6 +3,9 @@ import {React} from 'react'
 import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
+import EmailIcon from '@mui/icons-material/Email';
+import EmailSharpIcon from '@mui/icons-material/EmailSharp';
+import IconButton from '@mui/material/IconButton';
 import "./balances.css"
 
 const Balances = ({onClose}) => {
@@ -72,16 +75,22 @@ const Balances = ({onClose}) => {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Balance</th>
+                  <th>Send Email</th>
                 </tr>
               </thead>
               <tbody>
                 {parents.map((parent) => {
                     return (
-                        <tr key={parent.id}  onClick={() => {handleSendEmail(parent)}}>
+                        <tr key={parent.id}>
                             <td className="name">{parent.first} {parent.last}</td>
                             <td className="email">{parent.email}</td> 
                             <td className="phone">{parent.phone}</td>
                             <td className="balance">${parent.balance}</td>
+                            <td className="balance">
+                            <IconButton aria-label="delete" onClick={() => {handleSendEmail(parent)}} >
+                              <EmailIcon style={{ color: 'goldenrod' }}  />
+                            </IconButton>
+                            </td>
                     </tr>
                     )
                 })}
