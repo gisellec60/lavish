@@ -1106,15 +1106,16 @@ class DeleteFromPractice(Resource):
 class DeleteFromEvent(Resource):
     def delete(self, id1, id2):
        
-       user = User.query.filter_by(username=session.get("username"))
-       parent = Parent.query.filter_by(id=dancer.parent_id)
+       user = User.query.filter_by(username=session.get("username")).first()
        dancer = Dancer.query.filter_by(id=id1).first()
        event = Event.query.filter_by(id=id2).first()
+       parent = Parent.query.filter_by(id=dancer.parent_id).first()
        if dancer:
            if event:
               if user.isadmin or dancer.id == id1 or user.username == parent.username:
                   if dancer in event.dancers:
                       event.dancers.remove(dancer) 
+                      print("Do we get here?")
                       db.session.commit()
                       return {}, 204 
                   else:

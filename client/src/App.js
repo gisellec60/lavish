@@ -22,6 +22,7 @@ import ModifyEvent from "./components/ModifyEvent/ModifyEvent"
 import EventRegistration from "./components/EventRegistration/EventRegistration"
 import EventDancers from "./components/EventDancers/EventDancers"
 import AddToEvent from "./components/AddToEvent/AddToEvent"
+import DeleteFromEvent from "./components/DeleteFromEvent/DeleteFromEvent"
 
 import AllPractices from "./components/AllPractices/AllPractices"
 import DeletePractice from "./components/DeletePractice/DeletePractice"
@@ -30,6 +31,7 @@ import DancerPractices from "./components/DancerPractice/DancerPractices"
 import PracticeSignup from "./components/PracticeSignup/PracticeSignup"
 import PracticeDancers from "./components/PracticeDancers/PracticeDancers"
 import AddToPractice from "./components/AddToPractice/AddToPractice"
+import DeleteFromPractice from "./components/DeleteFromPractice/DeleteFromPractice"
 
 import AllParents from "./components/Parents/AllParents/AllParents"
 import SearchParent from "./components/Parents/SearchParent/SearchParent"
@@ -121,6 +123,7 @@ function App() {
          <Route path={"/event/signup"} element={<EventRegistration onClose={handleCloseButton}/>}></Route>
          <Route path={"/eventDancers"} element={<EventDancers onClose={handleCloseButton}/>}></Route>
          <Route path={"/dancer/addtoevent"} element={<AddToEvent onClose={handleCloseButton}/>}></Route>
+         <Route path={"/dancer/delfromevent"} element={<DeleteFromEvent onClose={handleCloseButton}/>}></Route>
 
          <Route path={"/modifyPractice"} element={<ModifyPractice onClose={handleCloseButton} />}></Route>  
          <Route path={"/addPractice"} element={<AddPractice />}></Route>
@@ -129,6 +132,7 @@ function App() {
          <Route path={"/practice/signup"} element={<PracticeSignup onClose={handleCloseButton}/>}></Route>
          <Route path={"/practiceDancers"} element={<PracticeDancers onClose={handleCloseButton}/>}></Route>
          <Route path={"/dancer/addtopractice"} element={<AddToPractice onClose={handleCloseButton}/>}></Route>
+         <Route path={"/dancer/delfrompractice"} element={<DeleteFromPractice onClose={handleCloseButton}/>}></Route>
 
          <Route path={"/parents"} element={<AllParents isAdmin={isAdmin} />}></Route>
          <Route path={"/listParent"} element={<SearchParent />}></Route>

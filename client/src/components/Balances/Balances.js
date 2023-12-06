@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import EmailIcon from '@mui/icons-material/Email';
-import EmailSharpIcon from '@mui/icons-material/EmailSharp';
 import IconButton from '@mui/material/IconButton';
 import "./balances.css"
 
