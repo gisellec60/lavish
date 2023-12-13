@@ -6,6 +6,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import os
+import stripe
 
 app = Flask(
     __name__,
@@ -14,6 +15,7 @@ app = Flask(
     template_folder='../client/build'
 )
 
+stripe.api_key = "pk_live_51OLrXPBPcHvh0YTi7jnyl5s8xMGbmdfV41lRAoW0y3X1pdknq7jOluOYO3CUYhuP6DONIb9fB4txXeTYjQvAh6xL00cRiRp0R7"
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

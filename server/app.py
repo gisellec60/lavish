@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import smtplib
+import stripe
+import json
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from flask import request, session, make_response,render_template
@@ -10,9 +12,13 @@ from flask_marshmallow import Marshmallow
 from config import app, db, api
 from models import Parent, Dancer, Event, Practice, Emergency, User,Password
 from datetime import date, datetime
-from flask import request, jsonify
 
 ma = Marshmallow(app)
+def calculate_order_amount(items):
+        # Replace this constant with a calculation of the order's amount
+        # Calculate the order total on the server to prevent
+        # people from directly manipulating the amount on the client
+        return 1400
 
 @app.route('/')
 @app.route('/<int:id>')
@@ -1084,7 +1090,7 @@ class DeleteFromPractice(Resource):
       
        user = User.query.filter_by(username=session.get("username"))
        dancer = Dancer.query.filter_by(id=id1).first()
-       parent = Parent.query.filter_by(id=dancer.parent_id)
+       parent = Parent.query.filter_by(id=dancer.parent_id).first()
        practice = Practice.query.filter_by(id=id2).first()
       
        if dancer:
@@ -1115,7 +1121,6 @@ class DeleteFromEvent(Resource):
               if user.isadmin or dancer.id == id1 or user.username == parent.username:
                   if dancer in event.dancers:
                       event.dancers.remove(dancer) 
-                      print("Do we get here?")
                       db.session.commit()
                       return {}, 204 
                   else:
@@ -1128,6 +1133,7 @@ class DeleteFromEvent(Resource):
            return ["message","Dancer does not exist"], 404        
 
 class Admin(Resource):
+
     def post(self):
         
         user=User.query.filter_by(username=session.get("username")).first() 
@@ -1159,6 +1165,11 @@ class Admin(Resource):
         else:
             return ["Message: ","User Not Authorized"], 401 
 
+class Payment(Resource):
+    def post(username):
+     print ("this is it")
+        
+
 api.add_resource(Dancers, '/dancers', endpoint='dancers')
 api.add_resource(DancerByID,'/dancers/<string:email>', endpoint='dancer/<string:email>')
 api.add_resource(AddDancer,'/dancers/add', endpoint='dancer/add')
@@ -1189,6 +1200,7 @@ api.add_resource(DeleteFromPractice, '/practices/delete/<int:id1>/<int:id2>', en
 api.add_resource(Users, '/users', endpoint='/users')
 api.add_resource(Signup, '/signup', endpoint='/signup')
 api.add_resource(ListBalances, '/balances', endpoint='/balances')
+api.add_resource(Payment, '/payment', endpoint='/payment')
 api.add_resource(Admin, '/admin', endpoint='/admin')
 
 if __name__ == '__main__':
