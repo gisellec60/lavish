@@ -40,6 +40,9 @@ import {DeleteParent} from "./components/Parents/DeleteParent/DeleteParent"
 import ParentDancers from "./components/Parents/ParentDancers/ParentDancers"
 
 import Balances from "./components/Balances/Balances"
+import PaymentInfo from "./components/Payment/PaymentInfo"
+
+
 
 function App() {
 
@@ -141,7 +144,8 @@ function App() {
          <Route path={"/parentDancers"} element={<ParentDancers />}></Route>
 
          <Route path={"/balances"} element={<Balances onClose={handleCloseButton} />}></Route>
-
+         <Route path={"/payment"} element={<PaymentInfo />}></Route>
+  
       </Routes> 
       </div>
     </> 
